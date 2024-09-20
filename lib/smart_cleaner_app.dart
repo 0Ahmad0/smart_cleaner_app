@@ -29,6 +29,7 @@ class SmartCleanerApp extends StatelessWidget {
         builder: (context, child) {
           return MaterialApp(
             title: StringManager.appName,
+            debugShowCheckedModeBanner: false,
             theme: ThemeData(
                 dividerColor: ColorManager.hintTextColor,
                 primaryColor: ColorManager.primaryColor,
@@ -38,7 +39,6 @@ class SmartCleanerApp extends StatelessWidget {
                 ),
                 appBarTheme: AppBarTheme(
                   centerTitle: true,
-                  titleTextStyle: StyleManager.font18Medium(),
                   backgroundColor: ColorManager.whiteColor,
                   elevation: 0.0,
                 ),
@@ -57,7 +57,7 @@ class SmartCleanerApp extends StatelessWidget {
                       EdgeInsets.symmetric(horizontal: 14.w, vertical: 14.h),
                 ),
                 scaffoldBackgroundColor: ColorManager.whiteColor,
-                fontFamily: GoogleFonts.cairo().fontFamily,
+                fontFamily: GoogleFonts.playpenSans().fontFamily,
                 elevatedButtonTheme: ElevatedButtonThemeData(
                     style: ElevatedButton.styleFrom(
                         minimumSize: Size(

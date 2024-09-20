@@ -8,7 +8,7 @@ class AssetsManager {
   static const noMessagesIMG = '$_pathImages/logo.png';
 
   ///<==== Svg ====>
-  static const backGroundAppIcon = '$_pathSVGs/background.svg';
+  static const backGroundAppIcon = '$_pathImages/background.svg';
   static const eyePasswordIcon = '$_pathSVGs/eye.svg';
   static const arrowRightIcon = '$_pathSVGs/arrow_right.svg';
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ColorManager{
-  static const Color primaryColor =  Colors.indigo;
+  static const Color primaryColor =  Color(0xff4D6B91);
 
   static const Color hintTextColor =  Color(0xFFadacac);
   

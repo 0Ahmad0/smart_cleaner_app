@@ -1,3 +1,6 @@
+import 'package:flutter/cupertino.dart';
+import 'package:smart_cleaner_app/core/helpers/spacing.dart';
+
 import '/core/utils/assets_manager.dart';
 import '/core/utils/style_manager.dart';
 import 'package:flutter/material.dart';
@@ -68,54 +71,63 @@ class _AppTextFieldState extends State<AppTextField> {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      inputFormatters: widget.filteringTextFormatterList,
-      maxLines: widget.maxLine,
-      minLines: widget.minLine,
-      readOnly: widget.readOnly,
-      autofocus: widget.autofocus,
-      validator: widget.validator ??
-          (String? val) {
-            if (val!.trim().isEmpty) return StringManager.requiredField;
-            return null;
-          },
-      onChanged: widget.onChanged,
-      onTap: widget.onTap,
-      textInputAction: widget.textInputAction,
-      keyboardType: widget.keyboardType,
-      obscureText: widget.obscureText,
-      controller: widget.controller,
-      cursorColor: ColorManager.primaryColor,
-      decoration: InputDecoration(
-        focusedBorder: _borderTextFiled(),
-        border: _borderTextFiled(color: Colors.transparent),
-        enabledBorder: _borderTextFiled(color: Colors.transparent),
-        errorBorder: _borderTextFiled(color: ColorManager.errorColor),
-        iconColor: ColorManager.grayColor,
-        filled: true,
-        fillColor: ColorManager.grayColor,
-        errorMaxLines: 2,
-        suffixIcon: widget.iconData != null
-            ? Icon(
-                widget.iconData,
-                size: 24.sp,
-          color: ColorManager.hintTextColor,
-              )
-            : widget.suffixIcon
-                ? IconButton(
-                    onPressed: () {
-                      showPassword();
-                    },
-                    icon: Icon(
-                      !widget.obscureText?Icons.remove_red_eye:Icons.visibility_off_sharp,
-                      color: ColorManager.hintTextColor,
-                    ))
-                : null,
-        hintText: widget.hintText,
-        hintStyle: StyleManager.font16Regular(
-          color: ColorManager.hintTextColor,
-        )
-      ),
+    return Row(
+      children: [
+        CircleAvatar(
+          backgroundColor: ColorManager.primaryColor,
+          child: Icon(
+            widget.iconData,
+            color: ColorManager.whiteColor,
+          ),
+        ),
+        horizontalSpace(20.w),
+        Flexible(
+          child: TextFormField(
+            inputFormatters: widget.filteringTextFormatterList,
+            maxLines: widget.maxLine,
+            minLines: widget.minLine,
+            readOnly: widget.readOnly,
+            autofocus: widget.autofocus,
+            validator: widget.validator ??
+                (String? val) {
+                  if (val!.trim().isEmpty) return StringManager.requiredField;
+                  return null;
+                },
+            onChanged: widget.onChanged,
+            onTap: widget.onTap,
+            textInputAction: widget.textInputAction,
+            keyboardType: widget.keyboardType,
+            obscureText: widget.obscureText,
+            controller: widget.controller,
+            cursorColor: ColorManager.primaryColor,
+            decoration: InputDecoration(
+                focusedBorder: _borderTextFiled(),
+                border: _borderTextFiled(color: Colors.transparent),
+                enabledBorder: _borderTextFiled(color: Colors.transparent),
+                errorBorder: _borderTextFiled(color: ColorManager.errorColor),
+                iconColor: ColorManager.grayColor,
+                filled: true,
+                fillColor: ColorManager.grayColor,
+                errorMaxLines: 2,
+                suffixIcon: widget.iconData != null && widget.suffixIcon
+                    ? IconButton(
+                        onPressed: () {
+                          showPassword();
+                        },
+                        icon: Icon(
+                          !widget.obscureText
+                              ? Icons.remove_red_eye
+                              : Icons.visibility_off_sharp,
+                          color: ColorManager.hintTextColor,
+                        ))
+                    : null,
+                hintText: widget.hintText,
+                hintStyle: StyleManager.font16Regular(
+                  color: ColorManager.hintTextColor,
+                )),
+          ),
+        ),
+      ],
     );
   }
 }

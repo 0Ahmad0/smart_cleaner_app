@@ -1,6 +1,8 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:smart_cleaner_app/app/screens/check_inbox_screen.dart';
+import 'package:smart_cleaner_app/app/screens/forgot_password_screen.dart';
 import 'package:smart_cleaner_app/app/screens/login_screen.dart';
 import 'package:smart_cleaner_app/app/screens/signup_screen.dart';
 import 'package:smart_cleaner_app/app/screens/splash_screen.dart';
@@ -22,6 +24,13 @@ class AppRouter {
       case Routes.signUpRoute:
         return MaterialPageRoute(
           builder: (_) => SignupScreen(),
+        );  case Routes.forgotPasswordRoute:
+        return MaterialPageRoute(
+          builder: (_) => ForgotPasswordScreen(),
+        );
+      case Routes.checkInboxRoute:
+        return MaterialPageRoute(
+          builder: (_) => CheckInboxScreen(),
         );
       default:
         return MaterialPageRoute(
