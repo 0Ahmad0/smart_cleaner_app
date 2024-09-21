@@ -1,5 +1,3 @@
-
-
 class ConstValueManager {
   /// Design Size
   static const double widthSize = 393.0;
@@ -21,6 +19,8 @@ class ConstValueManager {
   static const String arLanguageCode = 'ar';
   static const String enLanguageCode = 'en';
 
-
+  static const List<String> roleList = [
+    'Worker',
+    'Guest',
+  ];
 }
-

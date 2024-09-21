@@ -36,13 +36,17 @@ class SignupScreen extends StatelessWidget {
                   StringManager.appName.toUpperCase(),
                   textAlign: TextAlign.center,
                   style:
-                  StyleManager.font24Bold(color: ColorManager.primaryColor),
+                      StyleManager.font24Bold(color: ColorManager.primaryColor),
                 ),
                 verticalSpace(20.h),
-
                 AppTextField(
                   iconData: Icons.person,
-                  hintText: StringManager.emailText,
+                  hintText: StringManager.enterUserNameText,
+                ),
+                verticalSpace(20.h),
+                AppTextField(
+                  iconData: Icons.email_outlined,
+                  hintText: StringManager.enterEmailHintText,
                 ),
                 verticalSpace(20.h),
                 AppTextField(
@@ -50,17 +54,20 @@ class SignupScreen extends StatelessWidget {
                   obscureText: true,
                   suffixIcon: true,
                   hintText: StringManager.enterPasswordHintText,
-                ),verticalSpace(20.h),
+                ),
+                verticalSpace(20.h),
                 AppTextField(
                   iconData: Icons.lock_open,
                   obscureText: true,
                   suffixIcon: true,
                   hintText: StringManager.enterConfirmPasswordHintText,
                 ),
-
                 verticalSpace(30.h),
                 AppButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    context.pushAndRemoveUntil(Routes.homeGuestRoute,
+                        predicate: (route) => false);
+                  },
                   text: StringManager.signUpText,
                 ),
                 verticalSpace(20.h),
@@ -73,12 +80,12 @@ class SignupScreen extends StatelessWidget {
                       TextSpan(
                           text: StringManager.loginText,
                           style: StyleManager.font14Bold(
-                              color: ColorManager.primaryColor)
+                                  color: ColorManager.primaryColor)
                               .copyWith(decoration: TextDecoration.underline),
-                          recognizer: TapGestureRecognizer()..onTap = () {
-                            context.pushReplacement(Routes.loginRoute);
-                          }
-                      ),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              context.pushReplacement(Routes.loginRoute);
+                            }),
                     ]))
               ],
             ),

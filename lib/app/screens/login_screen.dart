@@ -88,7 +88,7 @@ class LoginScreen extends StatelessWidget {
                                 color: ColorManager.primaryColor)
                             .copyWith(decoration: TextDecoration.underline),
                           recognizer: TapGestureRecognizer()..onTap = () {
-                          context.pushReplacement(Routes.signUpRoute);
+                          context.pushNamed(Routes.selectRoleRoute);
                           }
                       ),
                     ]))

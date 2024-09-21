@@ -7,6 +7,8 @@ class StringManager {
   static const String submitText = 'Submit';
   static const String continueText = 'Continue';
   static const String sendText = 'Send';
+  static const String helloText = 'Hello';
+  static const String nextText = 'Next';
 
 
 
@@ -21,10 +23,13 @@ class StringManager {
 
   ///Signup Screen
   static const String createAccountText = 'Create an account';
-  static const String enterNameHintText = 'Enter Name';
+  static const String userNameText = 'Username';
+  static const String enterUserNameText = 'Enter username';
+  static const String enterEmailText = 'Enter email';
+  static const String createNewAccountText = 'Create New\nAccount';
   static const String enterPhoneHintText = 'Enter Phone';
   static const String enterSetPasswordHintText = 'Set Password';
-  static const String enterConfirmPasswordHintText = 'Confirm Password';
+  static const String enterConfirmPasswordHintText = 'Enter Confirm Password';
   static const String allReadyHaveAnAccountText = 'All Ready have account? ';
 
   ///ForgotPassword Screen
@@ -38,6 +43,17 @@ class StringManager {
   static const String goToLoginText = 'Go to login';
   static const String resendEmailText = 'Re send verification email';
 
+
+  /// Select Role Screen
+
+  static const String chooseYourWorkTitleText = 'Choose your work title';
+  static const String selectWorkTitleText = 'Select work title';
+
+
+  /// Home Guest Screen
+  static const String questionHomeGuestText = 'Do you witness any problem that SSC can help in?';
+  static const String reportProblemText = 'Report problem';
+  static const String weatherStatisticsText = 'Weather statistics';
   /// Profile Screen
   static const String accountText = 'Account';
   static const String profileText = 'Profile';
