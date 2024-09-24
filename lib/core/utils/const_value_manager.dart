@@ -19,8 +19,13 @@ class ConstValueManager {
   static const String arLanguageCode = 'ar';
   static const String enLanguageCode = 'en';
 
+  ///Role Strings
+  static const String worker = 'Worker';
+  static const String guest = 'Guest';
+  static  String role = '';
+
   static const List<String> roleList = [
-    'Worker',
-    'Guest',
+    worker,
+    guest
   ];
 }

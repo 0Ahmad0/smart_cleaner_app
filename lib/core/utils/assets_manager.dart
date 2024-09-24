@@ -11,6 +11,7 @@ class AssetsManager {
   static const backGroundAppIcon = '$_pathImages/background.svg';
   static const eyePasswordIcon = '$_pathSVGs/eye.svg';
   static const arrowRightIcon = '$_pathSVGs/arrow_right.svg';
+  static const robotIcon = '$_pathSVGs/robot_icon.svg';
 
 
   ///<==== Json ====>

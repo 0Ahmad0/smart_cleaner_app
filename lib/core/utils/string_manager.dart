@@ -9,6 +9,7 @@ class StringManager {
   static const String sendText = 'Send';
   static const String helloText = 'Hello';
   static const String nextText = 'Next';
+  static const String adminText = 'Admin';
 
 
 
