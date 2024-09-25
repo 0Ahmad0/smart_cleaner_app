@@ -5,6 +5,7 @@ class Routes {
   static const String selectRoleRoute = '/selectRoleScreen';
   static const String forgotPasswordRoute = '/forgotPasswordScreen';
   static const String checkInboxRoute = '/checkInboxScreen';
+  static const String weatherRoute = '/weatherScreen';
 
   //Admin Routes
 

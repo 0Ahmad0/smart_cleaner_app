@@ -69,9 +69,8 @@ class SmartCleanerApp extends StatelessWidget {
                 ConstValueManager.heightButtonSize,
               ))),
             ),
-            home: HomeAdminScreen(),
-            // initialRoute: Routes.initialRoute,
-            // onGenerateRoute: appRouter.generateRoute,
+            initialRoute: Routes.initialRoute,
+            onGenerateRoute: appRouter.generateRoute,
             // routes: {
             // },
           );

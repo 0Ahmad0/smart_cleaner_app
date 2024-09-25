@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smart_cleaner_app/app/widgets/back_ground_app_widget.dart';
+import 'package:smart_cleaner_app/core/helpers/extensions.dart';
 import 'package:smart_cleaner_app/core/helpers/spacing.dart';
+import 'package:smart_cleaner_app/core/routing/routes.dart';
 import 'package:smart_cleaner_app/core/utils/assets_manager.dart';
 import 'package:smart_cleaner_app/core/utils/color_manager.dart';
 import 'package:smart_cleaner_app/core/utils/string_manager.dart';
@@ -54,7 +56,9 @@ class HomeGuestScreen extends StatelessWidget {
                   onPressed: () {}, text: StringManager.reportProblemText),
               verticalSpace(20.h),
               AppButton(
-                  onPressed: () {}, text: StringManager.weatherStatisticsText),
+                  onPressed: () {
+                    context.pushNamed(Routes.weatherRoute);
+                  }, text: StringManager.weatherStatisticsText),
             ],
           ),
         ),
