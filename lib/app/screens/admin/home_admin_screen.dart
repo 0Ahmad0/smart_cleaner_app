@@ -5,11 +5,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:smart_cleaner_app/core/helpers/sizer.dart';
 import 'package:smart_cleaner_app/core/helpers/spacing.dart';
+import 'package:smart_cleaner_app/core/routing/routes.dart';
 import 'package:smart_cleaner_app/core/utils/assets_manager.dart';
 import 'package:smart_cleaner_app/core/utils/color_manager.dart';
 import 'package:smart_cleaner_app/core/utils/string_manager.dart';
 import 'package:smart_cleaner_app/core/utils/style_manager.dart';
 import 'package:smart_cleaner_app/core/widgets/app_padding.dart';
+import 'package:smart_cleaner_app/core/widgets/app_textfield.dart';
+
+import '../../widgets/container_home_widget.dart';
 
 class HomeAdminScreen extends StatelessWidget {
   const HomeAdminScreen({super.key});
@@ -24,7 +28,7 @@ class HomeAdminScreen extends StatelessWidget {
           ),
           child: CircleAvatar(),
         ),
-        title: Text(StringManager.homeText),
+        title: Text(StringManager.homeText.toUpperCase()),
         actions: [
           SvgPicture.asset(
             AssetsManager.robotIcon,
@@ -55,22 +59,54 @@ class HomeAdminScreen extends StatelessWidget {
               ),
             ),
             verticalSpace(20.h),
-            SizedBox(
-              width: double.maxFinite,
-              height: getWidth(context) / 1.5,
-              child: GridView.builder(
-                  itemCount: 6,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    crossAxisSpacing: 10.w,
-                    mainAxisSpacing: 20.h
-                  ),
-                  itemBuilder: (context, index) => Container(
-                        alignment: Alignment.center,
-                        color:
-                            ColorManager.errorColor.withOpacity(index / 20),
-                        child: Text('${index + 1}'),
-                      )),
+            AppTextField(
+              hintText: StringManager.searchText,
+              iconData: Icons.search,
+            ),
+            verticalSpace(30.h),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ContainerHomeWidget(
+                  icon: Icons.route,
+                  text: StringManager.robotPathText,
+                  color: ColorManager.hintTextColor,
+                ),
+                ContainerHomeWidget(
+                  icon: Icons.sunny_snowing,
+                  text: StringManager.weatherStatisticsText,
+                  color: ColorManager.tealColor,
+                  route: Routes.weatherRoute,
+                ),
+                ContainerHomeWidget(
+                  icon: Icons.person,
+                  text: StringManager.workersProfilesText,
+                  route: Routes.workerProfilesRoute,
+                ),
+              ],
+            ),
+            verticalSpace(20.h),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ContainerHomeWidget(
+                  icon: Icons.notifications_active_outlined,
+                  text: StringManager.activitiesText,
+                  route: Routes.activitiesRoute,
+                ),
+                ContainerHomeWidget(
+                  icon: Icons.location_on_outlined,
+                  text: StringManager.trackText,
+                  color: ColorManager.hintTextColor,
+                ),
+                ContainerHomeWidget(
+                  icon: Icons.more_horiz,
+                  text: StringManager.otherText,
+                  color: ColorManager.tealColor,
+                ),
+              ],
             ),
           ],
         ),
@@ -78,3 +114,4 @@ class HomeAdminScreen extends StatelessWidget {
     );
   }
 }
+

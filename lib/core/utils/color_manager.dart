@@ -7,6 +7,8 @@ class ColorManager{
   
   static  const Color blackColor =  Color(0xFF000000);
 
+  static  const Color tealColor =  Color(0xFF8FCDD7);
+
   static const Color whiteColor =  Color(0xFFFFFFFF);
 
   static const Color grayColor =  Color(0xFFf4f4f4);

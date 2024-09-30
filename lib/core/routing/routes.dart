@@ -8,7 +8,9 @@ class Routes {
   static const String weatherRoute = '/weatherScreen';
 
   //Admin Routes
-
+  static const String homeAdminRoute = '/homeAdminScreen';
+  static const String activitiesRoute = '/activitiesScreen';
+  static const String workerProfilesRoute = '/workerProfilesScreen';
   //Worker Routes
 
   //Guest Routes

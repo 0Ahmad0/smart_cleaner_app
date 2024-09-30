@@ -39,22 +39,19 @@ class SmartCleanerApp extends StatelessWidget {
               appBarTheme: AppBarTheme(
                 centerTitle: true,
                 backgroundColor: ColorManager.primaryColor,
-                titleTextStyle: StyleManager.font24Medium(
-                  color: ColorManager.whiteColor
-                ).copyWith(
-                    fontFamily: GoogleFonts.playpenSans().fontFamily,
+                titleTextStyle:
+                    StyleManager.font24Medium(color: ColorManager.whiteColor)
+                        .copyWith(
+                  fontFamily: GoogleFonts.playpenSans().fontFamily,
                 ),
                 elevation: 0.0,
               ),
               tabBarTheme: TabBarTheme(
                 labelColor: ColorManager.whiteColor,
+                unselectedLabelColor: ColorManager.blackColor.withOpacity(.5),
+                indicatorColor: ColorManager.whiteColor,
                 indicatorSize: TabBarIndicatorSize.tab,
-                overlayColor: MaterialStateProperty.all(
-                    ColorManager.primaryColor.withOpacity(.1)),
-                unselectedLabelColor: ColorManager.primaryColor,
-                indicator: BoxDecoration(
-                    color: ColorManager.primaryColor,
-                    borderRadius: BorderRadius.circular(8.r)),
+
               ),
               inputDecorationTheme: InputDecorationTheme(
                 contentPadding:
@@ -69,7 +66,8 @@ class SmartCleanerApp extends StatelessWidget {
                 ConstValueManager.heightButtonSize,
               ))),
             ),
-            initialRoute: Routes.initialRoute,
+            // home: HomeAdminScreen(),
+            initialRoute: Routes.homeAdminRoute,
             onGenerateRoute: appRouter.generateRoute,
             // routes: {
             // },

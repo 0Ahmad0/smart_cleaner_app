@@ -10,6 +10,9 @@ class StringManager {
   static const String helloText = 'Hello';
   static const String nextText = 'Next';
   static const String adminText = 'Admin';
+  static const String allText = 'All';
+  static const String seenText = 'Seen';
+  static const String unSeenText = 'Un seen';
 
 
 
@@ -82,6 +85,20 @@ class StringManager {
   static const String serviceProviderText = 'Service Provider';
   static const String becomeCarText = 'Become a car consultant and earn todays';
   static const String homeText = 'Home';
+
+  ///Admin Screens
+  ///HomeAdminScreen
+  static const String robotPathText = 'Robot path';
+  static const String weatherStatisticText = 'Weather statistic';
+  static const String workersProfilesText = 'Workers profiles';
+  static const String activitiesText = 'activities';
+  static const String trackText = 'track';
+  static const String otherText = 'other';
+  static const String searchText = 'Search here..';
+
+  ///Activities Screen
+
+
 
   /// Notification Screen
   static const String noNotificationText =

@@ -4,6 +4,7 @@ class ConstValueManager {
   static const double heightSize = 852.0;
 
   static const int animationDuration = 600;
+  static const int activitiesTabBar = 3;
 
   /// Duration Delayed Second
   static const int delayedSplash = 3;
