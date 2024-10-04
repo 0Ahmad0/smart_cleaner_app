@@ -1,5 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:smart_cleaner_app/app/widgets/back_ground_app_widget.dart';
 import 'package:smart_cleaner_app/core/helpers/extensions.dart';
 import 'package:smart_cleaner_app/core/helpers/spacing.dart';
@@ -52,13 +55,40 @@ class HomeGuestScreen extends StatelessWidget {
                 ),
               ),
               verticalSpace(30.h),
-              AppButton(
-                  onPressed: () {}, text: StringManager.reportProblemText),
+              Row(
+                children: [
+                  SvgPicture.asset(
+                    AssetsManager.robotIcon,
+                    width: 40.w,
+                    height: 40.h,
+                  ),
+                  horizontalSpace(10.w),
+                  Flexible(
+                    child: AppButton(
+                        onPressed: () {
+                          context.pushNamed(Routes.reportProblemGuestRoute);
+                        }, text: StringManager.reportProblemText),
+                  ),
+                ],
+              ),
               verticalSpace(20.h),
-              AppButton(
-                  onPressed: () {
-                    context.pushNamed(Routes.weatherRoute);
-                  }, text: StringManager.weatherStatisticsText),
+              Row(
+                children: [
+                  SvgPicture.asset(
+                    AssetsManager.robotIcon,
+                    width: 40.w,
+                    height: 40.h,
+                  ),
+                  horizontalSpace(10.w),
+                  Flexible(
+                    child: AppButton(
+                        onPressed: () {
+                          context.pushNamed(Routes.weatherRoute);
+                        },
+                        text: StringManager.weatherStatisticsText),
+                  ),
+                ],
+              ),
             ],
           ),
         ),

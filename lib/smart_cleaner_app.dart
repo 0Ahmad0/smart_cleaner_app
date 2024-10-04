@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smart_cleaner_app/app/screens/admin/home_admin_screen.dart';
+import 'package:smart_cleaner_app/app/screens/guest/home_guest_screen.dart';
 import 'package:smart_cleaner_app/core/helpers/extensions.dart';
 
 import 'core/routing/app_router.dart';
@@ -66,8 +67,8 @@ class SmartCleanerApp extends StatelessWidget {
                 ConstValueManager.heightButtonSize,
               ))),
             ),
-            // home: HomeAdminScreen(),
-            initialRoute: Routes.homeAdminRoute,
+            home: HomeGuestScreen(),
+            // initialRoute: Routes.homeAdminRoute,
             onGenerateRoute: appRouter.generateRoute,
             // routes: {
             // },

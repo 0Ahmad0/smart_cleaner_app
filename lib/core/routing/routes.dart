@@ -11,9 +11,11 @@ class Routes {
   static const String homeAdminRoute = '/homeAdminScreen';
   static const String activitiesRoute = '/activitiesScreen';
   static const String workerProfilesRoute = '/workerProfilesScreen';
+  static const String trackTheRobotRoute = '/trackTheRobotScreen';
   //Worker Routes
 
   //Guest Routes
 
   static const String homeGuestRoute = '/homeGuestScreen';
+  static const String reportProblemGuestRoute = '/reportProblemGuestScreen';
 }

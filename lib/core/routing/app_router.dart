@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_cleaner_app/app/screens/admin/activities_screen.dart';
 import 'package:smart_cleaner_app/app/screens/admin/home_admin_screen.dart';
+import 'package:smart_cleaner_app/app/screens/admin/track_the_robot_screen.dart';
 import 'package:smart_cleaner_app/app/screens/admin/workers_profiles_screen.dart';
 import 'package:smart_cleaner_app/app/screens/check_inbox_screen.dart';
 import 'package:smart_cleaner_app/app/screens/forgot_password_screen.dart';
 import 'package:smart_cleaner_app/app/screens/guest/home_guest_screen.dart';
+import 'package:smart_cleaner_app/app/screens/guest/report_problem_guest_screen.dart';
 import 'package:smart_cleaner_app/app/screens/login_screen.dart';
 import 'package:smart_cleaner_app/app/screens/select_role_screen.dart';
 import 'package:smart_cleaner_app/app/screens/signup_screen.dart';
@@ -43,10 +45,7 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => CheckInboxScreen(),
         );
-      case Routes.homeGuestRoute:
-        return MaterialPageRoute(
-          builder: (_) => HomeGuestScreen(),
-        );
+
       case Routes.weatherRoute:
         return MaterialPageRoute(builder: (BuildContext context) {
           return ChangeNotifierProvider(
@@ -69,7 +68,21 @@ class AppRouter {
         return MaterialPageRoute(builder: (BuildContext context) {
           return WorkerProfilesAdminScreen();
         });
+      case Routes.trackTheRobotRoute:
+        return MaterialPageRoute(builder: (BuildContext context) {
+          return TrackTheRobotScreen();
+        });
 
+      ///Guest
+
+      case Routes.homeGuestRoute:
+        return MaterialPageRoute(
+          builder: (_) => HomeGuestScreen(),
+        );
+      case Routes.reportProblemGuestRoute:
+        return MaterialPageRoute(builder: (BuildContext context) {
+          return ReportProblemGuestScreen();
+        });
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

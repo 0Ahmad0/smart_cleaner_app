@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
+import 'package:smart_cleaner_app/core/utils/color_manager.dart';
 import 'package:smart_cleaner_app/core/utils/string_manager.dart';
 
 import '../../../utils/constants.dart';
@@ -23,8 +24,11 @@ class WeatherScreen extends StatelessWidget {
       body:
           model.forecastObject?.location?.name != null && model.loading == false
               ? _ViewWidget()
-              : const Center(
-                  child: SpinKitCubeGrid(color: Colors.blue, size: 80),
+              : Center(
+                  child: SpinKitChasingDots(
+                      color: ColorManager.primaryColor,
+                    size: 80.sp,
+                  ),
                 ),
     );
   }

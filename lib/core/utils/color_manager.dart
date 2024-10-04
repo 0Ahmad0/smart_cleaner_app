@@ -8,6 +8,7 @@ class ColorManager{
   static  const Color blackColor =  Color(0xFF000000);
 
   static  const Color tealColor =  Color(0xFF8FCDD7);
+  static  const Color enterButtonColor =  Color(0xFF1299B5);
 
   static const Color whiteColor =  Color(0xFFFFFFFF);
 
@@ -16,6 +17,10 @@ class ColorManager{
   static const Color errorColor =  Color(0xFFED1C24);
 
   static const Color successColor =  Color(0xFF62B587);
+  static const Color purpleColor =  Color(0xFFB139FF);
+  static const Color pinkColor =  Color(0xFFFF39E8);
+  static const Color deepBlueColor =  Color(0xFF009494);
+  static const Color orangeColor =  Color(0xFFFF9512);
 
 
   static Color unselectedItemColor =  Colors.grey.shade300;

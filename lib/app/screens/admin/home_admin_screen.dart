@@ -100,6 +100,7 @@ class HomeAdminScreen extends StatelessWidget {
                   icon: Icons.location_on_outlined,
                   text: StringManager.trackText,
                   color: ColorManager.hintTextColor,
+                  route: Routes.trackTheRobotRoute,
                 ),
                 ContainerHomeWidget(
                   icon: Icons.more_horiz,

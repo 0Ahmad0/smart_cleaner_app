@@ -13,6 +13,7 @@ class StringManager {
   static const String allText = 'All';
   static const String seenText = 'Seen';
   static const String unSeenText = 'Un seen';
+  static const String enterText = 'Enter';
 
 
 
@@ -58,6 +59,17 @@ class StringManager {
   static const String questionHomeGuestText = 'Do you witness any problem that SSC can help in?';
   static const String reportProblemText = 'Report problem';
   static const String weatherStatisticsText = 'Weather statistics';
+
+  ///Reporting Problems Guest Screen
+  static const String reportingProblemsText = 'Reporting problems';
+  static const String describeProblemText = 'Please describe the problem.'
+      '\nYou can provide photo and location for the problem.';
+  static const String locationText = 'Location';
+  static const String documentText = 'Document';
+  static const String cameraText = 'Camera';
+  static const String galleryText = 'Gallery';
+  static const String audioText = 'Audio';
+
   /// Profile Screen
   static const String accountText = 'Account';
   static const String profileText = 'Profile';
@@ -97,6 +109,11 @@ class StringManager {
   static const String searchText = 'Search here..';
 
   ///Activities Screen
+
+  ///Track The Robot Screen
+  static const String trackTheRobotText = 'Track the Robot';
+  static const String enterRobotNameHintText = 'Enter robot name ex:SSC 001';
+
 
 
 

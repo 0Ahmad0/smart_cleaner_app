@@ -25,6 +25,7 @@ dependencies:
   geolocator:
   provider:
   flutter_spinkit:
+  google_maps_flutter: ^2.6.1
 
 dev_dependencies:
   flutter_test:
