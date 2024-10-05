@@ -67,11 +67,13 @@ class SignupScreen extends StatelessWidget {
                 AppButton(
                   onPressed: () {
                     if(ConstValueManager.role == ConstValueManager.worker){
-                      context.pushAndRemoveUntil(Routes.workerProfilesRoute,
+                      context.pushAndRemoveUntil(Routes.homeWorkerRoute,
+                          predicate: (route) => false);
+                    }else{
+                      context.pushAndRemoveUntil(Routes.homeGuestRoute,
                           predicate: (route) => false);
                     }
-                    context.pushAndRemoveUntil(Routes.homeGuestRoute,
-                        predicate: (route) => false);
+
                   },
                   text: StringManager.signUpText,
                 ),

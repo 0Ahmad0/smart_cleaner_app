@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_cleaner_app/app/screens/admin/activities_screen.dart';
 import 'package:smart_cleaner_app/app/screens/admin/home_admin_screen.dart';
+import 'package:smart_cleaner_app/app/screens/admin/other_screen.dart';
+import 'package:smart_cleaner_app/app/screens/admin/show_activities_screen.dart';
 import 'package:smart_cleaner_app/app/screens/admin/track_the_robot_screen.dart';
 import 'package:smart_cleaner_app/app/screens/admin/workers_profiles_screen.dart';
 import 'package:smart_cleaner_app/app/screens/check_inbox_screen.dart';
@@ -19,6 +21,7 @@ import 'package:smart_cleaner_app/app/screens/worker/home_worker_screen.dart';
 import 'package:smart_cleaner_app/app/screens/worker/notification_screen.dart';
 import 'package:smart_cleaner_app/app/screens/worker/problems_screen.dart';
 import 'package:smart_cleaner_app/app/screens/worker/profile_robot_worker_screen.dart';
+import 'package:smart_cleaner_app/app/screens/worker/robot_path_screen.dart';
 import 'package:smart_cleaner_app/app/screens/worker/setting_screen.dart';
 
 import '../../app/screens/weather/ui/widgets/main_screen/weather_screen.dart';
@@ -80,6 +83,14 @@ class AppRouter {
         return MaterialPageRoute(builder: (BuildContext context) {
           return TrackTheRobotScreen();
         });
+        case Routes.showActivitiesWorkerAdminRoute:
+        return MaterialPageRoute(builder: (BuildContext context) {
+          return ShowActivitiesWorkerScreen();
+        });
+        case Routes.otherAdminRoute:
+        return MaterialPageRoute(builder: (BuildContext context) {
+          return OtherAdminScreen();
+        });
 
     ///Worker
       case Routes.homeWorkerRoute:
@@ -108,6 +119,10 @@ class AppRouter {
       case Routes.profileRobotWorkerRoute:
         return MaterialPageRoute(builder: (BuildContext context) {
           return ProfileRobotWorkerScreen();
+        });
+        case Routes.robotPathWorkerRoute:
+        return MaterialPageRoute(builder: (BuildContext context) {
+          return RobotPathWorkerScreen();
         });
 
     ///Guest

@@ -72,6 +72,7 @@ class HomeAdminScreen extends StatelessWidget {
                   icon: Icons.route,
                   text: StringManager.robotPathText,
                   color: ColorManager.hintTextColor,
+                  route: Routes.robotPathWorkerRoute,
                 ),
                 ContainerHomeWidget(
                   icon: Icons.sunny_snowing,
@@ -106,6 +107,7 @@ class HomeAdminScreen extends StatelessWidget {
                   icon: Icons.more_horiz,
                   text: StringManager.otherText,
                   color: ColorManager.tealColor,
+                  route: Routes.otherAdminRoute,
                 ),
               ],
             ),

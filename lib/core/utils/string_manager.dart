@@ -3,6 +3,7 @@ class StringManager {
   static const String appName = "Smart Cleaner";
   static const String requiredField = "Filed Is Required";
   static const String loginText = 'Login';
+  static const String viewRobotText = 'View';
   static const String signUpText = 'Signup';
   static const String submitText = 'Submit';
   static const String continueText = 'Continue';

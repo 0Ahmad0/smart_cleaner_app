@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smart_cleaner_app/app/screens/admin/home_admin_screen.dart';
+import 'package:smart_cleaner_app/app/screens/admin/show_activities_screen.dart';
+import 'package:smart_cleaner_app/app/screens/admin/workers_profiles_screen.dart';
 import 'package:smart_cleaner_app/app/screens/guest/home_guest_screen.dart';
 import 'package:smart_cleaner_app/app/screens/worker/home_worker_screen.dart';
 import 'package:smart_cleaner_app/app/screens/worker/profile_robot_worker_screen.dart';
@@ -42,6 +44,9 @@ class SmartCleanerApp extends StatelessWidget {
               ),
               appBarTheme: AppBarTheme(
                 centerTitle: true,
+                iconTheme: IconThemeData(
+                  color: ColorManager.whiteColor
+                ),
                 backgroundColor: ColorManager.primaryColor,
                 titleTextStyle:
                     StyleManager.font24Medium(color: ColorManager.whiteColor)
@@ -76,6 +81,8 @@ class SmartCleanerApp extends StatelessWidget {
             routes: {
               Routes.profileRobotWorkerRoute: (_)=>ProfileRobotWorkerScreen(),
               Routes.settingWorkerRoute: (_)=>SettingScreen(),
+              Routes.workerProfilesRoute: (_)=>WorkerProfilesAdminScreen(),
+              Routes.showActivitiesWorkerAdminRoute: (_)=>ShowActivitiesWorkerScreen(),
             },
           );
         });

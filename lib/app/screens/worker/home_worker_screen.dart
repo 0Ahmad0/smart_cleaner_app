@@ -70,6 +70,7 @@ class HomeWorkerScreen extends StatelessWidget {
                 ContainerHomeWidget(
                   icon: Icons.location_on_outlined,
                   text: StringManager.locationText,
+                  route: Routes.robotPathWorkerRoute,
                 ),
                 ContainerHomeWidget(
                   icon: Icons.notifications_active_outlined,

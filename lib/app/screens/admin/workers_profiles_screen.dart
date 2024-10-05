@@ -27,7 +27,7 @@ class WorkerProfilesAdminScreen extends StatelessWidget {
           ),
           verticalSpace(8.h),
           Expanded(child: ListView.separated(
-              itemBuilder: (context,index)=>WorkerProfileWidget(),
+              itemBuilder: (context,index)=>WorkerProfileWidget(index: index+1,),
               separatorBuilder: (_,__)=>Divider(
                 height: 0,
                 thickness: .5,

@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:smart_cleaner_app/core/helpers/extensions.dart';
+import 'package:smart_cleaner_app/core/routing/routes.dart';
 import 'package:smart_cleaner_app/core/utils/color_manager.dart';
 
 class WorkerProfileWidget extends StatelessWidget {
   const WorkerProfileWidget({
-    super.key,
+    super.key, required this.index,
   });
+  final int index;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: (){},
+      onTap: (){
+        context.pushNamed(Routes.showActivitiesWorkerAdminRoute,arguments: {
+          'index':index
+        });
+      },
       dense: true,
       isThreeLine: true,
       leading: CircleAvatar(
