@@ -14,6 +14,8 @@ class StringManager {
   static const String seenText = 'Seen';
   static const String unSeenText = 'Un seen';
   static const String enterText = 'Enter';
+  static const String okText = 'Ok';
+
 
 
 
@@ -98,7 +100,35 @@ class StringManager {
   static const String becomeCarText = 'Become a car consultant and earn todays';
   static const String homeText = 'Home';
 
-  ///Admin Screens
+  ///Worker Screens
+  ///Home Worker Screens
+  static const String cancelTripText = 'Cancel trip';
+  static const String problemsText = 'Problems';
+  static const String solvedText = 'Solved';
+  static const String unSolvedText = 'Un solved';
+
+
+  ///Robot On Duty Worker Screen
+  static const String robotOnDutyText = 'Robot On Duty';
+
+
+  ///Cancel Trip Worker Screen
+  static const String enterVerificationCodeText = 'Enter Verification Code';
+  static const String leftText = 'left';
+  static const String thisCodeWillBeExpiredText = 'This code will be expired in 5 minutes';
+  static const String tripSuccessfullyCanceledText = 'trip is successfully cancelled';
+
+
+
+
+  ///Setting Worker Screen
+  static const String changeSettingText = 'Change setting';
+  static const String generalSettingText = 'General setting';
+  static const String robotModeText = 'Robot Mode';
+  static const String inDoorText = 'In Door';
+  static const String outDoorText = 'Out Door';
+
+
   ///HomeAdminScreen
   static const String robotPathText = 'Robot path';
   static const String weatherStatisticText = 'Weather statistic';

@@ -13,9 +13,13 @@ import 'package:smart_cleaner_app/app/screens/login_screen.dart';
 import 'package:smart_cleaner_app/app/screens/select_role_screen.dart';
 import 'package:smart_cleaner_app/app/screens/signup_screen.dart';
 import 'package:smart_cleaner_app/app/screens/splash_screen.dart';
+import 'package:smart_cleaner_app/app/screens/worker/cancel_trip_screen.dart';
+import 'package:smart_cleaner_app/app/screens/worker/robot_on_duty_screen.dart';
 import 'package:smart_cleaner_app/app/screens/worker/home_worker_screen.dart';
 import 'package:smart_cleaner_app/app/screens/worker/notification_screen.dart';
 import 'package:smart_cleaner_app/app/screens/worker/problems_screen.dart';
+import 'package:smart_cleaner_app/app/screens/worker/profile_robot_worker_screen.dart';
+import 'package:smart_cleaner_app/app/screens/worker/setting_screen.dart';
 
 import '../../app/screens/weather/ui/widgets/main_screen/weather_screen.dart';
 import '../../app/screens/weather/ui/widgets/main_screen/weather_screen_model.dart';
@@ -24,10 +28,10 @@ import 'routes.dart';
 class AppRouter {
   Route generateRoute(RouteSettings settings) {
     switch (settings.name) {
-      // case Routes.initialRoute:
-      //   return MaterialPageRoute(
-      //     builder: (_) => SplashScreen(),
-      //   );
+    case Routes.initialRoute:
+      return MaterialPageRoute(
+        builder: (_) => SplashScreen(),
+      );
 
       case Routes.loginRoute:
         return MaterialPageRoute(
@@ -59,7 +63,7 @@ class AppRouter {
           );
         });
 
-      ///Admin
+    ///Admin
       case Routes.homeAdminRoute:
         return MaterialPageRoute(builder: (BuildContext context) {
           return HomeAdminScreen();
@@ -77,24 +81,34 @@ class AppRouter {
           return TrackTheRobotScreen();
         });
 
-
-      ///Worker
+    ///Worker
       case Routes.homeWorkerRoute:
         return MaterialPageRoute(builder: (BuildContext context) {
           return HomeWorkerScreen();
         });
-        case Routes.notificationWorkerRoute:
+      case Routes.notificationWorkerRoute:
         return MaterialPageRoute(builder: (BuildContext context) {
           return NotificationScreen();
         });
-        case Routes.problemsWorkerRoute:
+      case Routes.problemsWorkerRoute:
         return MaterialPageRoute(builder: (BuildContext context) {
           return ProblemsScreen();
         });
-
-
-
-
+      case Routes.settingWorkerRoute:
+        return MaterialPageRoute(builder: (BuildContext context) {
+          return SettingScreen();
+        });
+      case Routes.robotOnDutyWorkerRoute:
+        return MaterialPageRoute(builder: (BuildContext context) {
+          return RobotOnDutyScreen();
+        });case Routes.cancelTripWorkerRoute:
+        return MaterialPageRoute(builder: (BuildContext context) {
+          return CancelTripScreen();
+        });
+      case Routes.profileRobotWorkerRoute:
+        return MaterialPageRoute(builder: (BuildContext context) {
+          return ProfileRobotWorkerScreen();
+        });
 
     ///Guest
 
@@ -106,15 +120,16 @@ class AppRouter {
         return MaterialPageRoute(builder: (BuildContext context) {
           return ReportProblemGuestScreen();
         });
-        case Routes.pickLocationGuestRoute:
+      case Routes.pickLocationGuestRoute:
         return MaterialPageRoute(builder: (BuildContext context) {
           return PickLocationScreen();
         });
       default:
         return MaterialPageRoute(
-          builder: (_) => Scaffold(
-            body: Center(child: Text('NO DATA')),
-          ),
+          builder: (_) =>
+              Scaffold(
+                body: Center(child: Text('NO DATA')),
+              ),
         );
     }
   }

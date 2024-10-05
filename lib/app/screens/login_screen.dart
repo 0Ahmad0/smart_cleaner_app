@@ -72,7 +72,9 @@ class LoginScreen extends StatelessWidget {
                 ),
                 verticalSpace(30.h),
                 AppButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    context.pushReplacement(Routes.homeAdminRoute);
+                  },
                   text: StringManager.loginText,
                 ),
                 verticalSpace(20.h),

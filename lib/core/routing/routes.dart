@@ -16,6 +16,10 @@ class Routes {
   static const String homeWorkerRoute = '/homeWorkerScreen';
   static const String problemsWorkerRoute = '/problemsWorkerScreen';
   static const String notificationWorkerRoute = '/notificationWorkerScreen';
+  static const String settingWorkerRoute = '/settingWorkerScreen';
+  static const String cancelTripWorkerRoute = '/cancelTripWorkerScreen';
+  static const String robotOnDutyWorkerRoute = '/robotOnDutyWorkerScreen';
+  static const String profileRobotWorkerRoute = '/profileRobotWorkerScreen';
 
   //Guest Routes
 

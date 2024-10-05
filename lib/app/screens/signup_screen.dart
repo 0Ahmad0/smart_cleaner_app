@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:smart_cleaner_app/core/utils/const_value_manager.dart';
 import '/app/widgets/back_ground_app_widget.dart';
 import '/core/helpers/extensions.dart';
 import '/core/helpers/spacing.dart';
@@ -65,6 +66,10 @@ class SignupScreen extends StatelessWidget {
                 verticalSpace(30.h),
                 AppButton(
                   onPressed: () {
+                    if(ConstValueManager.role == ConstValueManager.worker){
+                      context.pushAndRemoveUntil(Routes.workerProfilesRoute,
+                          predicate: (route) => false);
+                    }
                     context.pushAndRemoveUntil(Routes.homeGuestRoute,
                         predicate: (route) => false);
                   },
