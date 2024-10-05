@@ -22,13 +22,11 @@ class BackgroundAppWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Bounce(
-          child: SvgPicture.asset(
-            AssetsManager.backGroundAppIcon,
-            width: double.maxFinite,
-            height: double.maxFinite,
-            fit: BoxFit.cover,
-          ),
+        SvgPicture.asset(
+          AssetsManager.backGroundAppIcon,
+          width: double.maxFinite,
+          height: double.maxFinite,
+          fit: BoxFit.cover,
         ),
         Visibility(visible: visibleBackIcon, child: SafeArea(child: CustomBackButton())),
         child,
