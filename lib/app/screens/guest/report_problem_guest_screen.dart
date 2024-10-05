@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:smart_cleaner_app/core/helpers/extensions.dart';
 import 'package:smart_cleaner_app/core/helpers/spacing.dart';
+import 'package:smart_cleaner_app/core/routing/routes.dart';
 import 'package:smart_cleaner_app/core/utils/assets_manager.dart';
 import 'package:smart_cleaner_app/core/utils/color_manager.dart';
 import 'package:smart_cleaner_app/core/utils/string_manager.dart';
@@ -13,6 +14,7 @@ import 'package:smart_cleaner_app/core/utils/style_manager.dart';
 import 'package:smart_cleaner_app/core/widgets/app_padding.dart';
 
 import 'widgets/describe_problem_widget.dart';
+import 'widgets/report_problem_bottom_sheet_widget.dart';
 
 class ReportProblemGuestScreen extends StatefulWidget {
   const ReportProblemGuestScreen({super.key});
@@ -76,6 +78,8 @@ class _ReportProblemGuestScreenState extends State<ReportProblemGuestScreen> {
               ],
             ),
           ),
+          const Spacer(),
+
           Visibility(
             visible: reportProblemController.text.isEmpty,
             child: DescribeProblemWidget(),
@@ -156,128 +160,4 @@ class _ReportProblemGuestScreenState extends State<ReportProblemGuestScreen> {
   }
 }
 
-class ReportProblemBottomSheetWidget extends StatelessWidget {
-  const ReportProblemBottomSheetWidget({
-    super.key,
-  });
 
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        AppPaddingWidget(
-          child: ZoomIn(
-            child: Container(
-              width: double.maxFinite,
-              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
-              decoration: BoxDecoration(
-                  color: ColorManager.grayColor,
-                  borderRadius: BorderRadius.circular(8.r)),
-              child: Wrap(
-                crossAxisAlignment: WrapCrossAlignment.center,
-                alignment: WrapAlignment.center,
-                spacing: 40.w,
-                children: [
-                  BottomSheetReportProblemIconWidget(
-                    icon: Icons.location_on_rounded,
-                    label: StringManager.locationText,
-                    onPressed: () {},
-                    color: ColorManager.successColor,
-                  ),
-                  BottomSheetReportProblemIconWidget(
-                    icon: Icons.file_open_outlined,
-                    label: StringManager.documentText,
-                    onPressed: () async {
-                      context.pop();
-                      final file = FilePicker.platform;
-                      await file.pickFiles(
-                          type: FileType.media
-                      );
-                    },
-                    color: ColorManager.purpleColor,
-                  ),
-                  BottomSheetReportProblemIconWidget(
-                    icon: Icons.camera_alt_outlined,
-                    label: StringManager.cameraText,
-                    onPressed: () async {
-                      context.pop();
-                      final image = ImagePicker();
-                      await image.pickImage(source: ImageSource.camera);
-                    },
-
-                    color: ColorManager.pinkColor,
-                  ),
-                  BottomSheetReportProblemIconWidget(
-                    icon: Icons.photo,
-                    label: StringManager.galleryText,
-
-                    onPressed: () async {
-                      context.pop();
-                      final image = ImagePicker();
-                      await image.pickImage(source: ImageSource.gallery);
-                    },
-                    color: ColorManager.deepBlueColor,
-                  ),
-                  BottomSheetReportProblemIconWidget(
-                    icon: Icons.audiotrack_outlined,
-                    label: StringManager.audioText,
-                    onPressed: () async {
-                      context.pop();
-                      final file = FilePicker.platform;
-                      await file.pickFiles(
-                        type: FileType.audio
-                      );
-                    },
-                    color: ColorManager.orangeColor,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        )
-      ],
-    );
-  }
-}
-
-class BottomSheetReportProblemIconWidget extends StatelessWidget {
-  const BottomSheetReportProblemIconWidget({
-    super.key,
-    required this.icon,
-    this.label = '',
-    this.onPressed,
-    this.color = ColorManager.primaryColor,
-  });
-
-  final IconData icon;
-  final String label;
-  final VoidCallback? onPressed;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        CircleAvatar(
-          radius: 30.sp,
-          backgroundColor: color,
-          child: IconButton(
-            onPressed: onPressed,
-            icon: Icon(
-              icon,
-              size: 30.sp,
-              color: ColorManager.whiteColor,
-            ),
-          ),
-        ),
-        verticalSpace(6.h),
-        Text(
-          label,
-          style: StyleManager.font12Regular(),
-        ),
-        verticalSpace(20.h)
-      ],
-    );
-  }
-}

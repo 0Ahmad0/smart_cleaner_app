@@ -26,6 +26,8 @@ dependencies:
   provider:
   flutter_spinkit:
   google_maps_flutter: ^2.6.1
+  map_picker:
+  geocoding:
 
 dev_dependencies:
   flutter_test:
