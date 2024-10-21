@@ -3,6 +3,7 @@ class StringManager {
   static const String appName = "Smart Cleaner";
   static const String requiredField = "Filed Is Required";
   static const String loginText = 'Login';
+  static const String logoutText = 'Logout';
   static const String viewRobotText = 'View';
   static const String signUpText = 'Signup';
   static const String submitText = 'Submit';
@@ -202,4 +203,10 @@ class StringManager {
   static const String noMessageYetText = 'No messages yet';
   static const String startChatText =
       'Start a conversation with proofreaders,\nand get the job done';
+
+  ///<Message Firebase>//
+  static const message_success = "Success";
+  static const message_failure = "Failure";
+  static const message_successful_login = "Successful login";
+  static const message_successfully_update = "Successful update";
 }

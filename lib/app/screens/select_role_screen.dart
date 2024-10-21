@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:smart_cleaner_app/app/widgets/back_ground_app_widget.dart';
 import 'package:smart_cleaner_app/core/helpers/extensions.dart';
 import 'package:smart_cleaner_app/core/helpers/spacing.dart';
@@ -14,13 +16,27 @@ import 'package:smart_cleaner_app/core/utils/style_manager.dart';
 import 'package:smart_cleaner_app/core/widgets/app_button.dart';
 import 'package:smart_cleaner_app/core/widgets/app_padding.dart';
 
+import '../../core/utils/app_constant.dart';
 import '../../core/widgets/custome_back_button.dart';
+import '../controllers/auth_controller.dart';
 import '../widgets/container_gray_widget.dart';
 import '../widgets/hello_top_widget.dart';
 
-class SelectRoleScreen extends StatelessWidget {
+class SelectRoleScreen extends StatefulWidget {
   const SelectRoleScreen({super.key});
 
+  @override
+  State<SelectRoleScreen> createState() => _SelectRoleScreenState();
+}
+
+class _SelectRoleScreenState extends State<SelectRoleScreen> {
+  late AuthController authController;
+  @override
+  void initState() {
+    authController= Get.put(AuthController());
+    authController.init();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,9 +93,12 @@ class SelectRoleScreen extends StatelessWidget {
                         verticalSpace(40.h),
                         AppButton(
                             onPressed: () {
+
                               if(ConstValueManager.role.contains(ConstValueManager.guest)){
+                                authController.typeUser=AppConstants.collectionUser;
                               context.pushReplacement(Routes.signUpRoute);
                               }else{
+                                authController.typeUser=AppConstants.collectionWorker;
                                 context.pushReplacement(Routes.signUpRoute);
                               }
                             },

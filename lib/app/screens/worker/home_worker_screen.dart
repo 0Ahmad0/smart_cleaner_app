@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import '../../../core/helpers/spacing.dart';
 import '../../../core/routing/routes.dart';
@@ -10,6 +12,7 @@ import '../../../core/utils/string_manager.dart';
 import '../../../core/utils/style_manager.dart';
 import '../../../core/widgets/app_padding.dart';
 import '../../../core/widgets/app_textfield.dart';
+import '../../controllers/auth_controller.dart';
 import '../../widgets/container_home_widget.dart';
 
 class HomeWorkerScreen extends StatelessWidget {
@@ -85,6 +88,23 @@ class HomeWorkerScreen extends StatelessWidget {
                   route: Routes.problemsWorkerRoute,
                 ),
               ],
+            ),
+            verticalSpace(10.h),
+
+            ListTile(
+              onTap: () {
+                Get.lazyPut(() => AuthController());
+                AuthController.instance.signOut(context);
+              },
+              title:Text(
+
+                StringManager.logoutText,
+                // textAlign: TextAlign.center,
+                style: StyleManager.font16Regular(
+                    color: ColorManager.primaryColor),
+              ) ,
+              leading:  Icon(Icons.logout,size: 20.sp,),
+
             ),
           ],
         ),

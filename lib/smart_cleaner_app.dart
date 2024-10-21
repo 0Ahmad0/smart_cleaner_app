@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smart_cleaner_app/app/screens/admin/home_admin_screen.dart';
 import 'package:smart_cleaner_app/app/screens/admin/show_activities_screen.dart';
@@ -32,7 +33,7 @@ class SmartCleanerApp extends StatelessWidget {
           ConstValueManager.heightSize,
         ),
         builder: (context, child) {
-          return MaterialApp(
+          return GetMaterialApp(
             title: StringManager.appName,
             debugShowCheckedModeBanner: false,
             theme: ThemeData(

@@ -3,12 +3,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:smart_cleaner_app/core/helpers/extensions.dart';
 import 'package:smart_cleaner_app/core/helpers/spacing.dart';
 import 'package:smart_cleaner_app/core/routing/routes.dart';
 import 'package:smart_cleaner_app/core/utils/assets_manager.dart';
 import 'package:smart_cleaner_app/core/utils/const_value_manager.dart';
 
+import '../controllers/splash_controller.dart';
 import '../widgets/back_ground_app_widget.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -26,7 +29,8 @@ class _SplashScreenState extends State<SplashScreen> {
   }
   @override
   void initState() {
-    _goToNextScreen();
+    // _goToNextScreen();
+    Get.put(SplashController()).initSplash(context);
     super.initState();
   }
   @override

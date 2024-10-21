@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:smart_cleaner_app/core/helpers/sizer.dart';
 import 'package:smart_cleaner_app/core/helpers/spacing.dart';
 import 'package:smart_cleaner_app/core/routing/routes.dart';
@@ -13,6 +15,8 @@ import 'package:smart_cleaner_app/core/utils/style_manager.dart';
 import 'package:smart_cleaner_app/core/widgets/app_padding.dart';
 import 'package:smart_cleaner_app/core/widgets/app_textfield.dart';
 
+import '../../controllers/auth_controller.dart';
+import '../../controllers/profile_controller.dart';
 import '../../widgets/container_home_widget.dart';
 
 class HomeAdminScreen extends StatelessWidget {
@@ -41,6 +45,10 @@ class HomeAdminScreen extends StatelessWidget {
       body: AppPaddingWidget(
         child: Column(
           children: [
+    GetBuilder<ProfileController>(
+    init: Get.put(ProfileController()),
+    builder: (controller) {
+    return
             Center(
               child: Text.rich(
                 textAlign: TextAlign.center,
@@ -50,14 +58,14 @@ class HomeAdminScreen extends StatelessWidget {
                         text: StringManager.welcomeText,
                         style: StyleManager.font20SemiBold()),
                     TextSpan(
-                      text: ' ' + StringManager.adminText,
+                      text: ' ' + (controller.currentUser.value?.name??  StringManager.adminText),
                       style: StyleManager.font16Regular(
                           color: ColorManager.primaryColor),
                     ),
                   ],
                 ),
               ),
-            ),
+            );}),
             verticalSpace(20.h),
             AppTextField(
               hintText: StringManager.searchText,
@@ -110,6 +118,23 @@ class HomeAdminScreen extends StatelessWidget {
                   route: Routes.otherAdminRoute,
                 ),
               ],
+            ),
+            verticalSpace(10.h),
+
+            ListTile(
+              onTap: () {
+                Get.lazyPut(() => AuthController());
+                AuthController.instance.signOut(context);
+              },
+              title:Text(
+
+                StringManager.logoutText,
+                // textAlign: TextAlign.center,
+                style: StyleManager.font16Regular(
+                    color: ColorManager.primaryColor),
+              ) ,
+              leading:  Icon(Icons.logout,size: 20.sp,),
+
             ),
           ],
         ),

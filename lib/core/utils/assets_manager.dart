@@ -15,6 +15,9 @@ class AssetsManager {
 
 
   ///<==== Json ====>
+  static const robotLoadingJson = '$_pathJsons/robot_loading.json';
+  static const robotLoading2Json = '$_pathJsons/robot_loading2.json';
+
 
 
 }

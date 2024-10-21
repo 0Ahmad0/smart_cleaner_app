@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:map_picker/map_picker.dart';
 import 'package:smart_cleaner_app/firebase_options.dart';
@@ -18,10 +19,11 @@ Future<void> main() async {
   //set
   HttpOverrides.global = MyHttpOverrides();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  // await Firebase.initializeApp();
 
   /// To Fix Bug In Text Showing In Release Mode
   await ScreenUtil.ensureScreenSize();
-
+  await GetStorage.init();
   runApp(SmartCleanerApp(
     appRouter: AppRouter(),
   ));
