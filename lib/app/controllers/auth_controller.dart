@@ -125,6 +125,7 @@ class AuthController extends GetxController {
     String email = userName;
     try {
       ConstantsWidgets.showLoading();
+
       var result = await FirebaseFun.fetchUserByUserName(userName: userName);
 
       ///handling

@@ -53,7 +53,7 @@ class ConstantsWidgets {
           canPop:true
           ,
           child:
-          Lottie.asset(AssetsManager.robotLoadingJson,
+          Lottie.asset(AssetsManager.robotLoading2Json,
               width: 200.w,
               height: 200.h
           )
