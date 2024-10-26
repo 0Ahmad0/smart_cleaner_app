@@ -5,11 +5,15 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart'; // Import Geolocator
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:map_picker/map_picker.dart';
 import 'package:smart_cleaner_app/core/utils/color_manager.dart';
 import 'package:smart_cleaner_app/core/utils/string_manager.dart';
 import 'package:smart_cleaner_app/core/utils/style_manager.dart';
+
+import 'controllers/guest_problem_controller.dart';
 
 class PickLocationScreen extends StatefulWidget {
   const PickLocationScreen({super.key});
@@ -155,7 +159,9 @@ class _PickLocationScreenState extends State<PickLocationScreen> {
                       print(
                           "Location ${cameraPosition!.target.latitude} ${cameraPosition!.target.longitude}");
                       print("Address: ${locationController.text}");
-                    },
+                      Get.put(GuestProblemController()).addLocation(address: locationController.text,longitude: cameraPosition!.target.longitude, latitude: cameraPosition!.target.latitude);
+                  Get.back();
+                      },
                   ),
                 )
               ],

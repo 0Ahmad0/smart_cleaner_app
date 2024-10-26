@@ -1,9 +1,13 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:smart_cleaner_app/app/screens/guest/widgets/file_list_widget.dart';
+import 'package:smart_cleaner_app/app/screens/guest/widgets/location_list_widget.dart';
 import 'package:smart_cleaner_app/core/helpers/extensions.dart';
 import 'package:smart_cleaner_app/core/helpers/spacing.dart';
 import 'package:smart_cleaner_app/core/routing/routes.dart';
@@ -13,6 +17,7 @@ import 'package:smart_cleaner_app/core/utils/string_manager.dart';
 import 'package:smart_cleaner_app/core/utils/style_manager.dart';
 import 'package:smart_cleaner_app/core/widgets/app_padding.dart';
 
+import 'controllers/guest_problem_controller.dart';
 import 'widgets/describe_problem_widget.dart';
 import 'widgets/report_problem_bottom_sheet_widget.dart';
 
@@ -26,9 +31,14 @@ class ReportProblemGuestScreen extends StatefulWidget {
 
 class _ReportProblemGuestScreenState extends State<ReportProblemGuestScreen> {
   final reportProblemController = TextEditingController();
-
+  late GuestProblemController controller;
   @override
   void initState() {
+    controller = Get.put(GuestProblemController());
+    controller.onInit();
+    controller.descriptionController.addListener(() {
+     controller.update();
+    });
     reportProblemController.addListener(() {
       setState(() {});
     });
@@ -38,6 +48,7 @@ class _ReportProblemGuestScreenState extends State<ReportProblemGuestScreen> {
   @override
   void dispose() {
     reportProblemController.dispose();
+    controller.descriptionController.dispose();
     super.dispose();
   }
 
@@ -80,9 +91,34 @@ class _ReportProblemGuestScreenState extends State<ReportProblemGuestScreen> {
           ),
           const Spacer(),
 
-          Visibility(
-            visible: reportProblemController.text.isEmpty,
-            child: DescribeProblemWidget(),
+          GetBuilder<GuestProblemController>(
+            init: controller,
+            builder: (GuestProblemController problemController) {
+              return
+                ( (controller.problem?.files?.isEmpty??true)
+                &&  (controller.problem?.locations?.isEmpty??true)
+                &&  (controller.descriptionController.text.isEmpty))?
+
+
+                Visibility(
+                visible: controller.descriptionController.text.isEmpty,
+                // visible: reportProblemController.text.isEmpty,
+                child: DescribeProblemWidget(),
+              ):
+                Column(
+                  children: [
+                    FileListWidget(files:controller.problem?.files,
+                    onDelete: (file)=>controller.removeFile(file),
+                    ),
+                    SizedBox(height: 10.h,),
+                    LocationListWidget(locations:controller.problem?.locations,
+                      onDelete: (location)=>controller.removeLocation(location),
+                    ),
+                  ],
+                )
+                // FileListWidget(files:controller.problem?.files,)
+              ;
+            }
           ),
           const Spacer(),
           Container(
@@ -100,7 +136,8 @@ class _ReportProblemGuestScreenState extends State<ReportProblemGuestScreen> {
                   child: TextFormField(
                     minLines: 1,
                     maxLines: 4,
-                    controller: reportProblemController,
+                    controller: controller.descriptionController,
+                    // controller: reportProblemController,
                     decoration: InputDecoration(
                       fillColor: ColorManager.grayColor,
                       filled: true,
@@ -130,12 +167,17 @@ class _ReportProblemGuestScreenState extends State<ReportProblemGuestScreen> {
                   ),
                 ),
                 horizontalSpace(12.w),
+                GetBuilder<GuestProblemController>(
+                  init: controller,
+                  builder: ( problemController)=>
                 Visibility(
-                  visible: reportProblemController.text.isNotEmpty,
+                  visible: controller.descriptionController.text.isNotEmpty,
+                  // visible: reportProblemController.text.isNotEmpty,
                   child: ZoomIn(
                     child: IconButton(
                       onPressed: () {
-                        reportProblemController.clear();
+                       controller.addProblem(context);
+                        // reportProblemController.clear();
                       },
                       icon: CircleAvatar(
                         backgroundColor: ColorManager.primaryColor,
@@ -150,7 +192,7 @@ class _ReportProblemGuestScreenState extends State<ReportProblemGuestScreen> {
                       ),
                     ),
                   ),
-                )
+                ))
               ],
             ),
           ),

@@ -2,9 +2,13 @@ import 'package:animate_do/animate_do.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:smart_cleaner_app/app/screens/guest/controllers/guest_problem_controller.dart';
 import 'package:smart_cleaner_app/core/helpers/extensions.dart';
 
+import '../../../../core/enums/enums.dart';
 import '../../../../core/routing/routes.dart';
 import '../../../../core/utils/color_manager.dart';
 import '../../../../core/utils/string_manager.dart';
@@ -49,7 +53,11 @@ class ReportProblemBottomSheetWidget extends StatelessWidget {
                     onPressed: () async {
                       context.pop();
                       final file = FilePicker.platform;
-                      await file.pickFiles();
+                      FilePickerResult? filePickerResult= await file.pickFiles();
+                        for(PlatformFile platformFile in filePickerResult?.files??[])
+                        {
+                        Get.put(GuestProblemController()).addFile(platformFile.xFile,platformFile: platformFile,type: TypeFile.file.name);
+                      }
                     },
                     color: ColorManager.purpleColor,
                   ),
@@ -59,7 +67,12 @@ class ReportProblemBottomSheetWidget extends StatelessWidget {
                     onPressed: () async {
                       context.pop();
                       final image = ImagePicker();
-                      await image.pickImage(source: ImageSource.camera);
+                      XFile? xFile = await image.pickImage(source: ImageSource.camera);
+
+                     if(xFile!=null)
+                      {
+                        Get.put(GuestProblemController()).addFile(xFile,type: TypeFile.image.name);
+                      }
                     },
                     color: ColorManager.pinkColor,
                   ),
@@ -69,7 +82,11 @@ class ReportProblemBottomSheetWidget extends StatelessWidget {
                     onPressed: () async {
                       context.pop();
                       final image = ImagePicker();
-                      await image.pickImage(source: ImageSource.gallery);
+                      XFile? xFile =await image.pickImage(source: ImageSource.gallery);
+                      if(xFile!=null)
+                      {
+                        Get.put(GuestProblemController()).addFile(xFile,type: TypeFile.image.name);
+                      }
                     },
                     color: ColorManager.deepBlueColor,
                   ),
@@ -79,7 +96,11 @@ class ReportProblemBottomSheetWidget extends StatelessWidget {
                     onPressed: () async {
                       context.pop();
                       final file = FilePicker.platform;
-                      await file.pickFiles(type: FileType.audio);
+                      FilePickerResult? filePickerResult= await file.pickFiles(type: FileType.audio);
+                      for(PlatformFile platformFile in filePickerResult?.files??[])
+                      {
+                        Get.put(GuestProblemController()).addFile(platformFile.xFile,platformFile: platformFile,type: TypeFile.audio.name);
+                      }
                     },
                     color: ColorManager.orangeColor,
                   ),
