@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:map_picker/map_picker.dart';
+import 'package:smart_cleaner_app/core/helpers/extensions.dart';
 import 'package:smart_cleaner_app/core/utils/color_manager.dart';
 import 'package:smart_cleaner_app/core/utils/string_manager.dart';
 import 'package:smart_cleaner_app/core/utils/style_manager.dart';
@@ -62,8 +63,9 @@ class _PickLocationScreenState extends State<PickLocationScreen> {
     // Set the camera position to the user's current location
     setState(() {
       cameraPosition = CameraPosition(
-        target: LatLng(position.latitude, position.longitude),
-        zoom: 14.4746,
+        target: LatLng(29.5, 47.75),
+        // target: LatLng(position.latitude, position.longitude),
+        zoom: 8.4746,
       );
     });
   }
@@ -156,6 +158,7 @@ class _PickLocationScreenState extends State<PickLocationScreen> {
                           color: ColorManager.whiteColor),
                     ),
                     onPressed: () {
+                      context.pop();
                       print(
                           "Location ${cameraPosition!.target.latitude} ${cameraPosition!.target.longitude}");
                       print("Address: ${locationController.text}");

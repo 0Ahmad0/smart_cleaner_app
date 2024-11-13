@@ -39,7 +39,7 @@ class StringManager {
   static const String enterPhoneHintText = 'Enter Phone';
   static const String enterSetPasswordHintText = 'Set Password';
   static const String enterConfirmPasswordHintText = 'Enter Confirm Password';
-  static const String allReadyHaveAnAccountText = 'All Ready have account? ';
+  static const String allReadyHaveAnAccountText = 'AlReady have account? ';
 
   ///ForgotPassword Screen
   static const String forgotPasswordText = 'Forgot Password';
