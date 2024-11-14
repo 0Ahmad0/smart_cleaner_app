@@ -4,13 +4,17 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smart_cleaner_app/app/screens/admin/home_admin_screen.dart';
 import 'package:smart_cleaner_app/app/screens/admin/show_activities_screen.dart';
+import 'package:smart_cleaner_app/app/screens/admin/track_the_robot_screen.dart';
 import 'package:smart_cleaner_app/app/screens/admin/workers_profiles_screen.dart';
 import 'package:smart_cleaner_app/app/screens/guest/home_guest_screen.dart';
+import 'package:smart_cleaner_app/app/screens/worker/cancel_trip_screen.dart';
 import 'package:smart_cleaner_app/app/screens/worker/home_worker_screen.dart';
 import 'package:smart_cleaner_app/app/screens/worker/profile_robot_worker_screen.dart';
 import 'package:smart_cleaner_app/app/screens/worker/setting_screen.dart';
 import 'package:smart_cleaner_app/core/helpers/extensions.dart';
 
+import 'app/screens/worker/robot_on_duty_screen.dart';
+import 'app/screens/worker/select_path_robot_screen.dart';
 import 'core/routing/app_router.dart';
 import 'core/routing/routes.dart';
 import 'core/utils/color_manager.dart';
@@ -84,6 +88,10 @@ class SmartCleanerApp extends StatelessWidget {
               Routes.settingWorkerRoute: (_)=>SettingScreen(),
               Routes.workerProfilesRoute: (_)=>WorkerProfilesAdminScreen(),
               Routes.showActivitiesWorkerAdminRoute: (_)=>ShowActivitiesWorkerScreen(),
+              Routes.trackTheRobotRoute: (_)=>TrackTheRobotScreen(),
+              Routes.selectPathRobotRoute: (_)=>SelectPathRobotScreen(),
+              Routes.robotOnDutyWorkerRoute: (_)=>RobotOnDutyScreen(),
+              Routes.cancelTripWorkerRoute: (_)=>CancelTripScreen(),
             },
           );
         });

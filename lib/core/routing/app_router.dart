@@ -26,6 +26,7 @@ import 'package:smart_cleaner_app/app/screens/worker/setting_screen.dart';
 
 import '../../app/screens/weather/ui/widgets/main_screen/weather_screen.dart';
 import '../../app/screens/weather/ui/widgets/main_screen/weather_screen_model.dart';
+import '../../app/screens/worker/select_path_robot_screen.dart';
 import 'routes.dart';
 
 class AppRouter {
@@ -138,6 +139,10 @@ class AppRouter {
       case Routes.pickLocationGuestRoute:
         return MaterialPageRoute(builder: (BuildContext context) {
           return PickLocationScreen();
+        });
+      case Routes.selectPathRobotRoute:
+        return MaterialPageRoute(builder: (BuildContext context) {
+          return SelectPathRobotScreen();
         });
       default:
         return MaterialPageRoute(

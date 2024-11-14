@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pinput/pinput.dart';
 import 'package:smart_cleaner_app/core/helpers/spacing.dart';
+import 'package:smart_cleaner_app/core/models/robot_model.dart';
 import 'package:smart_cleaner_app/core/utils/assets_manager.dart';
 import 'package:smart_cleaner_app/core/utils/color_manager.dart';
 import 'package:smart_cleaner_app/core/utils/string_manager.dart';
@@ -55,11 +56,13 @@ class _CancelTripScreenState extends State<CancelTripScreen> {
     final seconds = (_remainingTime % 60).toString().padLeft(2, '0');
     return '$minutes:$seconds';
   }
+   RobotModel? robot;
 
   @override
   Widget build(BuildContext context) {
     final args = (ModalRoute.of(context)?.settings.arguments ??
         <String, dynamic>{}) as Map;
+    robot=args?['robot'];
     return Scaffold(
       appBar: AppBar(
         title: Text(StringManager.cancelTripText.toUpperCase()),
@@ -80,7 +83,7 @@ class _CancelTripScreenState extends State<CancelTripScreen> {
                     child: Text(
                       StringManager.cancelTripText +
                           '\n' +
-                          'SCC 00${args['index']}',
+                          "${robot?.name?? 'SCC 00${args['index']}'}",
                       textAlign: TextAlign.center,
                       style: StyleManager.font24Medium(),
                     ),

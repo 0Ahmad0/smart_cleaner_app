@@ -5,34 +5,35 @@ import 'package:get/get.dart';
 
 import 'package:get/get_core/src/get_main.dart';
 import 'package:smart_cleaner_app/app/controllers/firebase/firebase_fun.dart';
+import 'package:smart_cleaner_app/app/controllers/profile_controller.dart';
 import 'package:smart_cleaner_app/core/models/robot_model.dart';
+import 'package:smart_cleaner_app/core/models/user_model.dart';
 
 import '../../../../core/enums/enums.dart';
 import '../../../../core/models/problem_model.dart';
 import '../../../../core/widgets/constants_widgets.dart';
-import '../../../controllers/firebase/firebase_constants.dart';
-import '../../../controllers/profile_controller.dart';
+import 'firebase/firebase_constants.dart';
 
-class WorkerRobotsController extends GetxController{
+class WorkersController extends GetxController{
 
   final searchController = TextEditingController();
-  Robots robots=Robots(items: []);
-  Robots robotsWithFilter=Robots(items: []);
+  Users workers=Users(users: []);
+  Users workersWithFilter=Users(users: []);
   String? uid;
-  var getRobots;
+  var getWorkers;
 
   @override
   void onInit() {
    searchController.clear();
    ProfileController profileController=Get.put(ProfileController());
    uid= profileController.currentUser.value?.uid;
-   getRobotsFun();
+   getWorkersFun();
     super.onInit();
     }
 
-  getRobotsFun() async {
-    getRobots =_fetchRobotsStream();
-    return getRobots;
+  getWorkersFun() async {
+    getWorkers =_fetchWorkersStream();
+    return getWorkers;
   }
   @override
   void dispose() {
@@ -41,40 +42,28 @@ class WorkerRobotsController extends GetxController{
   }
 
 
-  _fetchRobotsStream() {
-    final result = FirebaseFun.database
-        .child(FirebaseConstants.collectionRobot)
-        .onValue;
+  _fetchWorkersStream() {
+    final result = FirebaseFirestore.instance.collection(FirebaseConstants.collectionUser)
+    .snapshots()
+    ;
     return result;
   }
-  filterProviders({required String term}) async {
+  filterWorkers({required String term}) async {
 
-    robotsWithFilter.items=[];
-    robots.items.forEach((element) {
+    workersWithFilter.users=[];
+    workers.users.forEach((element) {
 
-      if((element.name?.toLowerCase().contains(term.toLowerCase())??false))
-        robotsWithFilter.items.add(element);
+      if(element.isWorker&&StateWorker.Rejected!=element.state)
+      if(
+      (element.name?.toLowerCase().contains(term.toLowerCase())??false)||
+      (element.email?.toLowerCase().contains(term.toLowerCase())??false)||
+      (element.uid?.toLowerCase().contains(term.toLowerCase())??false)
+      )
+        workersWithFilter.users.add(element);
     });
      update();
   }
-  filterTrip({required String term}) async {
-    robotsWithFilter.items.clear();
-    robots.items.forEach((element) {
-      if((element.name?.toLowerCase().contains(term.toLowerCase())??false))
-        if(element.startPoint!=null&&element.endPoint!=null)
-          robotsWithFilter.items.add(element);
-    });
-    update();
-  }
-  classification() async {
-    robotsWithFilter.items.clear();
-    // robots.items.forEach((element) {
-    //   if((element.name?.toLowerCase().contains(term.toLowerCase())??false))
-    //   if(element.startPoint!=null&&element.endPoint!=null)
-    //     robotsWithFilter.items.add(element);
-    //   });
-    update();
-  }
+
 
   changeModeRobot(BuildContext context ,RobotModel? robot) async {
   var result;

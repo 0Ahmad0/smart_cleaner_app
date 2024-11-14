@@ -13,6 +13,8 @@ class RobotModel {
   double? temperature;
   String? name;
   LocationModel? location;
+  LocationModel? startPoint;
+  LocationModel? endPoint;
   bool mode=false;
   RobotModel(
       {this.id,
@@ -21,6 +23,8 @@ class RobotModel {
         this.temperature,
         this.name,
         this.location,
+        this.endPoint,
+        this.startPoint,
         this.mode=false,
       });
 
@@ -34,7 +38,9 @@ class RobotModel {
       air_quality: double.tryParse("${data["air_quality"]}")  ,
       temperature: double.tryParse("${data["temperature"]}")  ,
       name:  data["name"],
-      location:  data["location"]==null?null:LocationModel.fromJson( data["location"]),
+      location:  data["location"]==null?null:LocationModel.fromJsonReal( data["location"]),
+      startPoint:  data["startPoint"]==null?null:LocationModel.fromJsonReal( data["startPoint"]),
+      endPoint:  data["endPoint"]==null?null:LocationModel.fromJsonReal( data["endPoint"]),
       mode:  data["mode"]??false,
     );
   }
@@ -42,12 +48,14 @@ class RobotModel {
    
 
     return {
-     'id': id,
+     // 'id': id,
       'pressure': pressure,
       'air_quality': air_quality,
       'temperature': temperature,
       'name': name,
-      'location': location?.toJson(),
+      'location': location?.toJsonReal(),
+      'startPoint': startPoint?.toJsonReal(),
+      'endPoint': endPoint?.toJsonReal(),
       'mode': mode,
     };
   }

@@ -23,6 +23,7 @@ class Routes {
   static const String robotOnDutyWorkerRoute = '/robotOnDutyWorkerScreen';
   static const String profileRobotWorkerRoute = '/profileRobotWorkerScreen';
   static const String robotPathWorkerRoute = '/robotPathWorkerScreen';
+  static const String selectPathRobotRoute = '/selectPathRobotScreen';
 
   //Guest Routes
 

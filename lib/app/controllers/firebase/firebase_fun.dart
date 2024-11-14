@@ -6,9 +6,11 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:smart_cleaner_app/core/models/activity_model.dart';
 import 'package:smart_cleaner_app/core/models/problem_model.dart';
 import 'package:smart_cleaner_app/core/models/robot_model.dart';
 
+import '../../../core/models/notification_model.dart';
 import '../../../core/models/user_model.dart';
 import '../../../core/utils/color_manager.dart';
 import 'firebase_constants.dart';
@@ -120,6 +122,43 @@ class FirebaseFun {
     return result;
   }
 
+  ///Notification
+  static addNotification( {required NotificationModel notification}) async {
+    final result= await FirebaseFirestore.instance.collection(FirebaseConstants.collectionNotification).add(
+        notification.toJson()
+    ).then(onValueAddNotification).catchError(onError).timeout(timeOut,onTimeout: onTimeOut);
+    return result;
+  }
+
+  static updateNotification({required NotificationModel notification}) async {
+    final result = await FirebaseFirestore.instance
+        .collection(FirebaseConstants.collectionNotification)
+        .doc(notification.id)
+        .update(notification.toJson())
+        .then(onValueUpdateNotification)
+        .catchError(onError)
+        .timeout(timeOut, onTimeout: onTimeOut);
+    return result;
+  }
+  ///Activity
+  static addActivity( {required ActivityModel activity}) async {
+    final result= await FirebaseFirestore.instance.collection(FirebaseConstants.collectionActivity).add(
+        activity.toJson()
+    ).then(onValueAddActivity).catchError(onError).timeout(timeOut,onTimeout: onTimeOut);
+    return result;
+  }
+  static updateActivity({required ActivityModel activity}) async {
+    final result = await FirebaseFirestore.instance
+        .collection(FirebaseConstants.collectionActivity)
+        .doc(activity.id)
+        .update(activity.toJson())
+        .then(onValueUpdateNotification)
+        .catchError(onError)
+        .timeout(timeOut, onTimeout: onTimeOut);
+    return result;
+  }
+
+
 
   static Future<Map<String,dynamic>>  onError(error) async {
     return {
@@ -216,6 +255,30 @@ class FirebaseFun {
       'body': {}
     };
   }
+
+  static Future<Map<String,dynamic>>onValueAddNotification(value) async{
+    return {
+      'status':true,
+      'message':'Notification successfully add',
+      'body':{}
+    };
+  }
+  static Future<Map<String, dynamic>> onValueUpdateNotification(value) async {
+    return {
+      'status': true,
+      'message': 'Notification successfully update',
+      'body': {}
+    };
+  }
+  static Future<Map<String,dynamic>>onValueAddActivity(value) async{
+    return {
+      'status':true,
+      'message':'Activity successfully add',
+      'body':{}
+    };
+  }
+
+
 
 
 

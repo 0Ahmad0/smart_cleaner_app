@@ -5,18 +5,21 @@ import 'package:smart_cleaner_app/core/utils/color_manager.dart';
 import 'package:smart_cleaner_app/core/utils/style_manager.dart';
 import 'package:smart_cleaner_app/core/widgets/app_padding.dart';
 
+import '../../../core/models/user_model.dart';
 import 'widgets/activities_worker_widget.dart';
 
 class ShowActivitiesWorkerScreen extends StatelessWidget {
-  const ShowActivitiesWorkerScreen({super.key});
-
+   ShowActivitiesWorkerScreen({super.key});
+   UserModel? user;
   @override
   Widget build(BuildContext context) {
     final args = (ModalRoute.of(context)?.settings.arguments ??
         <String, dynamic>{}) as Map;
+    user=args["user"];
     return Scaffold(
       appBar: AppBar(
-        title: Text('Worker 00${args['index']}'.toUpperCase()),
+        title: Text('${user?.name??''}'.toUpperCase()),
+        // title: Text('Worker 00${args['index']}'.toUpperCase()),
       ),
       body: Column(
         children: [
@@ -30,7 +33,8 @@ class ShowActivitiesWorkerScreen extends StatelessWidget {
                 ),
                 Flexible(
                   child: Text(
-                    'Worker 00${args['index']}',
+                    '${user?.name??""}',
+                    // 'Worker 00${args['index']}',
                     style: StyleManager.font30SemiBold(),
                   ),
                 ),

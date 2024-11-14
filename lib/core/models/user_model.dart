@@ -14,6 +14,7 @@ class UserModel {
   String? password;
   String? typeUser;
   String? gender;
+  String? state;
   bool isAdd = false;
 
   bool get isAdmin=>typeUser?.toLowerCase().contains(AppConstants.collectionAdmin.toLowerCase())??false;
@@ -30,6 +31,7 @@ class UserModel {
     this.password,
     this.typeUser,
     this.gender,
+    this.state,
   });
 
   factory UserModel.fromJson(json) {
@@ -46,7 +48,8 @@ class UserModel {
       photoUrl: json["photoUrl"],
       typeUser: json["typeUser"],
       // gender: data["gender"],
-       password:data['password']
+       password:data['password'],
+        state:data['state']
     );
   }
 
@@ -72,6 +75,7 @@ class UserModel {
         'typeUser': typeUser,
         // 'gender': gender,
     'password': password==null?null:BCrypt.hashpw(password!, BCrypt.gensalt()),
+    'state':state,
     // 'password': password,
       };
   /// Function to check if the password matches the hashed password

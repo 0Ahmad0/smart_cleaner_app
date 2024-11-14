@@ -12,10 +12,14 @@ import 'package:image_picker/image_picker.dart';
 import 'package:smart_cleaner_app/core/models/file_model.dart';
 import 'package:smart_cleaner_app/core/models/location_model.dart';
 import 'package:smart_cleaner_app/core/models/problem_model.dart';
+import 'package:smart_cleaner_app/core/utils/app_constant.dart';
 
+import '../../../../core/models/notification_model.dart';
+import '../../../../core/utils/string_manager.dart';
 import '../../../../core/widgets/constants_widgets.dart';
 import '../../../controllers/firebase/firebase_constants.dart';
 import '../../../controllers/firebase/firebase_fun.dart';
+import '../../../controllers/notifications_controller.dart';
 import '../../../controllers/profile_controller.dart';
 
 
@@ -81,6 +85,10 @@ class GuestProblemController extends GetxController{
 
     ConstantsWidgets.closeDialog();
     if(result['status']){
+      //TODO dd notification
+      Get.put(NotificationsController()).addNotification(context, notification: NotificationModel(idUser: id,typeUser: AppConstants.collectionWorker
+          , subtitle: StringManager.notificationSubTitleNewProblem+' '+(Get.put(ProfileController())?.currentUser.value?.name??''), dateTime: DateTime.now(), title: StringManager.notificationTitleNewProblem, message: ''));
+
       Get.back();
     }
     ConstantsWidgets.TOAST(context,textToast: FirebaseFun.findTextToast(result['message'].toString()),state: result['status']);

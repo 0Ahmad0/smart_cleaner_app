@@ -5,11 +5,17 @@ import 'package:get/get.dart';
 
 import 'package:get/get_core/src/get_main.dart';
 import 'package:smart_cleaner_app/app/controllers/firebase/firebase_fun.dart';
+import 'package:smart_cleaner_app/app/controllers/worker_activities_controller.dart';
+import 'package:smart_cleaner_app/core/models/activity_model.dart';
 
 import '../../../../core/enums/enums.dart';
+import '../../../../core/models/notification_model.dart';
 import '../../../../core/models/problem_model.dart';
+import '../../../../core/utils/app_constant.dart';
+import '../../../../core/utils/string_manager.dart';
 import '../../../../core/widgets/constants_widgets.dart';
 import '../../../controllers/firebase/firebase_constants.dart';
+import '../../../controllers/notifications_controller.dart';
 import '../../../controllers/profile_controller.dart';
 
 class WorkerProblemsController extends GetxController{
@@ -89,6 +95,15 @@ class WorkerProblemsController extends GetxController{
     problem.state=StateProblem.solved.name;
     result = await FirebaseFun.updateProblem(problem: problem);
     // ConstantsWidgets.closeDialog();
+    if(result['status']){
+      //TODO dd notification
+      Get.put(NotificationsController()).addNotification(context, notification: NotificationModel(idUser: uid,typeUser: AppConstants.collectionAdmin
+          , subtitle: StringManager.notificationSubTitleProblemSolved+' '+(Get.put(ProfileController())?.currentUser.value?.name??''), dateTime: DateTime.now(), title: StringManager.notificationTitleProblemSolved, message: ''));
+
+      Get.put(WorkerActivitiesController()).addActivity(context, activity: ActivityModel(idUser: uid,nameUser: Get.put(ProfileController()).currentUser.value?.name,
+           subtitle: StringManager.activitySubTitleProblemSolved+' '+(Get.put(ProfileController())?.currentUser.value?.name??''), dateTime: DateTime.now(), title: StringManager.activityTitleProblemSolved,));
+
+    }
     ConstantsWidgets.TOAST(context,textToast: FirebaseFun.findTextToast(result['message'].toString()),state: result['status']);
 
   }

@@ -1,17 +1,34 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_cleaner_app/core/utils/color_manager.dart';
 import 'package:smart_cleaner_app/core/utils/string_manager.dart';
 
+import '../../../../../../core/models/weather_model.dart';
+import '../../../controllers/weathers_controller.dart';
 import '../../../utils/constants.dart';
 import 'weather_screen_model.dart';
 
 
-class WeatherScreen extends StatelessWidget {
+class WeatherScreen extends StatefulWidget {
   const WeatherScreen({Key? key}) : super(key: key);
+
+  @override
+  State<WeatherScreen> createState() => _WeatherScreenState();
+}
+
+class _WeatherScreenState extends State<WeatherScreen> {
+  late WeathersController controller;
+  void initState() {
+    controller = Get.put(WeathersController());
+    controller.onInit();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     final model = context.watch<WeatherScreenModel>();
@@ -22,19 +39,45 @@ class WeatherScreen extends StatelessWidget {
       ),
       backgroundColor: Colors.white,
       body:
-          model.forecastObject?.location?.name != null && model.loading == false
-              ? _ViewWidget()
-              : Center(
+      StreamBuilder<DatabaseEvent>(
+          stream: controller.getWeathers,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState ==
+                ConnectionState.active) {
+              if (snapshot.hasData) {
+
+                controller.weathers.items.clear();
+                if ((snapshot.data?.snapshot.children.length ?? 0) > 0) {
+                  controller.weathers.items = Weathers
+                      .fromJsonReal(snapshot.data!.snapshot.children).items;
+                }
+                controller.filterWeathers(
+                    term: controller.searchController.value.text);
+              }
+            }
+            return
+              GetBuilder<WeathersController>(
+                builder: (WeathersController weathersController) =>
+                model.forecastObject?.location?.name != null &&
+                    model.loading == false
+                    ? _ViewWidget(weathersController.weather)
+                    : Center(
                   child: SpinKitChasingDots(
-                      color: ColorManager.primaryColor,
+                    color: ColorManager.primaryColor,
                     size: 80.sp,
                   ),
                 ),
+
+              );
+          }
+      )
     );
   }
 }
 
 class _ViewWidget extends StatelessWidget {
+  _ViewWidget(this.weatherModel);
+  final WeatherModel? weatherModel;
   @override
   Widget build(BuildContext context) {
     final model = context.read<WeatherScreenModel>();
@@ -47,15 +90,15 @@ class _ViewWidget extends StatelessWidget {
                   physics: const BouncingScrollPhysics(),
                   child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      children: const [
+                      children:  [
                         SizedBox(height: 70),
-                        CityInfoWidget(),
+                        CityInfoWidget(weatherModel: weatherModel,),
                         SizedBox(height: 15),
                         CarouselWidget(),
                         SizedBox(height: 15),
                         WindWidget(),
                         SizedBox(height: 15),
-                        BarometerWidget(),
+                        BarometerWidget(weatherModel: weatherModel,),
                       ]),
                 )
               : Center(
@@ -118,14 +161,15 @@ class HeaderWidget extends StatelessWidget {
 }
 
 class CityInfoWidget extends StatelessWidget {
-  const CityInfoWidget({Key? key}) : super(key: key);
-
+  const CityInfoWidget({Key? key, this.weatherModel}) : super(key: key);
+  final WeatherModel? weatherModel;
   @override
   Widget build(BuildContext context) {
     final model = context.read<WeatherScreenModel>();
+    // final WeatherModel? weatherModel=Get.put(WeathersController()).weather;
     final snapshot = model.forecastObject;
     var city = snapshot!.location?.name;
-    var temp = snapshot.current?.tempC!.round();
+    var temp = weatherModel?.temperature?.round()??snapshot.current?.tempC!.round();
     var feelTemp = snapshot.current?.feelslikeC;
     var windDegree = snapshot.current?.windDegree;
     var url =
@@ -170,15 +214,16 @@ class CityInfoWidget extends StatelessWidget {
 }
 
 class BarometerWidget extends StatelessWidget {
-  const BarometerWidget({Key? key}) : super(key: key);
-
+  const BarometerWidget({Key? key, this.weatherModel}) : super(key: key);
+  final WeatherModel? weatherModel;
   @override
   Widget build(BuildContext context) {
+    // final WeatherModel? weatherModel=Get.put(WeathersController()).weather;
     final model = context.read<WeatherScreenModel>();
     final snapshot = model.forecastObject;
-    var temperature = snapshot!.current?.tempC;
-    var humidity = snapshot.current?.humidity;
-    var pressure = snapshot.current?.pressureMb;
+    var temperature =weatherModel?.temperature?? snapshot!.current?.tempC;
+    var humidity = weatherModel?.humidity??snapshot!.current?.humidity;
+    var pressure = weatherModel?.pressure??snapshot!.current?.pressureMb;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
       child: Column(

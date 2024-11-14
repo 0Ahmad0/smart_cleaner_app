@@ -5,6 +5,7 @@ class StringManager {
   static const String loginText = 'Login';
   static const String logoutText = 'Logout';
   static const String viewRobotText = 'View';
+  static const String viewLiveFeedText = 'Live Feed';
   static const String signUpText = 'Signup';
   static const String submitText = 'Submit';
   static const String continueText = 'Continue';
@@ -130,6 +131,7 @@ class StringManager {
   static const String robotModeText = 'Robot Mode';
   static const String inDoorText = 'In Door';
   static const String outDoorText = 'Out Door';
+  static const String showSelectedPath = 'Show Selected Path';
 
 
   ///HomeAdminScreen
@@ -151,8 +153,8 @@ class StringManager {
 
 
   /// Notification Screen
-  static const String noNotificationText =
-      'You don’t have any notifications yet';
+  static const String noNotificationText = 'You don’t have any notifications yet';
+  static const String noActivitiesText = 'You don’t have any activities yet';
 
   /// Appointments Screen
   static const String appointmentsText = 'Appointments';
@@ -210,4 +212,35 @@ class StringManager {
   static const message_failure = "Failure";
   static const message_successful_login = "Successful login";
   static const message_successfully_update = "Successful update";
+
+
+  //notification
+  static const notificationTitle = "";
+  static const notificationSubTitle= "";
+
+  static const notificationTitleProblemSolved = "Problem Resolved";
+  static const notificationSubTitleProblemSolved= " A new problem has been resolved by";
+
+  static const notificationTitleNewProblem = "New Problem";
+  static const notificationSubTitleNewProblem= "An issue report has been sent by";
+
+  static const notificationTitleTripCanceled = "Trip Canceled";
+  static const notificationSubTitleTripCanceled= "The robot task has been canceled by";
+
+  static const notificationTitleRobotPathSet = "New Path Set for Robot";
+  static const notificationSubTitleRobotPathSet= "The robot's path has been set by";
+
+  //activities
+  static const activityTitle = "";
+  static const activitySubTitle= "";
+
+  static const activityTitleProblemSolved = "Problem Solved";
+  static const activitySubTitleProblemSolved= "The problem has been resolved";
+
+  static const activityTitleTripCanceled = "Trip Canceled";
+  static const activitySubTitleTripCanceled= "The worker has canceled the robot's task";
+
+  static const activityTitleRobotPathSet = "Robot Path Set";
+  static const activitySubTitleRobotPathSet= "The robot's path has been defined";
+
 }

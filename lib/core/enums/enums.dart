@@ -14,3 +14,7 @@ enum StateProblem{
   solved,
   unSolved
 }
+enum StateWorker{
+  Accepted,
+  Rejected
+}
