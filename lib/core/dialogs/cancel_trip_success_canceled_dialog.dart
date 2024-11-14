@@ -13,9 +13,11 @@ class CancelTripSuccessCanceledDialog extends StatelessWidget {
   const CancelTripSuccessCanceledDialog({
     super.key,
     this.index = 0,
+    this.text,
   });
 
   final int index;
+  final String? text;
 
   @override
   Widget build(BuildContext context) {
@@ -42,31 +44,36 @@ class CancelTripSuccessCanceledDialog extends StatelessWidget {
                     height: 80.h,
                   ),
                   verticalSpace(40.h),
-                  Text.rich(
+                  text == null
+                      ? Text.rich(
+                          textAlign: TextAlign.center,
+                          TextSpan(children: [
+                            TextSpan(
+                                text: 'SSC ${00}',
+                                style: StyleManager.font20SemiBold(
+                                    color: ColorManager.tealColor)),
+                            TextSpan(
+                                text: '  ' +
+                                    StringManager.tripSuccessfullyCanceledText,
+                                style: StyleManager.font18Medium()),
+                          ]),
+                        )
+                      : Text(
+                          'SuccessFull Report',
                     textAlign: TextAlign.center,
-                    TextSpan(children: [
-                      TextSpan(
-                          text: 'SSC ${00}',
-                          style: StyleManager.font20SemiBold(
-                              color: ColorManager.tealColor)),
-                      TextSpan(
-                          text:
-                              '  ' + StringManager.tripSuccessfullyCanceledText,
-                          style: StyleManager.font18Medium()),
-                    ]),
-                  ),
+                    style: StyleManager.font14SemiBold(),
+                        ),
                   verticalSpace(20.h),
                   Align(
                     alignment: AlignmentDirectional.centerEnd,
                     child: InkWell(
-                      onTap: (){
+                      onTap: () {
                         context.pop();
                       },
                       child: Text(
                         StringManager.okText,
                         style: StyleManager.font14SemiBold(
-                          color: ColorManager.tealColor
-                        ),
+                            color: ColorManager.tealColor),
                       ),
                     ),
                   ),

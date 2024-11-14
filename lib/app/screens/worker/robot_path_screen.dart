@@ -1,106 +1,183 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:smart_cleaner_app/core/helpers/sizer.dart';
+import 'package:smart_cleaner_app/app/screens/worker/widgets/robot_path_widget.dart';
 import 'package:smart_cleaner_app/core/helpers/spacing.dart';
-import 'package:smart_cleaner_app/core/utils/assets_manager.dart';
-import 'package:smart_cleaner_app/core/utils/color_manager.dart';
-import 'package:smart_cleaner_app/core/utils/string_manager.dart';
-import 'package:smart_cleaner_app/core/widgets/app_padding.dart';
-import 'package:smart_cleaner_app/core/widgets/app_textfield.dart';
+import 'package:smart_cleaner_app/core/utils/style_manager.dart';
 
-import 'widgets/robot_path_widget.dart';
+import '../../../core/utils/color_manager.dart';
 
 class RobotPathWorkerScreen extends StatefulWidget {
   const RobotPathWorkerScreen({super.key});
 
   @override
-  State<RobotPathWorkerScreen> createState() => _RobotPathWorkerScreenState();
+  State<RobotPathWorkerScreen> createState() =>
+      _RobotPathWorkerScreenState();
 }
 
 class _RobotPathWorkerScreenState extends State<RobotPathWorkerScreen> {
-  late GoogleMapController mapController;
+  LatLng? _startPoint;
+  LatLng? _endPoint;
 
-  // Define the locations
-  final Set<Marker> _markers = {
-    Marker(
-      markerId: MarkerId('location1'),
-      position: LatLng(29.3759, 47.9774), // Example location 1
-      infoWindow: InfoWindow(title: 'Location 1'),
-      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
-    ),
-    Marker(
-      markerId: MarkerId('location2'),
-      position: LatLng(29.3755, 47.9754), // Example location 2
-      infoWindow: InfoWindow(title: 'Location 2'),
-      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
-    ),
-    Marker(
-      markerId: MarkerId('location3'),
-      position: LatLng(29.3765, 47.9784), // Example location 3
-      infoWindow: InfoWindow(title: 'Location 3'),
-      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
-    ),
-    Marker(
-      markerId: MarkerId('location4'),
-      position: LatLng(29.3761, 47.9764), // Example location 4
-      infoWindow: InfoWindow(title: 'Location 4'),
-      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
-    ),
-    Marker(
-      markerId: MarkerId('location5'),
-      position: LatLng(29.3749, 47.9794), // Example location 5
-      infoWindow: InfoWindow(title: 'Location 5'),
-      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
-    ),
-  };
+  Future<void> _navigateToMap(bool isStartPoint) async {
+    final LatLng? selectedPoint = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => MapSelectionScreen(
+          isStartPoint: isStartPoint,
+        ),
+      ),
+    );
+    if (selectedPoint != null) {
+      setState(() {
+        if (isStartPoint) {
+          _startPoint = selectedPoint;
+        } else {
+          _endPoint = selectedPoint;
+        }
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          StringManager.robotPathText.toUpperCase(),
-        ),
+        title: const Text("Select Start and End Points"),
       ),
       body: Column(
-        children: <Widget>[
-          AppPaddingWidget(
-            child: AppTextField(
-              hintText: StringManager.searchText,
-              iconData: Icons.search,
-            ),
-          ),
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
           Expanded(
+            flex: 3,
               child: ListView.builder(
-              itemCount: 2,
-              itemBuilder: (context, index) {
-            return RobotPathWidget(
-              index: index + 1,
-            );
-          })),
+                  itemCount: 2,
+                  itemBuilder: (context, index) {
+                    return RobotPathWidget(
+                      index: index + 1,
+                    );
+                  })),
           Divider(
-            thickness: 10.sp,
+            thickness: 10,
             color: ColorManager.tealColor,
-            height: 1.sp,
+            height: 1,
           ),
           Expanded(
-              child: GoogleMap(
-            zoomGesturesEnabled: true,
-            onMapCreated: (GoogleMapController controller) {
-              mapController = controller;
-            },
-            initialCameraPosition: CameraPosition(
-              target: LatLng(29.3759, 47.9774),
-              zoom: 16,
+            child: Row(
+              children: [
+                Expanded(child: InkWell(
+                  onTap: () => _navigateToMap(true),
+                  child: Container(
+                    padding: EdgeInsets.all(12.sp),
+                    color: ColorManager.primaryColor,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('Select start Point',style: StyleManager.font14SemiBold(
+                          color: ColorManager.whiteColor
+                        ),),
+                        verticalSpace(10.sp),
+
+                        Text(
+                          _startPoint != null
+                              ? 'Selected:\nLat: ${_startPoint!.latitude.toStringAsFixed(2)},\nLng: ${_startPoint!.longitude.toStringAsFixed(2)}'
+                              : 'No Start Point Selected',
+                          textAlign: TextAlign.center,
+                          style: StyleManager.font12Regular(
+                            color: ColorManager.whiteColor
+                          ),
+                        ),
+
+                      ],
+                    ),
+                  ),
+                )),
+                horizontalSpace(2.sp),
+                Expanded(child: InkWell(
+                  onTap: () => _navigateToMap(false),
+                  child: Container(
+                    padding: EdgeInsets.all(12.sp),
+                    color: ColorManager.primaryColor,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('Select end Point',style: StyleManager.font14SemiBold(
+                            color: ColorManager.whiteColor
+                        ),),
+                        verticalSpace(10.sp),
+                        Text(
+                          _endPoint != null
+                              ? 'Selected: \nLat: ${_endPoint!.latitude.toStringAsFixed(2)},\nLng: ${_endPoint!.longitude.toStringAsFixed(2)}'
+                              : 'No End Point Selected',
+                          textAlign: TextAlign.center,
+                          style: StyleManager.font12Regular(
+                            color: ColorManager.whiteColor
+                          ),
+                        ),
+
+                      ],
+                    ),
+
+                  ),
+                )),
+              ],
             ),
-            markers: _markers,
-          ))
+          ),
         ],
       ),
     );
   }
 }
+
+class MapSelectionScreen extends StatefulWidget {
+  final bool isStartPoint;
+
+  const MapSelectionScreen({super.key, required this.isStartPoint});
+
+  @override
+  _MapSelectionScreenState createState() => _MapSelectionScreenState();
+}
+
+class _MapSelectionScreenState extends State<MapSelectionScreen> {
+  LatLng _initialPosition = const LatLng(29.3759, 47.9774);
+  LatLng? _selectedPoint;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.isStartPoint ? 'Select Start Point' : 'Select End Point'),
+      ),
+      body: GoogleMap(
+        initialCameraPosition: CameraPosition(
+          target: _initialPosition,
+          zoom: 16,
+        ),
+        onTap: (LatLng location) {
+          setState(() {
+            _selectedPoint = location;
+          });
+        },
+        markers: _selectedPoint != null
+            ? {
+          Marker(
+            markerId: MarkerId(widget.isStartPoint ? 'startPoint' : 'endPoint'),
+            position: _selectedPoint!,
+          )
+        }
+            : {},
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          if (_selectedPoint != null) {
+            Navigator.pop(context, _selectedPoint);
+          }
+        },
+        child: const Icon(Icons.check),
+      ),
+    );
+  }
+}
+
+
