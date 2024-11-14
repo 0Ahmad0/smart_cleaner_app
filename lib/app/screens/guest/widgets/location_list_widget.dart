@@ -31,7 +31,9 @@ class LocationListWidget extends StatelessWidget {
               "Latitude: ${location.latitude?.toStringAsFixed(4) ?? 'N/A'}, "
                   "Longitude: ${location.longitude?.toStringAsFixed(4) ?? 'N/A'}",
             ),
-            trailing: IconButton(
+            trailing:
+            onDelete==null?null:
+            IconButton(
               icon: Icon(Icons.delete, color: Colors.redAccent),
               onPressed: () => onDelete?.call(location),
             ),

@@ -9,3 +9,8 @@ enum StateStream{
   Empty,
   Error
 }
+enum StateProblem{
+  pending,
+  solved,
+  unSolved
+}

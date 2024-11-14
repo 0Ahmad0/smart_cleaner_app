@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../enums/enums.dart';
 import 'file_model.dart';
 import 'location_model.dart';
 
@@ -8,6 +9,8 @@ class ProblemModel {
   String? description;
   String? idUser;
   DateTime? sendingTime;
+  String? state;
+  int? idRobot;
   List<FileModel>? files;
   List<LocationModel>? locations;
   ProblemModel(
@@ -16,8 +19,14 @@ class ProblemModel {
         this.idUser,
         this.description,
         this.files,
-        this.locations
+        this.locations,
+        this.state,
+        this.idRobot
       });
+  StateProblem get getState{
+    return StateProblem.values.where((element)=>state?.toLowerCase().contains(element.name.toLowerCase())??false).firstOrNull??StateProblem.pending;
+  }
+
   factory ProblemModel.fromJson( json){
     var data = ['_JsonDocumentSnapshot','_JsonQueryDocumentSnapshot'].contains(json.runtimeType.toString())?json.data():json;
 
@@ -34,6 +43,9 @@ class ProblemModel {
       files:  tempList,
       locations:  tempListLocations,
       idUser:  data["idUser"],
+      idRobot:  data["idRobot"],
+      state:  data["state"],
+      description:  data["description"],
 
       sendingTime:  data["sendingTime"]?.toDate(),
     );
@@ -54,6 +66,9 @@ class ProblemModel {
       'idUser': idUser,
       'files': tempList,
       'locations': tempListLocations,
+      'idRobot': idRobot,
+      'state': state,
+      'description': description,
     };
   }
   factory ProblemModel.init(){
@@ -70,7 +85,7 @@ class Problems {
 
   factory Problems.fromJson(json) {
     List<ProblemModel> temp = [];
-    for (int i = 1; i < json.length; i++) {
+    for (int i = 0; i < json.length; i++) {
       ProblemModel tempElement = ProblemModel.fromJson(json[i]);
       tempElement.id = json[i].id;
       temp.add(tempElement);

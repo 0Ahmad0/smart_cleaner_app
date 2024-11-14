@@ -2,10 +2,12 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:smart_cleaner_app/core/models/problem_model.dart';
+import 'package:smart_cleaner_app/core/models/robot_model.dart';
 
 import '../../../core/models/user_model.dart';
 import '../../../core/utils/color_manager.dart';
@@ -14,7 +16,7 @@ import 'firebase_constants.dart';
 class FirebaseFun {
   static FirebaseAuth auth = FirebaseAuth.instance;
 
-  // static final database= FirebaseDatabase.instance.ref();
+  static final database= FirebaseDatabase.instance.ref();
 
   // time for waiting request to done or show error message
   static Duration timeOut = Duration(seconds: 50);
@@ -107,7 +109,16 @@ class FirebaseFun {
   }
 
 
+  static updateRobotReal({required RobotModel robot}) async {
 
+    final result = await database.child(FirebaseConstants.collectionRobot).child(robot?.id??"")
+    // set({'${planetModel.id}': planetModel.toJson()})
+        .update( robot.toJson())
+        .then(onValueUpdateRobotModel)
+        .catchError(onError)
+        .timeout(timeOut, onTimeout: onTimeOut);
+    return result;
+  }
 
 
   static Future<Map<String,dynamic>>  onError(error) async {
@@ -198,7 +209,13 @@ class FirebaseFun {
       'body':{}
     };
   }
-
+  static Future<Map<String, dynamic>> onValueUpdateRobotModel(value) async {
+    return {
+      'status': true,
+      'message': 'Robot successfully update',
+      'body': {}
+    };
+  }
 
 
 

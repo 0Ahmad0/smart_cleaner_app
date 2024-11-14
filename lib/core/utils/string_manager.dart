@@ -107,6 +107,7 @@ class StringManager {
   static const String cancelTripText = 'Cancel trip';
   static const String problemsText = 'Problems';
   static const String solvedText = 'Solved';
+  static const String solveText = 'Solve';
   static const String unSolvedText = 'Un solved';
 
 

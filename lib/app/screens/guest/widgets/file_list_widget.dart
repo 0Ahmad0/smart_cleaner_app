@@ -34,7 +34,9 @@ class FileListWidget extends StatelessWidget {
             title: Text(file.name ?? "Unnamed File",
                 style: TextStyle(fontWeight: FontWeight.w500)),
             subtitle: Text(_formatFileSize(file.size)),
-            trailing: IconButton(
+            trailing:
+            onDelete==null?null:
+            IconButton(
               icon: Icon(Icons.delete, color: ColorManager.errorColor),
               onPressed: () => onDelete?.call(file),
             ),

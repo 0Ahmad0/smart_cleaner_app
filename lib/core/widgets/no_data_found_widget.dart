@@ -24,10 +24,18 @@ class NoDataFoundWidget extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        image.split(".").last=="svg"?
         SvgPicture.asset(
           image,
           width: 100.w,
           height: 100.h,
+          color: ColorManager.primaryColor,
+          fit: BoxFit.cover,
+        ):
+        Image.asset(
+          image,
+          // width: 100.w,
+          // height: 100.h,
           color: ColorManager.primaryColor,
           fit: BoxFit.cover,
         ),

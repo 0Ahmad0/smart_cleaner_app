@@ -3,12 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:smart_cleaner_app/core/helpers/spacing.dart';
+import 'package:smart_cleaner_app/core/models/robot_model.dart';
 import 'package:smart_cleaner_app/core/utils/assets_manager.dart';
 import 'package:smart_cleaner_app/core/utils/color_manager.dart';
 import 'package:smart_cleaner_app/core/utils/string_manager.dart';
 import 'package:smart_cleaner_app/core/utils/style_manager.dart';
 import 'package:smart_cleaner_app/core/widgets/app_padding.dart';
+
+import 'controllers/worker_robots_controller.dart';
 
 class ProfileRobotWorkerScreen extends StatefulWidget {
   const ProfileRobotWorkerScreen({super.key});
@@ -20,11 +25,14 @@ class ProfileRobotWorkerScreen extends StatefulWidget {
 
 class _ProfileRobotWorkerScreenState extends State<ProfileRobotWorkerScreen> {
   bool mode = false;
+  RobotModel? robot ;
 
   @override
   Widget build(BuildContext context) {
     final args = (ModalRoute.of(context)?.settings.arguments ??
-        <String, dynamic>{}) as Map;
+        <String, dynamic>{}) as Map?;
+    robot=args?['robot'];
+    mode=robot?.mode??mode;
     return Scaffold(
       appBar: AppBar(
         title: Text(StringManager.profileText.toUpperCase()),
@@ -65,7 +73,8 @@ class _ProfileRobotWorkerScreenState extends State<ProfileRobotWorkerScreen> {
           ),
           verticalSpace(10.h),
           Text(
-            'SCC 00${args['index']}',
+            robot?.name??
+            'SCC 00${args?['index']}',
             style: StyleManager.font12SemiBold(),
           ),
           verticalSpace(100.h),
@@ -120,6 +129,8 @@ class _ProfileRobotWorkerScreenState extends State<ProfileRobotWorkerScreen> {
               value: mode,
               onChanged: (value) {
                 modeSetState(() => mode = value);
+                Get.put(WorkerRobotsController()).changeModeRobot(context,robot);
+                modeSetState(() {});
               },
             );
           })
