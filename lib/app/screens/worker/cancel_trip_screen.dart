@@ -1,9 +1,12 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:pinput/pinput.dart';
 import 'package:smart_cleaner_app/core/helpers/spacing.dart';
 import 'package:smart_cleaner_app/core/models/robot_model.dart';
@@ -14,6 +17,10 @@ import 'package:smart_cleaner_app/core/widgets/app_padding.dart';
 
 import '../../../core/dialogs/cancel_trip_success_canceled_dialog.dart';
 import '../../../core/utils/style_manager.dart';
+import '../../../core/widgets/constants_widgets.dart';
+import '../../controllers/profile_controller.dart';
+import '../../controllers/smtp_service.dart';
+import '../../controllers/workers_controller.dart';
 
 class CancelTripScreen extends StatefulWidget {
   const CancelTripScreen({super.key});
@@ -27,8 +34,23 @@ class _CancelTripScreenState extends State<CancelTripScreen> {
   late Timer _timer;
   int _remainingTime = countdownDuration;
 
+  String? code;
+
+  setupCode(){
+    Future.delayed(Duration(seconds: 2),()=>
+    SmtpService.sendCode(code: code??"",name: robot?.name, email: Get.put(ProfileController()).currentUser.value?.email??"")
+    );
+  }
+  String generateRandomCode() {
+    final random = Random();
+    code = "${random.nextInt(900) + 100}"; // يولد أرقام بين 100 و 999
+    return code.toString();
+  }
+
   @override
   void initState() {
+    generateRandomCode();
+    setupCode();
     super.initState();
     _startTimer();
   }
@@ -123,11 +145,17 @@ class _CancelTripScreenState extends State<CancelTripScreen> {
                       color: ColorManager.tealColor.withOpacity(.5),
                       borderRadius: BorderRadius.circular(100.r))),
               onCompleted: (value) {
-                if (value == '000') {
-                  showDialog(
-                    context: context,
-                    builder: (_) => CancelTripSuccessCanceledDialog(),
-                  );
+                if (value ==(code??"000")) {
+
+                  Get.put(WorkersController()).cancelTripRobot(context, robot);
+                // if (value == '000') {
+                //   showDialog(
+                //     context: context,
+                //     builder: (_) => CancelTripSuccessCanceledDialog(),
+                //   );
+                }else{
+                  ConstantsWidgets.TOAST(context,textToast:"The code entry is wrong, Try again.",state: false);
+
                 }
               },
             ),
@@ -150,6 +178,38 @@ class _CancelTripScreenState extends State<CancelTripScreen> {
                 ),
               ]),
             ),
+            verticalSpace(10.h),
+            Visibility(
+              visible: !_timer.isActive,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: InkWell(
+                  onTap: (){
+                    _remainingTime = countdownDuration;
+                   _startTimer();
+                   setupCode();
+                  },
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
+                    decoration: BoxDecoration(
+                        color: ColorManager.enterButtonColor,
+                        borderRadius:
+                        BorderRadius.all( Radius.circular(100.r))),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(Icons.email_outlined,size: 18.w,color: ColorManager.whiteColor,),
+                        SizedBox(width: 8.w,),
+                        Text(
+                          StringManager.sendText,
+                          style: StyleManager.font12Medium(color: ColorManager.whiteColor),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            )
           ],
         ),
       ),

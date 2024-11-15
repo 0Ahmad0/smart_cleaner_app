@@ -48,6 +48,7 @@ class NotificationsController extends GetxController{
 
 
   filterNotification(){
+    notifications.items.sort((n1,n2)=>(n2.dateTime??DateTime.now()).compareTo(n1.dateTime??DateTime.now()));
     seenNotifications.items.clear();
     unSeenNotifications.items.clear();
     notifications.items.forEach((element) {

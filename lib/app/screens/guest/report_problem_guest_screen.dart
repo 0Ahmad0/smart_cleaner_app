@@ -89,38 +89,42 @@ class _ReportProblemGuestScreenState extends State<ReportProblemGuestScreen> {
               ],
             ),
           ),
-          const Spacer(),
+          // const Spacer(),
 
-          GetBuilder<GuestProblemController>(
-            init: controller,
-            builder: (GuestProblemController problemController) {
-              return
-                ( (controller.problem?.files?.isEmpty??true)
-                &&  (controller.problem?.locations?.isEmpty??true)
-                &&  (controller.descriptionController.text.isEmpty))?
+          Expanded(
+            child: GetBuilder<GuestProblemController>(
+              init: controller,
+              builder: (GuestProblemController problemController) {
+                return
+                  ( (controller.problem?.files?.isEmpty??true)
+                  &&  (controller.problem?.locations?.isEmpty??true)
+                  &&  (controller.descriptionController.text.isEmpty))?
 
 
-                Visibility(
-                visible: controller.descriptionController.text.isEmpty,
-                // visible: reportProblemController.text.isEmpty,
-                child: DescribeProblemWidget(),
-              ):
-                Column(
-                  children: [
-                    FileListWidget(files:controller.problem?.files,
-                    onDelete: (file)=>controller.removeFile(file),
+                  Visibility(
+                  visible: controller.descriptionController.text.isEmpty,
+                  // visible: reportProblemController.text.isEmpty,
+                  child: DescribeProblemWidget(),
+                ):
+                  SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        FileListWidget(files:controller.problem?.files,
+                        onDelete: (file)=>controller.removeFile(file),
+                        ),
+                        SizedBox(height: 10.h,),
+                        LocationListWidget(locations:controller.problem?.locations,
+                          onDelete: (location)=>controller.removeLocation(location),
+                        ),
+                      ],
                     ),
-                    SizedBox(height: 10.h,),
-                    LocationListWidget(locations:controller.problem?.locations,
-                      onDelete: (location)=>controller.removeLocation(location),
-                    ),
-                  ],
-                )
-                // FileListWidget(files:controller.problem?.files,)
-              ;
-            }
+                  )
+                  // FileListWidget(files:controller.problem?.files,)
+                ;
+              }
+            ),
           ),
-          const Spacer(),
+          // const Spacer(),
           Container(
             padding: EdgeInsets.symmetric(
               horizontal: 0.w,

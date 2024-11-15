@@ -30,6 +30,7 @@ class LiveFeedWidget extends StatefulWidget {
 class _LiveFeedWidgetState extends State<LiveFeedWidget> {
  late  Future<ListResult> getFeeds;
  Map<String,dynamic> urlMap={};
+ ListResult? initData;
  getUrl(Reference reference) async {
    if(urlMap.containsKey(reference.name))
      return;
@@ -48,20 +49,24 @@ class _LiveFeedWidgetState extends State<LiveFeedWidget> {
   }
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Live Feeds".toUpperCase()),
       ),
       body: FutureBuilder<ListResult>(
-          future: getFeeds,
+        initialData:initData ,
+          future: FirebaseStorage.instance.ref().child("live_feed").listAll(),
           builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
+            if (snapshot.connectionState == ConnectionState.waiting&&initData==null) {
               return    ConstantsWidgets.circularProgress();
             } else if (snapshot.connectionState ==
-                ConnectionState.done) {
+                ConnectionState.done||initData!=null) {
               if (snapshot.hasError) {
                 return  Text('Error');
               } else if (snapshot.hasData) {
+                initData=snapshot.data;
+                Future.delayed(Duration(seconds: 5),()=>setState(() {}));
                 ConstantsWidgets.circularProgress();
                 return
                       snapshot.data?.items.isEmpty??true?

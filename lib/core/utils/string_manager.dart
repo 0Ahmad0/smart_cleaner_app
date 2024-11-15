@@ -212,6 +212,8 @@ class StringManager {
   static const message_failure = "Failure";
   static const message_successful_login = "Successful login";
   static const message_successfully_update = "Successful update";
+  static const errorTryAgainLater = "An unexpected error occurred. Please try again later.";
+
 
 
   //notification
@@ -242,5 +244,12 @@ class StringManager {
 
   static const activityTitleRobotPathSet = "Robot Path Set";
   static const activitySubTitleRobotPathSet= "The robot's path has been defined";
+
+  static const notificationTitleAcceptRequestWorker = "Accept Account";
+  static const notificationSubTitleAcceptRequestWorker= "Done Accepted Request As Worker";
+  static const notificationTitleRejectRequestWorker = "Reject Account";
+  static const notificationSubTitleRejectRequestWorker= "Done Rejected Request As Worker";
+
+
 
 }

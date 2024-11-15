@@ -26,11 +26,13 @@ class NotificationModel {
   });
 
   factory NotificationModel.fromJson(json) {
+    var data = ['_JsonDocumentSnapshot','_JsonQueryDocumentSnapshot'].contains(json.runtimeType.toString())?json.data():json;
+
     return NotificationModel(
       id: json['id'],
       idNotification: json['idNotification'],
       idUser: json['idUser'],
-      typeUser: json['typeUser'],
+      typeUser: data['typeUser'],
       subtitle: json['subtitle'],
       title: json['title'],
       message: json['message'],

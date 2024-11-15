@@ -42,7 +42,7 @@ class ReportProblemBottomSheetWidget extends StatelessWidget {
                     icon: Icons.location_on_rounded,
                     label: StringManager.locationText,
                     onPressed: () {
-                      context.pop();
+                      // context.pop();
                       context.pushNamed(Routes.pickLocationGuestRoute);
                     },
                     color: ColorManager.successColor,
