@@ -12,9 +12,11 @@ import 'package:smart_cleaner_app/app/screens/guest/home_guest_screen.dart';
 import 'package:smart_cleaner_app/app/screens/guest/pick_location_screen.dart';
 import 'package:smart_cleaner_app/app/screens/guest/report_problem_guest_screen.dart';
 import 'package:smart_cleaner_app/app/screens/login_screen.dart';
+import 'package:smart_cleaner_app/app/screens/problems_chart_screen.dart';
 import 'package:smart_cleaner_app/app/screens/select_role_screen.dart';
 import 'package:smart_cleaner_app/app/screens/signup_screen.dart';
 import 'package:smart_cleaner_app/app/screens/splash_screen.dart';
+import 'package:smart_cleaner_app/app/screens/weather_chart_screen.dart';
 import 'package:smart_cleaner_app/app/screens/worker/cancel_trip_screen.dart';
 import 'package:smart_cleaner_app/app/screens/worker/robot_on_duty_screen.dart';
 import 'package:smart_cleaner_app/app/screens/worker/home_worker_screen.dart';
@@ -66,6 +68,15 @@ class AppRouter {
             lazy: false,
           );
         });
+      case Routes.weatherChartRoute:
+        return MaterialPageRoute(builder: (BuildContext context) {
+          return WeatherChartScreen();
+        });
+      case Routes.problemsChartRoute:
+        return MaterialPageRoute(builder: (BuildContext context) {
+          return ProblemsChartScreen();
+        });
+
 
     ///Admin
       case Routes.homeAdminRoute:

@@ -1,3 +1,5 @@
+import 'string_manager.dart';
+
 class ConstValueManager {
   /// Design Size
   static const double widthSize = 393.0;
@@ -29,4 +31,17 @@ class ConstValueManager {
     worker,
     guest
   ];
+
+  static List<ConditionPasswordItem> conditionPasswordList = [
+    ConditionPasswordItem(text: StringManager.condition1Text),
+    ConditionPasswordItem(text: StringManager.condition2Text),
+    ConditionPasswordItem(text: StringManager.condition3Text),
+    ConditionPasswordItem(text: StringManager.condition4Text),
+  ];
+}
+class ConditionPasswordItem {
+  final String text;
+  bool isValidate;
+
+  ConditionPasswordItem({required this.text, this.isValidate = false});
 }

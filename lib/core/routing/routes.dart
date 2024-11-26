@@ -6,6 +6,8 @@ class Routes {
   static const String forgotPasswordRoute = '/forgotPasswordScreen';
   static const String checkInboxRoute = '/checkInboxScreen';
   static const String weatherRoute = '/weatherScreen';
+  static const String weatherChartRoute = '/weatherChartScreen';
+  static const String problemsChartRoute = '/problemsChartScreen';
 
   //Admin Routes
   static const String homeAdminRoute = '/homeAdminScreen';

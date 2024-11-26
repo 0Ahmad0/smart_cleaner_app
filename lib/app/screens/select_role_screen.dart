@@ -95,8 +95,9 @@ class _SelectRoleScreenState extends State<SelectRoleScreen> {
                             onPressed: () {
 
                               if(ConstValueManager.role.contains(ConstValueManager.guest)){
-                                authController.typeUser=AppConstants.collectionUser;
-                              context.pushReplacement(Routes.signUpRoute);
+                                //TODO Go To Guest Screen 
+                                // authController.typeUser=AppConstants.collectionUser;
+                              // context.pushReplacement(Routes.signUpRoute);
                               }else{
                                 authController.typeUser=AppConstants.collectionWorker;
                                 context.pushReplacement(Routes.signUpRoute);

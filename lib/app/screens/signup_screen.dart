@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:smart_cleaner_app/core/utils/const_value_manager.dart';
+import '../../core/helpers/validator.dart';
 import '../controllers/auth_controller.dart';
 import '/app/widgets/back_ground_app_widget.dart';
 import '/core/helpers/extensions.dart';
@@ -18,8 +19,38 @@ import '/core/widgets/app_button.dart';
 import '/core/widgets/app_padding.dart';
 import '/core/widgets/app_textfield.dart';
 
-class SignupScreen extends StatelessWidget {
+class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
+
+  @override
+  State<SignupScreen> createState() => _SignupScreenState();
+}
+
+class _SignupScreenState extends State<SignupScreen> {
+  final passwordController = TextEditingController();
+  late List s;
+  late AuthController authController;
+
+  @override
+  void initState() {
+    authController = Get.put(AuthController());
+    authController.init();
+    s = ConstValueManager.conditionPasswordList;
+    Future.delayed(Duration(seconds: 2), () {
+      passwordController.addListener(() {
+        setState(() {
+          s = ConstValueManager.conditionPasswordList;
+        });
+      });
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,9 +95,65 @@ class SignupScreen extends StatelessWidget {
                     iconData: Icons.lock_open,
                     obscureText: true,
                     suffixIcon: true,
-                    controller:  authController.passwordController,
-                    validator: (value)=>authController.validatePassword(value??''),
+                    controller: passwordController,
+
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return StringManager.requiredField;
+                      } else {
+                        s = Validator.validatePassword(value);
+                      }
+                      return null;
+                    },
+                    onChanged: (value) => s = Validator.validatePassword(value),
                     hintText: StringManager.enterPasswordHintText,
+                  ),
+                  verticalSpace(10.h),
+                  Visibility(
+                    visible: passwordController.value.text.isNotEmpty,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20.w),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            StringManager.conditionPasswordText,
+                            style: StyleManager.font10Bold(),
+                          ),
+                          verticalSpace(10.h),
+                          Column(
+                            children: s
+                                .map((e) => Row(
+                              children: [
+                                Icon(
+                                  e.isValidate
+                                      ? Icons.check_circle
+                                      : Icons.circle,
+                                  color: e.isValidate
+                                      ? ColorManager.primaryColor
+                                      : ColorManager.grayColor,
+                                  size: 18.sp,
+                                ),
+                                horizontalSpace(8.w),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 2.h),
+                                  child: Text(
+                                    e.text,
+                                    style: StyleManager.font12Regular(
+                                      color: e.isValidate
+                                          ? ColorManager.primaryColor
+                                          : ColorManager.hintTextColor,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ))
+                                .toList(),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                   verticalSpace(20.h),
                   AppTextField(

@@ -19,8 +19,11 @@ class StringManager {
   static const String enterText = 'Enter';
   static const String okText = 'Ok';
 
-
-
+  static const String conditionPasswordText = 'YOUR PASSWORD MUST CONTAIN :';
+  static const String condition1Text = 'At least 8 characters';
+  static const String condition2Text = '1 uppercase letter';
+  static const String condition3Text = '1 number';
+  static const String condition4Text = '1 special character';
 
   ///Login Screen
   static const String welcomeText = 'Welcome';

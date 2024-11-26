@@ -6,6 +6,9 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:provider/provider.dart';
+import 'package:smart_cleaner_app/app/controllers/auth_controller.dart';
+import 'package:smart_cleaner_app/core/helpers/extensions.dart';
+import 'package:smart_cleaner_app/core/routing/routes.dart';
 import 'package:smart_cleaner_app/core/utils/color_manager.dart';
 import 'package:smart_cleaner_app/core/utils/string_manager.dart';
 
@@ -36,6 +39,11 @@ class _WeatherScreenState extends State<WeatherScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(StringManager.weatherStatisticsText),
+        actions: [
+          IconButton(onPressed: (){
+            context.pushNamed(Routes.problemsChartRoute);
+          }, icon: Icon(Icons.bar_chart_outlined))
+        ],
       ),
       backgroundColor: Colors.white,
       body:
