@@ -4,9 +4,11 @@ class StringManager {
   static const String requiredField = "Filed Is Required";
   static const String loginText = 'Login';
   static const String logoutText = 'Logout';
+  static const String exitText = 'Exit';
   static const String viewRobotText = 'View';
   static const String viewLiveFeedText = 'Live Feed';
   static const String signUpText = 'Signup';
+  static const String signUpAsWorkerText = 'Signup as Worker';
   static const String submitText = 'Submit';
   static const String continueText = 'Continue';
   static const String sendText = 'Send';
@@ -32,6 +34,7 @@ class StringManager {
   static const String passwordText = 'Password';
   static const String enterPasswordHintText = 'Enter password';
   static const String doNotHaveAccountText = 'Don\'t have an account? ';
+  static const String continueAsGuest = 'Continue as Guest';
 
 
   ///Signup Screen
@@ -227,7 +230,8 @@ class StringManager {
   static const notificationSubTitleProblemSolved= " A new problem has been resolved by";
 
   static const notificationTitleNewProblem = "New Problem";
-  static const notificationSubTitleNewProblem= "An issue report has been sent by";
+  static const notificationSubTitleNewProblem= "An issue report has been sent";
+  // static const notificationSubTitleNewProblem= "An issue report has been sent by";
 
   static const notificationTitleTripCanceled = "Trip Canceled";
   static const notificationSubTitleTripCanceled= "The robot task has been canceled by";

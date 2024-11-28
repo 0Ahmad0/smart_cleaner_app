@@ -113,7 +113,7 @@ class HomeGuestScreen extends StatelessWidget {
                   },
                 title:Text(
 
-                  StringManager.logoutText,
+                  StringManager.exitText,
                   // textAlign: TextAlign.center,
                   style: StyleManager.font16Regular(
                       color: ColorManager.primaryColor),
