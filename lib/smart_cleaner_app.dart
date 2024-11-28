@@ -7,6 +7,8 @@ import 'package:smart_cleaner_app/app/screens/admin/show_activities_screen.dart'
 import 'package:smart_cleaner_app/app/screens/admin/track_the_robot_screen.dart';
 import 'package:smart_cleaner_app/app/screens/admin/workers_profiles_screen.dart';
 import 'package:smart_cleaner_app/app/screens/guest/home_guest_screen.dart';
+import 'package:smart_cleaner_app/app/screens/problems_chart_screen.dart';
+import 'package:smart_cleaner_app/app/screens/weather_chart_screen.dart';
 import 'package:smart_cleaner_app/app/screens/worker/cancel_trip_screen.dart';
 import 'package:smart_cleaner_app/app/screens/worker/home_worker_screen.dart';
 import 'package:smart_cleaner_app/app/screens/worker/profile_robot_worker_screen.dart';
@@ -92,6 +94,8 @@ class SmartCleanerApp extends StatelessWidget {
               Routes.selectPathRobotRoute: (_)=>SelectPathRobotScreen(),
               Routes.robotOnDutyWorkerRoute: (_)=>RobotOnDutyScreen(),
               Routes.cancelTripWorkerRoute: (_)=>CancelTripScreen(),
+              Routes.weatherChartRoute: (_)=>WeatherChartScreen(),
+              Routes.problemsChartRoute: (_)=>ProblemsChartScreen(),
             },
           );
         });
