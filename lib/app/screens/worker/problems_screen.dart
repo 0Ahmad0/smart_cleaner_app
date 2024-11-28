@@ -2,8 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:smart_cleaner_app/core/helpers/extensions.dart';
 
 import '../../../core/models/problem_model.dart';
+import '../../../core/routing/routes.dart';
 import '../../../core/utils/const_value_manager.dart';
 import '../../../core/utils/string_manager.dart';
 import '../../../core/widgets/constants_widgets.dart';
@@ -30,7 +32,14 @@ class _ProblemsScreenState extends State<ProblemsScreen> {
       length: ConstValueManager.activitiesTabBar,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(StringManager.problemsText.toUpperCase()),
+          title: Text(StringManager.problemsText.toUpperCase(),
+
+          ),
+          actions: [
+            IconButton(onPressed: (){
+              context.pushNamed(Routes.problemsChartRoute);
+            }, icon: Icon(Icons.bar_chart_outlined))
+          ],
           bottom: TabBar(
             tabs: [
               Tab(

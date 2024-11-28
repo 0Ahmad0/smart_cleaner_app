@@ -41,7 +41,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
         title: Text(StringManager.weatherStatisticsText),
         actions: [
           IconButton(onPressed: (){
-            context.pushNamed(Routes.problemsChartRoute);
+            context.pushNamed(Routes.weatherChartRoute);
           }, icon: Icon(Icons.bar_chart_outlined))
         ],
       ),
