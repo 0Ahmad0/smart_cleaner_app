@@ -5,7 +5,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:smart_cleaner_app/app/controllers/profile_controller.dart';
 import 'package:smart_cleaner_app/app/screens/worker/widgets/robot_path_widget.dart';
+import 'package:smart_cleaner_app/core/enums/enums.dart';
 import 'package:smart_cleaner_app/core/helpers/extensions.dart';
 import 'package:smart_cleaner_app/core/helpers/spacing.dart';
 import 'package:smart_cleaner_app/core/models/location_model.dart';
@@ -17,6 +19,7 @@ import '../../../core/utils/color_manager.dart';
 import '../../../core/utils/string_manager.dart';
 import '../../../core/widgets/constants_widgets.dart';
 import '../../../core/widgets/no_data_found_widget.dart';
+import '../../controllers/workers_controller.dart';
 import 'controllers/worker_robots_controller.dart';
 
 class RobotPathWorkerScreen extends StatefulWidget {
@@ -150,6 +153,66 @@ class _RobotPathWorkerScreenState extends State<RobotPathWorkerScreen> {
                 ),
               ),
             ),
+
+    if(_startPoint!=null&&_endPoint!=null
+        && (Get.put(ProfileController()).currentUser.value?.isWorker??false)
+    )...[
+      SizedBox(height: 10.h,),
+      Visibility(
+        visible: robots.firstOrNull?.getState==PowerCommand.shutdown,
+        child: InkWell(
+          onTap: (){
+            Get.put(WorkersController()).startRobot(context,  robots.firstOrNull);
+          },
+
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
+            decoration: BoxDecoration(
+                color: ColorManager.successColor,
+                borderRadius:
+                BorderRadius.all( Radius.circular(100.r))),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(Icons.start,size: 20.w,color: ColorManager.whiteColor,),
+                SizedBox(width: 8.w,),
+                Text(
+                  StringManager.start,
+                  style: StyleManager.font18Medium(color: ColorManager.whiteColor).copyWith(fontSize: 16),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+      Visibility(
+        visible: robots.firstOrNull?.getState==PowerCommand.start,
+        child: InkWell(
+          onTap: (){
+            Get.put(WorkersController()).cancelRobot(context,  robots.firstOrNull);
+          },
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
+            decoration: BoxDecoration(
+                color: ColorManager.errorColor,
+                borderRadius:
+                BorderRadius.all( Radius.circular(100.r))),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(Icons.cancel_outlined,size: 20.w,color: ColorManager.whiteColor,),
+                SizedBox(width: 8.w,),
+                Text(
+                  StringManager.cancel,
+                  style: StyleManager.font18Medium(color: ColorManager.whiteColor).copyWith(fontSize: 16),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    ],
+
             Spacer()
           ]
         ,

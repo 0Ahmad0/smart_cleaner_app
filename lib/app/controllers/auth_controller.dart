@@ -305,10 +305,10 @@ class AuthController extends GetxController {
 
   Future<void> seeder() async {
     List<UserModel> users=[
-    UserModel(email: 'admin@gmail.com', name: 'Admin Acc', password: '12345678', typeUser: AppConstants.collectionAdmin),
-    UserModel(email: 'worker@gmail.com', name: 'Worker Acc', password: '12345678', typeUser: AppConstants.collectionWorker),
-    UserModel(email: 'user@gmail.com', name: 'User Acc', password: '12345678', typeUser: AppConstants.collectionUser),
-    UserModel(email: 'guest@gmail.com', name: 'Guest Acc', password: '12345678', typeUser: AppConstants.collectionUser),
+    UserModel(email: 'admin1@gmail.com', name: 'Admin Acc', password: '1234sS@4321', typeUser: AppConstants.collectionAdmin),
+    UserModel(email: 'worker1@gmail.com', name: 'Worker Acc', password: '1234sS@4321', typeUser: AppConstants.collectionWorker),
+    UserModel(email: 'user1@gmail.com', name: 'User Acc', password: '1234sS@4321', typeUser: AppConstants.collectionUser),
+    UserModel(email: 'guest1@gmail.com', name: 'Guest Acc', password: '1234sS@4321', typeUser: AppConstants.collectionUser),
     // UserModel(email: 'mr.ahmadmriwed@gmail.com', name: 'Ahmad Mriwed', password: '12345678', typeUser: AppConstants.collectionUser,phoneNumber: '0937954969'),
     ];
     try {

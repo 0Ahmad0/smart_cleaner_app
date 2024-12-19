@@ -16,6 +16,7 @@ class RobotModel {
   LocationModel? startPoint;
   LocationModel? endPoint;
   bool mode=false;
+  String?  powerCommand;
   RobotModel(
       {this.id,
         this.pressure,
@@ -25,10 +26,13 @@ class RobotModel {
         this.location,
         this.endPoint,
         this.startPoint,
+        this.powerCommand,
         this.mode=false,
       });
 
-
+  PowerCommand get getState{
+    return PowerCommand.values.where((element)=>powerCommand?.toLowerCase().contains(element.name.toLowerCase())??false).firstOrNull??PowerCommand.shutdown;
+  }
   factory RobotModel.fromJson( json){
     var data = ['_JsonDocumentSnapshot','_JsonQueryDocumentSnapshot'].contains(json.runtimeType.toString())?json.data():json;
     
@@ -38,6 +42,7 @@ class RobotModel {
       air_quality: double.tryParse("${data["air_quality"]}")  ,
       temperature: double.tryParse("${data["temperature"]}")  ,
       name:  data["name"],
+      powerCommand:  data["power_command"],
       location:  data["location"]==null?null:LocationModel.fromJsonReal( data["location"]),
       startPoint:  data["startPoint"]==null?null:LocationModel.fromJsonReal( data["startPoint"]),
       endPoint:  data["endPoint"]==null?null:LocationModel.fromJsonReal( data["endPoint"]),
@@ -53,6 +58,7 @@ class RobotModel {
       'air_quality': air_quality,
       'temperature': temperature,
       'name': name,
+      'power_command': powerCommand,
       'location': location?.toJsonReal(),
       'startPoint': startPoint?.toJsonReal(),
       'endPoint': endPoint?.toJsonReal(),

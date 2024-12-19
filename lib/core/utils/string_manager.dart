@@ -138,6 +138,9 @@ class StringManager {
   static const String inDoorText = 'In Door';
   static const String outDoorText = 'Out Door';
   static const String showSelectedPath = 'Show Selected Path';
+  static const String start = 'Start';
+  static const String cancel = 'Cancel';
+
 
 
   ///HomeAdminScreen

@@ -9,6 +9,10 @@ enum StateStream{
   Empty,
   Error
 }
+enum PowerCommand{
+  start,
+  shutdown,
+}
 enum StateProblem{
   pending,
   solved,

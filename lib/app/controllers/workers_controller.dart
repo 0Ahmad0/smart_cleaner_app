@@ -131,6 +131,7 @@ class WorkersController extends GetxController{
     ConstantsWidgets.showLoading();
     robot.endPoint=null;
     robot.startPoint=null;
+    robot.powerCommand=null;
     result = await FirebaseFun.updateRobotReal(robot: robot);
     ConstantsWidgets.closeDialog();
     if(result['status']){
@@ -145,6 +146,38 @@ class WorkersController extends GetxController{
     // }
   }
 
+  cancelRobot(BuildContext context ,RobotModel? robot) async {
+    var result;
+    if(robot==null)
+      return;
+    ConstantsWidgets.showLoading();
+    robot.powerCommand=PowerCommand.shutdown.name;
+    result = await FirebaseFun.updateRobotReal(robot: robot);
+    ConstantsWidgets.closeDialog();
+    if(result['status']){
+      ConstantsWidgets.TOAST(context,textToast: FirebaseFun.findTextToast("Successful canceled"),state: result['status']);
+    }
+    else
+      ConstantsWidgets.TOAST(context,textToast: FirebaseFun.findTextToast(result['message'].toString()),state: result['status']);
+
+    // }
+  }
+  startRobot(BuildContext context ,RobotModel? robot) async {
+    var result;
+    if(robot==null)
+      return;
+    ConstantsWidgets.showLoading();
+    robot.powerCommand=PowerCommand.start.name;
+    result = await FirebaseFun.updateRobotReal(robot: robot);
+    ConstantsWidgets.closeDialog();
+    if(result['status']){
+      ConstantsWidgets.TOAST(context,textToast: FirebaseFun.findTextToast("Successful started"),state: result['status']);
+    }
+    else
+      ConstantsWidgets.TOAST(context,textToast: FirebaseFun.findTextToast(result['message'].toString()),state: result['status']);
+
+    // }
+  }
 
 // solveProblem(BuildContext context ,ProblemModel problem) async {
   //   var result;

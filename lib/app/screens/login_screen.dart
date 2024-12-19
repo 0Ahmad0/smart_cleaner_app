@@ -80,20 +80,45 @@ class _LoginScreenState extends State<LoginScreen> {
                         validator: (value)=>authController.validatePassword(value??''),
                         hintText: StringManager.enterPasswordHintText,
                       ),
-                      Align(
-                        alignment: AlignmentDirectional.centerEnd,
-                        child: TextButton(
-                          onPressed: () {
-                            context.pushNamed(Routes.forgotPasswordRoute);
-                          },
-                          child: Text(
-                            StringManager.forgotPasswordText,
-                            style: StyleManager.font14Regular(
-                                    color: ColorManager.primaryColor)
-                                .copyWith(decoration: TextDecoration.underline),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                              constraints:BoxConstraints(
+                                  maxWidth: 184.w,
+                                  maxHeight: 30.h
+                              ),
+
+                              child:
+                              ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      backgroundColor: ColorManager.primaryColor),
+                                  onPressed: () async {
+                                    authController.typeUser=AppConstants.collectionUser;
+                                    context.pushReplacement(Routes.homeGuestRoute);
+                                  },
+                                  child: Text(
+                                    StringManager.continueAsGuest+" >>",
+                                    style: StyleManager.font12Regular(color: ColorManager.whiteColor),
+                                  ))
                           ),
-                        ),
+                          Align(
+                            alignment: AlignmentDirectional.centerEnd,
+                            child: TextButton(
+                              onPressed: () {
+                                context.pushNamed(Routes.forgotPasswordRoute);
+                              },
+                              child: Text(
+                                StringManager.forgotPasswordText,
+                                style: StyleManager.font14Regular(
+                                        color: ColorManager.primaryColor)
+                                    .copyWith(decoration: TextDecoration.underline),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
+
                       verticalSpace(30.h),
                       AppButton(
                         onPressed: () async {
@@ -126,29 +151,29 @@ class _LoginScreenState extends State<LoginScreen> {
                           ]))
                     ],
                   ),
-                  PositionedDirectional(
-                    end: 0,
-                    top: 70.h,
-                    child: Container(
-                        constraints:BoxConstraints(
-                          maxWidth: 184.w,
-                          maxHeight: 30.h
-                        ),
-
-                      child:
-                      ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: ColorManager.primaryColor),
-                          onPressed: () async {
-                            authController.typeUser=AppConstants.collectionUser;
-                            context.pushReplacement(Routes.homeGuestRoute);
-                          },
-                          child: Text(
-                            StringManager.continueAsGuest+" >>",
-                            style: StyleManager.font12Regular(color: ColorManager.whiteColor),
-                          ))
-                    ),
-                  ),
+                  // PositionedDirectional(
+                  //   end: 0,
+                  //   top: 70.h,
+                  //   child: Container(
+                  //       constraints:BoxConstraints(
+                  //         maxWidth: 184.w,
+                  //         maxHeight: 30.h
+                  //       ),
+                  //
+                  //     child:
+                  //     ElevatedButton(
+                  //         style: ElevatedButton.styleFrom(
+                  //             backgroundColor: ColorManager.primaryColor),
+                  //         onPressed: () async {
+                  //           authController.typeUser=AppConstants.collectionUser;
+                  //           context.pushReplacement(Routes.homeGuestRoute);
+                  //         },
+                  //         child: Text(
+                  //           StringManager.continueAsGuest+" >>",
+                  //           style: StyleManager.font12Regular(color: ColorManager.whiteColor),
+                  //         ))
+                  //   ),
+                  // ),
                 ],
               ),
             ),

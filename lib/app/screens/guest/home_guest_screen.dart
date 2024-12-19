@@ -51,12 +51,12 @@ class HomeGuestScreen extends StatelessWidget {
                       style: StyleManager.font30Bold(),
                     ),
 
-                            TextSpan(
-                              text: '  ' + (controller.currentUser.value?.name??  ''),
-                              style: StyleManager.font20SemiBold(
-                                  color: ColorManager.primaryColor)
+                            // TextSpan(
+                            //   text: '  ' + (controller.currentUser.value?.name??  ''),
+                            //   style: StyleManager.font20SemiBold(
+                            //       color: ColorManager.primaryColor)
 
-                    )
+                    // )
                   ]))
                ;}),
               verticalSpace(10.h),
