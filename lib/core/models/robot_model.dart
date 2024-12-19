@@ -16,6 +16,7 @@ class RobotModel {
   LocationModel? startPoint;
   LocationModel? endPoint;
   bool mode=false;
+  bool isCharged=false;
   String?  powerCommand;
   RobotModel(
       {this.id,
@@ -28,6 +29,7 @@ class RobotModel {
         this.startPoint,
         this.powerCommand,
         this.mode=false,
+        this.isCharged=false,
       });
 
   PowerCommand get getState{
@@ -47,6 +49,7 @@ class RobotModel {
       startPoint:  data["startPoint"]==null?null:LocationModel.fromJsonReal( data["startPoint"]),
       endPoint:  data["endPoint"]==null?null:LocationModel.fromJsonReal( data["endPoint"]),
       mode:  data["mode"]??false,
+      isCharged:  data["isCharged"]??false,
     );
   }
   Map<String,dynamic> toJson() {
@@ -63,6 +66,7 @@ class RobotModel {
       'startPoint': startPoint?.toJsonReal(),
       'endPoint': endPoint?.toJsonReal(),
       'mode': mode,
+      'isCharged': isCharged,
     };
   }
   factory RobotModel.init(){

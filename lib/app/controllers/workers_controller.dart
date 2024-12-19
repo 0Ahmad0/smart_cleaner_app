@@ -146,16 +146,32 @@ class WorkersController extends GetxController{
     // }
   }
 
-  cancelRobot(BuildContext context ,RobotModel? robot) async {
+  dumpingRobot(BuildContext context ,RobotModel? robot) async {
     var result;
     if(robot==null)
       return;
-    ConstantsWidgets.showLoading();
-    robot.powerCommand=PowerCommand.shutdown.name;
+    // ConstantsWidgets.showLoading();
+    robot.isCharged=false;
     result = await FirebaseFun.updateRobotReal(robot: robot);
-    ConstantsWidgets.closeDialog();
+    // ConstantsWidgets.closeDialog();
     if(result['status']){
-      ConstantsWidgets.TOAST(context,textToast: FirebaseFun.findTextToast("Successful canceled"),state: result['status']);
+      // ConstantsWidgets.TOAST(context,textToast: FirebaseFun.findTextToast("Successful canceled"),state: result['status']);
+    }
+    else
+      ConstantsWidgets.TOAST(context,textToast: FirebaseFun.findTextToast(result['message'].toString()),state: result['status']);
+
+    // }
+  }
+  chargingRobot(BuildContext context ,RobotModel? robot) async {
+    var result;
+    if(robot==null)
+      return;
+    // ConstantsWidgets.showLoading();
+    robot.isCharged=true;
+    result = await FirebaseFun.updateRobotReal(robot: robot);
+    // ConstantsWidgets.closeDialog();
+    if(result['status']){
+      // ConstantsWidgets.TOAST(context,textToast: FirebaseFun.findTextToast("Successful canceled"),state: result['status']);
     }
     else
       ConstantsWidgets.TOAST(context,textToast: FirebaseFun.findTextToast(result['message'].toString()),state: result['status']);
