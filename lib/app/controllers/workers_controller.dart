@@ -178,6 +178,37 @@ class WorkersController extends GetxController{
 
     // }
   }
+  toggleChargingRobot(BuildContext context ,RobotModel? robot) async {
+    var result;
+    if(robot==null)
+      return;
+    // ConstantsWidgets.showLoading();
+    robot.isCharged=!robot.isCharged;
+    result = await FirebaseFun.updateRobotReal(robot: robot);
+    // ConstantsWidgets.closeDialog();
+    if(!result['status']){
+      robot.isCharged=!robot.isCharged;
+      ConstantsWidgets.TOAST(context,textToast: FirebaseFun.findTextToast(result['message'].toString()),state: result['status']);
+
+    }
+  }
+  toggleDumpingRobot(BuildContext context ,RobotModel? robot) async {
+    var result;
+    if(robot==null)
+      return;
+    // ConstantsWidgets.showLoading();
+    robot.isDumping=!robot.isDumping;
+    result = await FirebaseFun.updateRobotReal(robot: robot);
+    // ConstantsWidgets.closeDialog();
+    if(!result['status']){
+      robot.isDumping=!robot.isDumping;
+      ConstantsWidgets.TOAST(context,textToast: FirebaseFun.findTextToast(result['message'].toString()),state: result['status']);
+
+    }
+  }
+
+
+
   startRobot(BuildContext context ,RobotModel? robot) async {
     var result;
     if(robot==null)

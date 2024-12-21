@@ -155,7 +155,7 @@ class _RobotPathWorkerScreenState extends State<RobotPathWorkerScreen> {
             ),
 
     if(_startPoint!=null&&_endPoint!=null
-        && (Get.put(ProfileController()).currentUser.value?.isWorker??false)
+        // && (Get.put(ProfileController()).currentUser.value?.isWorker??false)
     )...[
       SizedBox(height: 10.h,),
       Visibility(
