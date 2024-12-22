@@ -21,6 +21,12 @@ class _WeatherChartScreenState extends State<WeatherChartScreen> {
   Map<String, double> weeklyMap = {};
   Map<String, double> monthlyMap = {};
 
+  List humidityWeeklyData = [];
+  List humidityMonthlyData = [];
+
+  Map<String, double> humidityWeeklyMap = {};
+  Map<String, double> humidityMonthlyMap = {};
+
   Map<String, List<WeatherModel>> groupByWeek(List<WeatherModel> weathers) {
     Map<String, List<WeatherModel>> groupedData = {};
     DateFormat monthFormatter = DateFormat('MMM');
@@ -113,6 +119,34 @@ class _WeatherChartScreenState extends State<WeatherChartScreen> {
   }
 
 
+  void calHumidity(){
+    humidityWeeklyMap=calculateAverageMap(groupByWeek(weathers!), (weather) => weather.humidity) ;
+    humidityMonthlyMap=calculateAverageMap(groupByMonth(weathers!), (weather) => weather.humidity) ;
+
+
+  if(humidityWeeklyMap.length<2){
+  Map<String, double> test={
+  "init":0
+  };
+  test.addAll(humidityWeeklyMap);
+  humidityWeeklyMap=test;
+  }
+  if(humidityMonthlyMap.length<2){
+  Map<String, double> test={
+  "init":0
+  };
+  test.addAll(humidityMonthlyMap);
+  humidityMonthlyMap=test;
+  }
+
+    humidityWeeklyData =
+        humidityWeeklyMap.values.toList()??
+  generateBoundaries(humidityWeeklyMap);
+
+    humidityMonthlyData=
+        humidityMonthlyMap.values.toList()??
+            generateBoundaries(humidityMonthlyMap);
+}
   @override
   Widget build(BuildContext context) {
 
@@ -122,6 +156,8 @@ class _WeatherChartScreenState extends State<WeatherChartScreen> {
     weathers??=args?['weathers']??[];
     weeklyMap=calculateAverageMap(groupByWeek(weathers!), (weather) => weather.temperature) ;
     monthlyMap=calculateAverageMap(groupByMonth(weathers!), (weather) => weather.temperature) ;
+
+
     if(weeklyMap.length<2){
       Map<String, double> test={
         "init":0
@@ -136,9 +172,11 @@ class _WeatherChartScreenState extends State<WeatherChartScreen> {
       test.addAll(monthlyMap);
       monthlyMap=test;
     }
-    // weeklyMap={"week1": 23.3,
+    // weeklyMap={
+    //   "week1": 23.3,
     //   "week2": 23.5,
-    //   "week3": 27.0};
+    //   "week3": 27.0
+    // };
     // print(weeklyMap);
     // print(monthlyMap);
      weeklyData =
@@ -155,7 +193,11 @@ class _WeatherChartScreenState extends State<WeatherChartScreen> {
     final data = isWeekly ? weeklyData : monthlyData;
 
 
+    calHumidity();
 
+    final humidityDataMap = isWeekly ?  humidityWeeklyMap :  humidityMonthlyMap;
+
+    final  humidityData = isWeekly ?  humidityWeeklyData :  humidityMonthlyData;
     return Scaffold(
       appBar: AppBar(
         title: Text('Weather Chart'),
@@ -215,6 +257,28 @@ class _WeatherChartScreenState extends State<WeatherChartScreen> {
                         show: true,
                         color: ColorManager.primaryColor.withOpacity(0.3),
                       ),
+                      dotData: FlDotData(show: false),
+                    ),
+                    LineChartBarData(
+                      spots: List.generate(
+                        humidityData.length,
+                            (index) {
+                          // if (index < dataMap.length) { // تحقق من صحة الفهرس
+                            double value = data[index].toDouble();
+                            // String key = dataMap.keys.elementAt(index); // الحصول على المفتاح (week1, week2, ...)
+                           // print(value);
+                            return FlSpot(index.toDouble(), value);
+                          // }
+                          return FlSpot(0, 0); // قيمة افتراضية إذا كان الفهرس غير صالح
+                        },
+                      ),
+                      isCurved: true,
+                      color: ColorManager.successColor,
+                      barWidth: 2,
+                      // belowBarData: BarAreaData(
+                      //   show: true,
+                      //   color: ColorManager.successColor.withOpacity(0.3),
+                      // ),
                       dotData: FlDotData(show: false),
                     ),
                   ],

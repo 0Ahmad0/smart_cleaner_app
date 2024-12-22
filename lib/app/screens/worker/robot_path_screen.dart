@@ -6,10 +6,12 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:smart_cleaner_app/app/controllers/profile_controller.dart';
+import 'package:smart_cleaner_app/app/screens/worker/controllers/info_robot_controller.dart';
 import 'package:smart_cleaner_app/app/screens/worker/widgets/robot_path_widget.dart';
 import 'package:smart_cleaner_app/core/enums/enums.dart';
 import 'package:smart_cleaner_app/core/helpers/extensions.dart';
 import 'package:smart_cleaner_app/core/helpers/spacing.dart';
+import 'package:smart_cleaner_app/core/models/info_robot_model.dart';
 import 'package:smart_cleaner_app/core/models/location_model.dart';
 import 'package:smart_cleaner_app/core/utils/style_manager.dart';
 
@@ -63,7 +65,11 @@ class _RobotPathWorkerScreenState extends State<RobotPathWorkerScreen> {
     }
   }
   late WorkerRobotsController controller;
+  late InfoRobotController infoRobotController;
+
   void initState() {
+    infoRobotController = Get.put(InfoRobotController());
+    infoRobotController.onInit();
     controller = Get.put(WorkerRobotsController());
     controller.onInit();
     super.initState();
@@ -93,12 +99,34 @@ class _RobotPathWorkerScreenState extends State<RobotPathWorkerScreen> {
                 }
                 controller.filterProviders(term: controller.searchController.value.text);
                 return
-                  GetBuilder<WorkerRobotsController>(
-                      builder: (WorkerRobotsController workerRobotsController)=>
-                      workerRobotsController.robotsWithFilter.items.isEmpty?
-                      NoDataFoundWidget(text: "No Robots Yet",)
-                          :
-                      buildScreen(context, workerRobotsController.robotsWithFilter.items));
+
+                  StreamBuilder<DatabaseEvent>(
+                      stream: infoRobotController.getInfoRobots,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.active) {
+                          if (snapshot.hasData) {
+
+                            infoRobotController.infoRobots.items.clear();
+                            if ((snapshot.data?.snapshot.children.length ?? 0) > 0) {
+                              infoRobotController.infoRobots.items = InfoRobots
+                                  .fromJsonReal(snapshot.data!.snapshot.children).items;
+                            }
+                            infoRobotController.filterInfoRobots(
+                                term: infoRobotController.searchController.value.text);
+                          }
+                        }
+                        return
+                          GetBuilder<InfoRobotController>(
+                            builder: (InfoRobotController infoRobotController) =>
+                          GetBuilder<WorkerRobotsController>(
+                              builder: (WorkerRobotsController workerRobotsController)=>
+                              workerRobotsController.robotsWithFilter.items.isEmpty?
+                              NoDataFoundWidget(text: "No Robots Yet",)
+                                  :
+                              buildScreen(context, workerRobotsController.robotsWithFilter.items)));
+                      }
+                  );
               } else {
                 return const Text('Empty data');
               }
@@ -124,6 +152,7 @@ class _RobotPathWorkerScreenState extends State<RobotPathWorkerScreen> {
                     return RobotPathWidget(
                       index: index + 1,
                       robot: robots[index],
+                        infoRobot:  infoRobotController.infoRobot
                     );
                   })),
           if(_startPoint!=null||_endPoint!=null)...[

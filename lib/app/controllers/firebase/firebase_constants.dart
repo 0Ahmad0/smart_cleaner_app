@@ -8,5 +8,6 @@ class FirebaseConstants{
   static String collectionTrack = "gps_data";
   static String collectionNotification = "Notifications";
   static String collectionActivity = "Activities";
+  static String collectionInfoRobot = "robot_status";
 
 }
