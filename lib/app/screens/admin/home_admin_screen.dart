@@ -112,13 +112,28 @@ class HomeAdminScreen extends StatelessWidget {
                   route: Routes.trackTheRobotRoute,
                 ),
                 ContainerHomeWidget(
+                  icon: Icons.close_outlined,
+                  text: StringManager.cancelTripText,
+                  route: Routes.robotOnDutyWorkerRoute,
+                ),
+              ],
+            ),
+            verticalSpace(20.h),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ContainerHomeWidget(
                   icon: Icons.more_horiz,
                   text: StringManager.otherText,
                   color: ColorManager.tealColor,
                   route: Routes.otherAdminRoute,
                 ),
+
               ],
             ),
+
             verticalSpace(10.h),
 
             ListTile(
