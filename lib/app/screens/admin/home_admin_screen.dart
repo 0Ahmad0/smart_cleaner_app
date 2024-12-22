@@ -124,12 +124,14 @@ class HomeAdminScreen extends StatelessWidget {
 
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+
                 ContainerHomeWidget(
                   icon: Icons.more_horiz,
                   text: StringManager.otherText,
                   color: ColorManager.tealColor,
                   route: Routes.otherAdminRoute,
                 ),
+
 
               ],
             ),

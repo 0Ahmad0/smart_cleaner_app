@@ -1,11 +1,12 @@
+
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:intl/intl.dart';
-import 'package:smart_cleaner_app/core/utils/color_manager.dart';
-import 'package:smart_cleaner_app/core/utils/style_manager.dart';
-import 'package:smart_cleaner_app/core/widgets/app_padding.dart';
+import 'package:intl/intl.dart'; // لتنسيق التاريخ
 
 import '../../core/models/weather_model.dart';
+import '../../core/utils/color_manager.dart';
+import '../../core/utils/style_manager.dart';
+import '../../core/widgets/app_padding.dart';
 
 class WeatherChartScreen extends StatefulWidget {
   @override
@@ -13,191 +14,19 @@ class WeatherChartScreen extends StatefulWidget {
 }
 
 class _WeatherChartScreenState extends State<WeatherChartScreen> {
-  bool isWeekly = true;
   List<WeatherModel>? weathers;
-  List weeklyData = [15, 18, 20, 22, 19];
-  List monthlyData = [15, 16, 18, 20, 19, 17, 16];
+  bool isWeekly = true;
 
-  Map<String, double> weeklyMap = {};
-  Map<String, double> monthlyMap = {};
-
-  List humidityWeeklyData = [];
-  List humidityMonthlyData = [];
-
-  Map<String, double> humidityWeeklyMap = {};
-  Map<String, double> humidityMonthlyMap = {};
-
-  Map<String, List<WeatherModel>> groupByWeek(List<WeatherModel> weathers) {
-    Map<String, List<WeatherModel>> groupedData = {};
-    DateFormat monthFormatter = DateFormat('MMM');
-    DateTime? firstDate = weathers.isNotEmpty ? weathers.first.timestamp : null;
-
-    if (firstDate != null) {
-      weathers.forEach((weather) {
-        if (weather.timestamp != null) {
-
-          int daysDiff = weather.timestamp!.difference(firstDate).inDays;
-          int weekNumber = (daysDiff ~/ 7) + 1;
-          String monthKey = monthFormatter.format(weather.timestamp!); //
-          String weekKey = "W$weekNumber-$monthKey";
-
-
-          groupedData.putIfAbsent(weekKey, () => []);
-          groupedData[weekKey]!.add(weather);
-        }
-      });
-    }
-    return groupedData;
-  }
-  Map<String, List<WeatherModel>> groupByMonth(List<WeatherModel> weathers) {
-    Map<String, List<WeatherModel>> groupedData = {};
-    DateFormat monthFormatter = DateFormat.MMMM();
-    DateFormat formatter = DateFormat('MMM-yy');
-    weathers.forEach((weather) {
-      if (weather.timestamp != null) {
-
-        // String monthKey = "${weather.timestamp!.year}-${weather.timestamp!.month.toString().padLeft(2, '0')}";
-        // String monthKey = monthFormatter.format(weather.timestamp!);
-        String monthKey = formatter.format(weather.timestamp!);
-
-
-        groupedData.putIfAbsent(monthKey, () => []);
-        groupedData[monthKey]!.add(weather);
-      }
-    });
-    
-
-    return groupedData;
-  }
-  List<double> calculateAverages(Map<String, List<WeatherModel>> dataMap, num? Function(WeatherModel) valueSelector) {
-    return dataMap.values.map((dataList) {
-
-      double sum = dataList.fold(0.0, (total, item) => total + (valueSelector(item) ?? 0));
-
-      return dataList.isNotEmpty ? sum / dataList.length : 0.0;
-    }).toList();
-  }
-
-  Map<String, double> calculateAverageMap(
-      Map<String, List<WeatherModel>> dataMap, num? Function(WeatherModel) valueSelector) {
-    return dataMap.map((key, dataList) {
-
-      double sum = dataList.fold(0.0, (total, item) => total + (valueSelector(item) ?? 0));
-
-      double average = dataList.isNotEmpty ? sum / dataList.length : 0.0;
-      return MapEntry(key, average);
-    });
-  }
-  List<int> generateBoundaries(Map<String, double> data) {
-    List<int> boundaries = []; // البداية بالقيمة 0
-
-    // جمع القيم في قائمة مرتبة
-    List<double> values = data.values.toList()..sort();
-
-    // البحث عن مضاعفات 3 حول القيم
-    for (double value in values) {
-      // أقرب مضاعف 3 أقل من القيمة
-      int lowerBound = (value ~/ 3) * 3;
-      if (!boundaries.contains(lowerBound)) boundaries.add(lowerBound);
-
-      // أقرب مضاعف 3 أكبر من القيمة
-      int upperBound = lowerBound + 3;
-      if (!boundaries.contains(upperBound)) boundaries.add(upperBound);
-    }
-
-    // التحقق من الفجوات بين القيم
-    for (int i = 1; i < values.length; i++) {
-      int start = ((values[i - 1] ~/ 3) * 3).toInt();
-      int end = ((values[i] ~/ 3) * 3).toInt();
-      for (int j = start; j <= end; j += 3) {
-        if (!boundaries.contains(j)) boundaries.add(j);
-      }
-    }
-
-    boundaries.sort();
-    return boundaries;
-  }
-
-
-  void calHumidity(){
-    humidityWeeklyMap=calculateAverageMap(groupByWeek(weathers!), (weather) => weather.humidity) ;
-    humidityMonthlyMap=calculateAverageMap(groupByMonth(weathers!), (weather) => weather.humidity) ;
-
-
-  if(humidityWeeklyMap.length<2){
-  Map<String, double> test={
-  "init":0
-  };
-  test.addAll(humidityWeeklyMap);
-  humidityWeeklyMap=test;
-  }
-  if(humidityMonthlyMap.length<2){
-  Map<String, double> test={
-  "init":0
-  };
-  test.addAll(humidityMonthlyMap);
-  humidityMonthlyMap=test;
-  }
-
-    humidityWeeklyData =
-        humidityWeeklyMap.values.toList()??
-  generateBoundaries(humidityWeeklyMap);
-
-    humidityMonthlyData=
-        humidityMonthlyMap.values.toList()??
-            generateBoundaries(humidityMonthlyMap);
-}
   @override
   Widget build(BuildContext context) {
+    final args = (ModalRoute.of(context)?.settings.arguments ?? <String, dynamic>{}) as Map?;
+    weathers ??= args?['weathers'] ?? [];
 
-    final args = (ModalRoute.of(context)?.settings.arguments ??
-        <String, dynamic>{}) as Map?;
+    // تصفية البيانات بناءً على الحالة الأسبوعية أو الشهرية
+    final filteredData = isWeekly
+        ? groupByWeeks(weathers ?? [])
+        : groupByMonths(weathers ?? []);
 
-    weathers??=args?['weathers']??[];
-    weeklyMap=calculateAverageMap(groupByWeek(weathers!), (weather) => weather.temperature) ;
-    monthlyMap=calculateAverageMap(groupByMonth(weathers!), (weather) => weather.temperature) ;
-
-
-    if(weeklyMap.length<2){
-      Map<String, double> test={
-        "init":0
-      };
-      test.addAll(weeklyMap);
-      weeklyMap=test;
-    }
-    if(monthlyMap.length<2){
-      Map<String, double> test={
-        "init":0
-      };
-      test.addAll(monthlyMap);
-      monthlyMap=test;
-    }
-    // weeklyMap={
-    //   "week1": 23.3,
-    //   "week2": 23.5,
-    //   "week3": 27.0
-    // };
-    // print(weeklyMap);
-    // print(monthlyMap);
-     weeklyData =
-         weeklyMap.values.toList()??
-         generateBoundaries(weeklyMap);
-
-    monthlyData=
-        monthlyMap.values.toList()??
-        generateBoundaries(monthlyMap);
-    // print(weeklyData);
-    // print(monthlyData);
-    final dataMap = isWeekly ? weeklyMap : monthlyMap;
-
-    final data = isWeekly ? weeklyData : monthlyData;
-
-
-    calHumidity();
-
-    final humidityDataMap = isWeekly ?  humidityWeeklyMap :  humidityMonthlyMap;
-
-    final  humidityData = isWeekly ?  humidityWeeklyData :  humidityMonthlyData;
     return Scaffold(
       appBar: AppBar(
         title: Text('Weather Chart'),
@@ -216,7 +45,6 @@ class _WeatherChartScreenState extends State<WeatherChartScreen> {
                     'Weekly',
                     style: StyleManager.font14Bold(
                       color: isWeekly ? ColorManager.primaryColor : ColorManager.hintTextColor,
-        
                     ),
                   ),
                 ),
@@ -235,138 +63,477 @@ class _WeatherChartScreenState extends State<WeatherChartScreen> {
             // المخطط
             Expanded(
               child: LineChart(
-                LineChartData(
-                  lineBarsData: [
-                    LineChartBarData(
-                      spots: List.generate(
-                        data.length,
-                            (index) {
-                          // if (index < dataMap.length) { // تحقق من صحة الفهرس
-                            double value = data[index].toDouble();
-                            // String key = dataMap.keys.elementAt(index); // الحصول على المفتاح (week1, week2, ...)
-                           // print(value);
-                            return FlSpot(index.toDouble(), value);
-                          // }
-                          return FlSpot(0, 0); // قيمة افتراضية إذا كان الفهرس غير صالح
-                        },
-                      ),
-                      isCurved: true,
-                      color: ColorManager.primaryColor,
-                      barWidth: 2,
-                      belowBarData: BarAreaData(
-                        show: true,
-                        color: ColorManager.primaryColor.withOpacity(0.3),
-                      ),
-                      dotData: FlDotData(show: false),
-                    ),
-                    LineChartBarData(
-                      spots: List.generate(
-                        humidityData.length,
-                            (index) {
-                          // if (index < dataMap.length) { // تحقق من صحة الفهرس
-                            double value = data[index].toDouble();
-                            // String key = dataMap.keys.elementAt(index); // الحصول على المفتاح (week1, week2, ...)
-                           // print(value);
-                            return FlSpot(index.toDouble(), value);
-                          // }
-                          return FlSpot(0, 0); // قيمة افتراضية إذا كان الفهرس غير صالح
-                        },
-                      ),
-                      isCurved: true,
-                      color: ColorManager.successColor,
-                      barWidth: 2,
-                      // belowBarData: BarAreaData(
-                      //   show: true,
-                      //   color: ColorManager.successColor.withOpacity(0.3),
-                      // ),
-                      dotData: FlDotData(show: false),
-                    ),
-                  ],
-                  titlesData: FlTitlesData(
-                    leftTitles: AxisTitles(
-                      sideTitles: SideTitles(showTitles: true),
-                    ),
-                    bottomTitles: AxisTitles(
-                      sideTitles: SideTitles(
-                        showTitles: true,
-                        getTitlesWidget: (value, meta) {
-                          int index =  value!=value.toInt()?-1:value.toInt();
-                          // index-=1;
-                          // print(value);
-                          if (index >= 0 && index < data.length && index < dataMap.length) {
-                            String key = dataMap.keys.elementAt(index); // الحصول على مفتاح الأسبوع
-                            return Text(
-                              key, // عرض "week1", "week2", ...
-                              style: StyleManager.font10Medium(),
-                            );
-                          }
-                          return SizedBox.shrink();
-                        },
-                      ),
-                    ),
-                  ),
-                  gridData: FlGridData(show: true),
-                  borderData: FlBorderData(
-                    border: Border.all(color: ColorManager.grayColor),
-                  ),
-                ),
+                buildChartData(filteredData),
               ),
-            )
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  height: 10,
+                  width: 10,
+                  color: Colors.red,
+                ),
+                SizedBox(width: 5),
+                Text('Temperature', style: TextStyle(color: Colors.black)),
+                SizedBox(width: 20),
+                Container(
+                  height: 10,
+                  width: 10,
+                  color: Colors.blue,
+                ),
+                SizedBox(width: 5),
+                Text('Pressure', style: TextStyle(color: Colors.black)),
+                SizedBox(width: 20),
+                Container(
+                  height: 10,
+                  width: 10,
+                  color: Colors.green,
+                ),
+                SizedBox(width: 5),
+                Text('Humidity', style: TextStyle(color: Colors.black)),
+              ],
+            ),
 
-            ,
-          ],
+        ],
         ),
       ),
     );
   }
+
+  // إنشاء بيانات المخطط
+  LineChartData buildChartData(Map<String, List<WeatherModel>> data) {
+    List<FlSpot> temperatureSpots = [];
+    List<FlSpot> pressureSpots = [];
+    List<FlSpot> humiditySpots = [];
+    if(data.length<2){
+      Map<String, List<WeatherModel>>test={
+        "init":[WeatherModel(pressure: 0,temperature: 0,humidity: 0)]
+      };
+      test.addAll(data);
+      data=test;
+    }
+    int index = 0;
+    data.forEach((key, value) {
+      final avgTemperature = value.map((e) => e.temperature ?? 0).reduce((a, b) => a + b) / value.length;
+      final avgPressure = value.map((e) => e.pressure ?? 0).reduce((a, b) => a + b) / value.length;
+      final avgHumidity = value.map((e) => e.humidity ?? 0).reduce((a, b) => a + b) / value.length;
+
+      // تطبيع القيم بتقسيمها على عوامل التقسيم
+      final normalizedTemperature = avgTemperature / 1;
+      final normalizedPressure = avgPressure / 1000;
+      final normalizedHumidity = avgHumidity / 1;
+
+      // إضافة النقاط
+      temperatureSpots.add(FlSpot(index.toDouble(), double.parse(normalizedTemperature.toStringAsFixed(2))));
+      pressureSpots.add(FlSpot(index.toDouble(), double.parse(normalizedPressure.toStringAsFixed(2))));
+      humiditySpots.add(FlSpot(index.toDouble(), double.parse(normalizedHumidity.toStringAsFixed(2))));
+
+
+      // temperatureSpots.add(FlSpot(index.toDouble(),double.parse(avgTemperature.toStringAsFixed(2)) ));
+      // pressureSpots.add(FlSpot(index.toDouble(),double.parse(avgPressure.toStringAsFixed(2)) ));
+      // humiditySpots.add(FlSpot(index.toDouble(),double.parse(avgHumidity.toStringAsFixed(2)) ));
+
+
+      // temperatureSpots.add(FlSpot(index.toDouble(), avgTemperature));
+      // pressureSpots.add(FlSpot(index.toDouble(), avgPressure));
+      // humiditySpots.add(FlSpot(index.toDouble(), avgHumidity));
+
+      index++;
+    });
+
+
+    return LineChartData(
+      gridData: FlGridData(show: true),
+      titlesData: FlTitlesData(
+        leftTitles: AxisTitles(
+          sideTitles: SideTitles(
+            showTitles: true,
+            getTitlesWidget: (value, meta) {
+              return Text(
+                value.toInt().toString(),
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 12,
+                ),
+              );
+            },
+          ),
+        ),
+        bottomTitles: AxisTitles(
+          sideTitles: SideTitles(
+            showTitles: true,
+            getTitlesWidget: (value, meta) {
+              final index = value.toInt();
+              if (index >= 0 && index < data.keys.length) {
+                return Text(
+                  data.keys.elementAt(index),
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 12,
+                  ),
+                );
+              }
+              return const SizedBox.shrink();
+            },
+          ),
+        ),
+      ),
+
+      borderData: FlBorderData(show: true),
+      lineBarsData: [
+        LineChartBarData(
+          spots: temperatureSpots,
+          isCurved: true,
+          color: Colors.red,
+          // colors: [Colors.red],
+          barWidth: 3,
+        ),
+        LineChartBarData(
+          spots: pressureSpots,
+          isCurved: true,
+          color: Colors.blue,
+          // colors: [Colors.blue],
+          barWidth: 3,
+        ),
+        LineChartBarData(
+          spots: humiditySpots,
+          isCurved: true,
+          color: Colors.green,
+          // colors: [Colors.green],
+          barWidth: 3,
+        ),
+      ],
+    );
+  }
+  LineChartData buildChartDataOld(Map<String, List<WeatherModel>> data) {
+    List<FlSpot> temperatureSpots = [];
+    List<FlSpot> pressureSpots = [];
+    List<FlSpot> humiditySpots = [];
+
+    int index = 0;
+    data.forEach((key, value) {
+      print(key);
+      final avgTemperature = value.map((e) => e.temperature ?? 0).reduce((a, b) => a + b) / value.length;
+      final avgPressure = value.map((e) => e.pressure ?? 0).reduce((a, b) => a + b) / value.length;
+      final avgHumidity = value.map((e) => e.humidity ?? 0).reduce((a, b) => a + b) / value.length;
+
+      temperatureSpots.add(FlSpot(index.toDouble(), avgTemperature));
+      pressureSpots.add(FlSpot(index.toDouble(), avgPressure));
+      humiditySpots.add(FlSpot(index.toDouble(), avgHumidity));
+      index++;
+    });
+    print(data);
+    print(pressureSpots);
+    print(humiditySpots);
+    print(temperatureSpots);
+
+    return LineChartData(
+      gridData: FlGridData(show: true),
+      titlesData: FlTitlesData(
+        leftTitles: AxisTitles(
+          sideTitles: SideTitles(
+            showTitles: true,
+            getTitlesWidget: (value, meta) {
+              return Text(
+                value.toInt().toString(),
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 12,
+                ),
+              );
+            },
+          ),
+        ),
+        bottomTitles: AxisTitles(
+          sideTitles: SideTitles(
+            showTitles: true,
+            getTitlesWidget: (value, meta) {
+              final index = value.toInt();
+              if (index >= 0 && index < data.keys.length) {
+                return Text(
+                  data.keys.elementAt(index),
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 12,
+                  ),
+                );
+              }
+              return const SizedBox.shrink();
+            },
+          ),
+        ),
+      ),
+
+      borderData: FlBorderData(show: true),
+      lineBarsData: [
+        LineChartBarData(
+          spots: temperatureSpots,
+          isCurved: true,
+          color: Colors.red,
+          // colors: [Colors.red],
+          barWidth: 3,
+        ),
+        LineChartBarData(
+          spots: pressureSpots,
+          isCurved: true,
+          color: Colors.blue,
+          // colors: [Colors.blue],
+          barWidth: 3,
+        ),
+        LineChartBarData(
+          spots: humiditySpots,
+          isCurved: true,
+          color: Colors.green,
+          // colors: [Colors.green],
+          barWidth: 3,
+        ),
+      ],
+    );
+  }
+  LineChartData buildChartDataOld2(Map<String, List<WeatherModel>> data) {
+    List<FlSpot> temperatureSpots = [];
+    List<FlSpot> pressureSpots = [];
+    List<FlSpot> humiditySpots = [];
+
+    // ابدأ بمؤشر الخطوط
+    int index = 0;
+
+    data.forEach((key, value) {
+      // إضافة النقاط لكل قيمة
+      for (int i = 0; i < value.length; i++) {
+        temperatureSpots.add(FlSpot(index + i.toDouble(), value[i].temperature?.toDouble() ?? 0));
+        pressureSpots.add(FlSpot(index + i.toDouble(), value[i].pressure?.toDouble() ?? 0));
+        humiditySpots.add(FlSpot(index + i.toDouble(), value[i].humidity?.toDouble() ?? 0));
+      }
+
+      // زيادة الفاصل بين الخطوط
+      index += value.length;
+    });
+    print(temperatureSpots);
+    print(pressureSpots);
+
+    return LineChartData(
+      gridData: FlGridData(show: true),
+      titlesData: FlTitlesData(
+        leftTitles: AxisTitles(
+          sideTitles: SideTitles(
+            showTitles: true,
+            getTitlesWidget: (value, meta) {
+              return Text(
+                value.toInt().toString(),
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 12,
+                ),
+              );
+            },
+          ),
+        ),
+        bottomTitles: AxisTitles(
+          sideTitles: SideTitles(
+            showTitles: true,
+            getTitlesWidget: (value, meta) {
+              final index = value.toInt();
+              if (index >= 0 && index < data.keys.length) {
+                return Text(
+                  data.keys.elementAt(index),
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 12,
+                  ),
+                );
+              }
+              return const SizedBox.shrink();
+            },
+          ),
+        ),
+      ),
+      borderData: FlBorderData(show: true),
+      lineBarsData: [
+        LineChartBarData(
+          spots: temperatureSpots,
+          isCurved: true,
+          color: Colors.red,
+          barWidth: 3,
+          dotData: FlDotData(show: false),
+        ),
+        LineChartBarData(
+          spots: pressureSpots,
+          isCurved: true,
+          color: Colors.blue,
+          barWidth: 3,
+          dotData: FlDotData(show: false),
+        ),
+        LineChartBarData(
+          spots: humiditySpots,
+          isCurved: true,
+          color: Colors.green,
+          barWidth: 3,
+          dotData: FlDotData(show: false),
+        ),
+      ],
+    );
+  }
+  LineChartData buildChartDataOld3(Map<String, List<WeatherModel>> data) {
+    List<FlSpot> temperatureSpots = [];
+    List<FlSpot> pressureSpots = [];
+    List<FlSpot> humiditySpots = [];
+
+    data.forEach((key, value) {
+      for (var weather in value) {
+        final xValue = weather.timestamp!.millisecondsSinceEpoch.toDouble(); // تحويل الطابع الزمني إلى قيمة X
+        temperatureSpots.add(FlSpot(xValue, weather.temperature?.toDouble() ?? 0));
+        pressureSpots.add(FlSpot(xValue, weather.pressure?.toDouble() ?? 0));
+        humiditySpots.add(FlSpot(xValue, weather.humidity?.toDouble() ?? 0));
+
+      }
+    });
+
+    return LineChartData(
+      gridData: FlGridData(show: true),
+      titlesData: FlTitlesData(
+        leftTitles: AxisTitles(
+          sideTitles: SideTitles(
+            showTitles: true,
+            getTitlesWidget: (value, meta) {
+              return Text(
+                value.toInt().toString(),
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 12,
+                ),
+              );
+            },
+          ),
+        ),
+        bottomTitles: AxisTitles(
+          sideTitles: SideTitles(
+            showTitles: true,
+            getTitlesWidget: (value, meta) {
+              final date = DateTime.fromMillisecondsSinceEpoch(value.toInt());
+              return Text(
+                DateFormat('dd/MM').format(date), // عرض التاريخ بصيغة يوم/شهر
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 12,
+                ),
+              );
+            },
+          ),
+        ),
+      ),
+      borderData: FlBorderData(show: true),
+      lineBarsData: [
+        LineChartBarData(
+          spots: temperatureSpots,
+          isCurved: true,
+          color: Colors.red,
+          barWidth: 3,
+          dotData: FlDotData(show: false),
+        ),
+        LineChartBarData(
+          spots: pressureSpots,
+          isCurved: true,
+          color: Colors.blue,
+          barWidth: 3,
+          dotData: FlDotData(show: false),
+        ),
+        LineChartBarData(
+          spots: humiditySpots,
+          isCurved: true,
+          color: Colors.green,
+          barWidth: 3,
+          dotData: FlDotData(show: false),
+        ),
+      ],
+      minX: temperatureSpots.isNotEmpty ? temperatureSpots.first.x : 0,
+      maxX: temperatureSpots.isNotEmpty ? temperatureSpots.last.x : 0,
+    );
+  }
+
+  // تجميع البيانات حسب الأسابيع
+  Map<String, List<WeatherModel>> groupByWeeks(List<WeatherModel> data) {
+    final Map<String, List<WeatherModel>> grouped = {};
+
+    for (var weather in data) {
+      final week = DateFormat("'Week' w").format(weather.timestamp!);
+      grouped.putIfAbsent(week, () => []).add(weather);
+    }
+    return grouped;
+  }
+
+  // تجميع البيانات حسب الأشهر
+  Map<String, List<WeatherModel>> groupByMonths(List<WeatherModel> data) {
+    final Map<String, List<WeatherModel>> grouped = {};
+    for (var weather in data) {
+      final month = DateFormat("MMM yyyy").format(weather.timestamp!);
+      grouped.putIfAbsent(month, () => []).add(weather);
+    }
+    return grouped;
+  }
 }
-// Map<String, List<WeatherModel>> groupByWeek(List<WeatherModel> weathers) {
-//     Map<String, List<WeatherModel>> groupedData = {};
-//     DateFormat monthFormatter = DateFormat('MMM');
-//     DateTime? firstDate = weathers.isNotEmpty ? weathers.first.timestamp : null;
+
+
+// import 'package:flutter/cupertino.dart';
+// import 'package:flutter/material.dart';
 //
-//     if (firstDate != null) {
-//       weathers.forEach((weather) {
-//         if (weather.timestamp != null) {
+// import '../../core/models/weather_model.dart';
+// import '../../core/utils/color_manager.dart';
+// import '../../core/utils/style_manager.dart';
+// import '../../core/widgets/app_padding.dart';
 //
-//           int daysDiff = weather.timestamp!.difference(firstDate).inDays;
-//           int weekNumber = (daysDiff ~/ 7) + 1;
-//           String monthKey = monthFormatter.format(weather.timestamp!); //
-//           String weekKey = "W$weekNumber-$monthKey";
+// class WeatherChartScreen extends StatefulWidget {
+//   @override
+//   _WeatherChartScreenState createState() => _WeatherChartScreenState();
+// }
 //
+// class _WeatherChartScreenState extends State<WeatherChartScreen> {
+//   List<WeatherModel>? weathers;
+//   bool isWeekly = true;
+//   @override
+//   Widget build(BuildContext context) {
 //
-//           groupedData.putIfAbsent(weekKey, () => []);
-//           groupedData[weekKey]!.add(weather);
-//         }
-//       });
-//     }
-//     return groupedData;
+//     final args = (ModalRoute.of(context)?.settings.arguments ??
+//         <String, dynamic>{}) as Map?;
+//
+//     weathers??=args?['weathers']??[];
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('Weather Chart'),
+//         centerTitle: true,
+//       ),
+//       body: AppPaddingWidget(
+//       child: Column(
+//       children: [
+//       // زر التبديل بين الأسبوعي والشهري
+//       Row(
+//       mainAxisAlignment: MainAxisAlignment.center,
+//       children: [
+//         TextButton(
+//           onPressed: () => setState(() => isWeekly = true),
+//           child: Text(
+//             'Weekly',
+//             style: StyleManager.font14Bold(
+//               color: isWeekly ? ColorManager.primaryColor : ColorManager.hintTextColor,
+//
+//             ),
+//           ),
+//         ),
+//         TextButton(
+//           onPressed: () => setState(() => isWeekly = false),
+//           child: Text(
+//             'Monthly',
+//             style: StyleManager.font14Bold(
+//               color: !isWeekly ? ColorManager.primaryColor : ColorManager.hintTextColor,
+//             ),
+//           ),
+//         ),
+//       ],
+//     ),
+//     SizedBox(height: 20),
+//     // المخطط
+//     Expanded(child: null,)
+//     ])));
 //   }
-//   Map<String, List<WeatherModel>> groupByMonth(List<WeatherModel> weathers) {
-//     Map<String, List<WeatherModel>> groupedData = {};
-//     DateFormat monthFormatter = DateFormat.MMMM();
-//     DateFormat formatter = DateFormat('MMM-yy');
-//     weathers.forEach((weather) {
-//       if (weather.timestamp != null) {
-//
-//         // String monthKey = "${weather.timestamp!.year}-${weather.timestamp!.month.toString().padLeft(2, '0')}";
-//         // String monthKey = monthFormatter.format(weather.timestamp!);
-//         String monthKey = formatter.format(weather.timestamp!);
-//
-//
-//         groupedData.putIfAbsent(monthKey, () => []);
-//         groupedData[monthKey]!.add(weather);
-//       }
-//     });
-//
-//
-//     return groupedData;
-//   }
-//   List<double> calculateAverages(Map<String, List<WeatherModel>> dataMap, num? Function(WeatherModel) valueSelector) {
-//     return dataMap.values.map((dataList) {
-//
-//       double sum = dataList.fold(0.0, (total, item) => total + (valueSelector(item) ?? 0));
-//
-//       return dataList.isNotEmpty ? sum / dataList.length : 0.0;
-//     }).toList();
-//   }
+// }
