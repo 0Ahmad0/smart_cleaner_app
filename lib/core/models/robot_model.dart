@@ -35,7 +35,7 @@ class RobotModel {
       });
 
   PowerCommand get getState{
-    return PowerCommand.values.where((element)=>powerCommand?.toLowerCase().contains(element.name.toLowerCase())??false).firstOrNull??PowerCommand.shutdown;
+    return PowerCommand.values.where((element)=>powerCommand?.toLowerCase().contains(element.name.toLowerCase())??false).firstOrNull??PowerCommand.stop;
   }
   factory RobotModel.fromJson( json){
     var data = ['_JsonDocumentSnapshot','_JsonQueryDocumentSnapshot'].contains(json.runtimeType.toString())?json.data():json;
