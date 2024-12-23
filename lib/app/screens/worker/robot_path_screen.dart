@@ -188,7 +188,7 @@ class _RobotPathWorkerScreenState extends State<RobotPathWorkerScreen> {
     )...[
       SizedBox(height: 10.h,),
       Visibility(
-        visible: robots.firstOrNull?.getState==PowerCommand.shutdown,
+        visible: robots.firstOrNull?.getState==PowerCommand.shutdown||robots.firstOrNull?.getState==PowerCommand.stop,
         child: InkWell(
           onTap: (){
             Get.put(WorkersController()).startRobot(context,  robots.firstOrNull);
