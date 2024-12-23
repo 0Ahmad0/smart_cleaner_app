@@ -62,7 +62,7 @@ class WorkerRobotsController extends GetxController{
     robots.items.forEach((element) {
       if((element.name?.toLowerCase().contains(term.toLowerCase())??false))
         if(element.startPoint!=null&&element.endPoint!=null)
-          if(element.getState==PowerCommand.start)
+          if(element.getState==PowerCommand.start||element.getState==PowerCommand.shutdown)
           robotsWithFilter.items.add(element);
     });
     update();

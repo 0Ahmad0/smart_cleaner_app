@@ -214,20 +214,87 @@ class _RobotPathWorkerScreenState extends State<RobotPathWorkerScreen> {
           ),
         ),
       ),
-
       Visibility(
         visible: robots.firstOrNull?.getState==PowerCommand.start,
         child:    Text(
-        'The robot is started',
+          'The robot is started',
           style: StyleManager.font20Bold(
-            color:  ColorManager.successColor
+              color:  ColorManager.successColor
 
           ),
         ),
       ),
+      SizedBox(height: 10.h,),
+      Visibility(
+        visible: robots.firstOrNull?.getState==PowerCommand.start,
+        child: InkWell(
+          onTap: (){
+            Get.put(WorkersController()).cancelRobot(context,  robots.firstOrNull);
+          },
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
+            decoration: BoxDecoration(
+                color: ColorManager.errorColor,
+                borderRadius:
+                BorderRadius.all( Radius.circular(100.r))),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(Icons.pause_circle_outline,size: 20.w,color: ColorManager.whiteColor,),
+                SizedBox(width: 8.w,),
+                Text(
+                 "Shout Down",
+                  style: StyleManager.font18Medium(color: ColorManager.whiteColor).copyWith(fontSize: 16),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+
+
+      // Visibility(
+      //   visible: robots.firstOrNull?.getState==PowerCommand.shutdown,
+      //   child: InkWell(
+      //     onTap: (){
+      //       Get.put(WorkersController()).startRobot(context,  robots.firstOrNull);
+      //     },
+      //
+      //     child: Container(
+      //       padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
+      //       decoration: BoxDecoration(
+      //           color: ColorManager.successColor,
+      //           borderRadius:
+      //           BorderRadius.all( Radius.circular(100.r))),
+      //       child: Row(
+      //         mainAxisSize: MainAxisSize.min,
+      //         children: [
+      //           Icon(Icons.start,size: 20.w,color: ColorManager.whiteColor,),
+      //           SizedBox(width: 8.w,),
+      //           Text(
+      //             StringManager.start,
+      //             style: StyleManager.font18Medium(color: ColorManager.whiteColor).copyWith(fontSize: 16),
+      //           ),
+      //         ],
+      //       ),
+      //     ),
+      //   ),
+      // ),
+      //
+      // Visibility(
+      //   visible: robots.firstOrNull?.getState==PowerCommand.start,
+      //   child:    Text(
+      //   'The robot is started',
+      //     style: StyleManager.font20Bold(
+      //       color:  ColorManager.successColor
+      //
+      //     ),
+      //   ),
+      // ),
     ],
 
-            Spacer()
+            // Spacer()
+            SizedBox(height: 80.h,)
           ]
         ,
           Divider(

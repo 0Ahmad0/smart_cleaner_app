@@ -123,7 +123,22 @@ class WorkersController extends GetxController{
       );
     }
   }
+  cancelRobot(BuildContext context ,RobotModel? robot) async {
+    var result;
+    if(robot==null)
+      return;
+    ConstantsWidgets.showLoading();
+    robot.powerCommand=PowerCommand.shutdown.name;
+    result = await FirebaseFun.updateRobotReal(robot: robot);
+    ConstantsWidgets.closeDialog();
+    if(result['status']){
+      ConstantsWidgets.TOAST(context,textToast: FirebaseFun.findTextToast("Successful canceled"),state: result['status']);
+    }
+    else
+      ConstantsWidgets.TOAST(context,textToast: FirebaseFun.findTextToast(result['message'].toString()),state: result['status']);
 
+    // }
+  }
   cancelTripRobot(BuildContext context ,RobotModel? robot) async {
     var result;
     if(robot==null)
@@ -131,7 +146,7 @@ class WorkersController extends GetxController{
     ConstantsWidgets.showLoading();
     robot.endPoint=null;
     robot.startPoint=null;
-    robot.powerCommand=null;
+    robot.powerCommand=PowerCommand.stop.name;
     result = await FirebaseFun.updateRobotReal(robot: robot);
     ConstantsWidgets.closeDialog();
     if(result['status']){

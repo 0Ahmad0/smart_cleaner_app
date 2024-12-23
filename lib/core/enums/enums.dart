@@ -12,6 +12,7 @@ enum StateStream{
 enum PowerCommand{
   start,
   shutdown,
+  stop,
 }
 enum StateProblem{
   pending,
