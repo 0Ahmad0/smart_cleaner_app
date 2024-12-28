@@ -37,10 +37,10 @@ class ProblemsListviewWidget extends StatelessWidget {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      FileListWidget(files:items[index].files,
-                        // onDelete: (file)=>controller.removeFile(file),
-                      ),
-                      SizedBox(height: 10.h,),
+                      // FileListWidget(files:items[index].files,
+                      //   // onDelete: (file)=>controller.removeFile(file),
+                      // ),
+                      // SizedBox(height: 10.h,),
                       LocationListWidget(locations:items[index].locations,
                         // onDelete: (location)=>controller.removeLocation(location),
                       ),
