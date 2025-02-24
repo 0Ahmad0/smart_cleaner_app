@@ -260,6 +260,6 @@ class StringManager {
   static const notificationTitleRejectRequestWorker = "Reject Account";
   static const notificationSubTitleRejectRequestWorker= "Done Rejected Request As Worker";
 
-
+  static const message_successfully_restore = "Successful Restore";
 
 }

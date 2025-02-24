@@ -10,6 +10,7 @@ import 'package:smart_cleaner_app/core/utils/assets_manager.dart';
 import 'package:smart_cleaner_app/core/utils/color_manager.dart';
 import 'package:smart_cleaner_app/core/utils/style_manager.dart';
 
+import '../../../controllers/fab_controller.dart';
 import '../../../controllers/notifications_controller.dart';
 
 class NotificationsListviewWidget extends StatelessWidget {
@@ -28,7 +29,9 @@ class NotificationsListviewWidget extends StatelessWidget {
       ),
       itemBuilder: (context, index) => ListTile(
         onTap: () {
+          if(showDemoRejectMessage()) return;
           if(!list[index].checkRec){
+
             list[index].checkRec = true;
             Get.put(NotificationsController())
                 .updateNotification(context, notification: list[index]);

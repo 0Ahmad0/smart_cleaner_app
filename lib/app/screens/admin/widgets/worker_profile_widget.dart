@@ -8,6 +8,7 @@ import 'package:smart_cleaner_app/core/utils/color_manager.dart';
 
 import '../../../../core/enums/enums.dart';
 import '../../../../core/models/user_model.dart';
+import '../../../controllers/fab_controller.dart';
 import '../../../controllers/workers_controller.dart';
 
 class WorkerProfileWidget extends StatelessWidget {
@@ -54,6 +55,7 @@ class WorkerProfileWidget extends StatelessWidget {
           IconButton(
             padding: EdgeInsets.zero,
             onPressed: (){
+              if(showDemoRejectMessage()) return;
               Get.put(WorkersController()).acceptOrRejectedRequest(context,StateWorker.Accepted,user);
             },
             icon: Icon(Icons.check_circle_outline,color: ColorManager.successColor,),
@@ -61,6 +63,7 @@ class WorkerProfileWidget extends StatelessWidget {
           IconButton(
             padding: EdgeInsets.zero,
             onPressed: (){
+              if(showDemoRejectMessage()) return;
               Get.put(WorkersController()).acceptOrRejectedRequest(context,StateWorker.Rejected,user);
             },
             icon: Icon(Icons.cancel_outlined,color: ColorManager.errorColor,),

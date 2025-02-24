@@ -12,6 +12,7 @@ import 'package:smart_cleaner_app/core/utils/style_manager.dart';
 import 'package:smart_cleaner_app/core/widgets/app_button.dart';
 
 import '../../../../core/enums/enums.dart';
+import '../../../controllers/fab_controller.dart';
 import '../../guest/widgets/file_list_widget.dart';
 import '../../guest/widgets/location_list_widget.dart';
 import '../controllers/worker_problems_controller.dart';
@@ -77,6 +78,7 @@ class ProblemsListviewWidget extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: InkWell(
             onTap: (){
+              if(showDemoRejectMessage()) return;
               Get.put(WorkerProblemsController()).solveProblem(context,items[index]);
             },
             child: Container(

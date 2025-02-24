@@ -17,6 +17,7 @@ import 'package:smart_cleaner_app/core/utils/string_manager.dart';
 import 'package:smart_cleaner_app/core/utils/style_manager.dart';
 import 'package:smart_cleaner_app/core/widgets/app_padding.dart';
 
+import '../../controllers/fab_controller.dart';
 import 'controllers/guest_problem_controller.dart';
 import 'widgets/describe_problem_widget.dart';
 import 'widgets/report_problem_bottom_sheet_widget.dart';
@@ -180,6 +181,7 @@ class _ReportProblemGuestScreenState extends State<ReportProblemGuestScreen> {
                   child: ZoomIn(
                     child: IconButton(
                       onPressed: () {
+                        if(showDemoRejectMessage()) return;
                        controller.addProblem(context);
                         // reportProblemController.clear();
                       },

@@ -7,6 +7,7 @@ import 'package:smart_cleaner_app/core/models/activity_model.dart';
 import 'package:smart_cleaner_app/core/utils/color_manager.dart';
 import 'package:smart_cleaner_app/core/utils/style_manager.dart';
 
+import '../../../controllers/fab_controller.dart';
 import '../../../controllers/worker_activities_controller.dart';
 
 class ActivitiesListviewWidget extends StatelessWidget {
@@ -24,6 +25,7 @@ class ActivitiesListviewWidget extends StatelessWidget {
       ),
       itemBuilder: (context, index) => ListTile(
         onTap: (){
+          if(showDemoRejectMessage()) return;
           if(!list[index].checkRec){
             list[index].checkRec = true;
             Get.put(WorkerActivitiesController())
