@@ -22,7 +22,7 @@ import '../../controllers/profile_controller.dart';
 import '../../widgets/container_home_widget.dart';
 
 class HomeAdminScreen extends StatelessWidget {
-   HomeAdminScreen({super.key});
+  HomeAdminScreen({super.key});
   final GlobalKey _startKey = GlobalKey();
   final GlobalKey _workerProfilesKey = GlobalKey();
   final GlobalKey _activitiesKey = GlobalKey();
@@ -53,178 +53,164 @@ class HomeAdminScreen extends StatelessWidget {
             }
           });
           return Scaffold(
-          appBar: AppBar(
-            leading: Padding(
-              padding: EdgeInsets.symmetric(
-                vertical: 8.h,
+            appBar: AppBar(
+              leading: Padding(
+                padding: EdgeInsets.symmetric(
+                  vertical: 8.h,
+                ),
+                child: CircleAvatar(),
               ),
-              child: CircleAvatar(),
-            ),
-            title: Text(StringManager.homeText.toUpperCase()),
-            actions: [
-              Showcase(
-                key: _startKey,
-                description: "Welcome to the admin section! I'm here to help you understand some sections. Click to continue and complete the instructions",
+              title: Text(StringManager.homeText.toUpperCase()),
+              actions: [
+                Showcase(
+                  key: _startKey,
+                  description: "Welcome to the admin section! I'm here to help you understand some sections. Click to continue and complete the instructions",
 
-                child: SvgPicture.asset(
-                  AssetsManager.robotIcon,
-                  width: 50.w,
-                  height: 50.h,
-                ),
-              ),
-              horizontalSpace(6.w),
-            ],
-          ),
-          body: AppPaddingWidget(
-            child: Column(
-              children: [
-        GetBuilder<ProfileController>(
-        init: Get.put(ProfileController()),
-        builder: (controller) {
-        return
-                Center(
-                  child: Text.rich(
-                    textAlign: TextAlign.center,
-                    TextSpan(
-                      children: [
-                        TextSpan(
-                            text: StringManager.welcomeText,
-                            style: StyleManager.font20SemiBold()),
-                        TextSpan(
-                          text: ' ' + (controller.currentUser.value?.name??  StringManager.adminText),
-                          style: StyleManager.font16Regular(
-                              color: ColorManager.primaryColor),
-                        ),
-                      ],
-                    ),
+                  child: SvgPicture.asset(
+                    AssetsManager.robotIcon,
+                    width: 50.w,
+                    height: 50.h,
                   ),
-                );}),
-                verticalSpace(20.h),
-                AppTextField(
-                  hintText: StringManager.searchText,
-                  iconData: Icons.search,
                 ),
-                verticalSpace(30.h),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Showcase(
-                      key: _robotPathKey,
-                      description: "Monitor the robot's path in real-time and modify it as needed for precise navigation",
-                      child: ContainerHomeWidget(
+                horizontalSpace(6.w),
+              ],
+            ),
+            body: AppPaddingWidget(
+              child: Column(
+                children: [
+                  GetBuilder<ProfileController>(
+                      init: Get.put(ProfileController()),
+                      builder: (controller) {
+                        return
+                          Center(
+                            child: Text.rich(
+                              textAlign: TextAlign.center,
+                              TextSpan(
+                                children: [
+                                  TextSpan(
+                                      text: StringManager.welcomeText,
+                                      style: StyleManager.font20SemiBold()),
+                                  TextSpan(
+                                    text: ' ' + (controller.currentUser.value?.name??  StringManager.adminText),
+                                    style: StyleManager.font16Regular(
+                                        color: ColorManager.primaryColor),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );}),
+                  verticalSpace(20.h),
+                  AppTextField(
+                    hintText: StringManager.searchText,
+                    iconData: Icons.search,
+                  ),
+                  verticalSpace(30.h),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ContainerHomeWidget(
+                        casekey: _robotPathKey,
+                        caseDescription: "Monitor the robot's path in real-time and modify it as needed for precise navigation",
+
                         icon: Icons.route,
                         text: StringManager.robotPathText,
                         color: ColorManager.hintTextColor,
                         route: Routes.robotPathWorkerRoute,
                       ),
-                    ),
-                    Showcase(
-                      key: _weatherKey,
-                      description: "Check the current weather conditions along with comprehensive statistics for the past month",
-
-                      child: ContainerHomeWidget(
+                      ContainerHomeWidget(
+                        casekey: _weatherKey,
+                        caseDescription: "Check the current weather conditions along with comprehensive statistics for the past month",
                         icon: Icons.sunny_snowing,
                         text: StringManager.weatherStatisticsText,
                         color: ColorManager.tealColor,
                         route: Routes.weatherRoute,
                       ),
-                    ),
-                    Expanded(
-                      child: Showcase(
-                        key: _workerProfilesKey,
-                        description: "Manage worker profiles and view their activity logs",
-                      
-                        child: ContainerHomeWidget(
-                          icon: Icons.person,
-                          text: StringManager.workersProfilesText,
-                          route: Routes.workerProfilesRoute,
-                        ),
+                      ContainerHomeWidget(
+                        casekey: _workerProfilesKey,
+                        caseDescription: "Manage worker profiles and view their activity logs",
+
+                        icon: Icons.person,
+                        text: StringManager.workersProfilesText,
+                        route: Routes.workerProfilesRoute,
                       ),
-                    ),
-                  ],
-                ),
-                verticalSpace(20.h),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Showcase(
-                      key: _activitiesKey,
-                      description: "View all ongoing and historical activities",
-                      child: ContainerHomeWidget(
+                    ],
+                  ),
+                  verticalSpace(20.h),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ContainerHomeWidget(
+                        casekey: _activitiesKey,
+                        caseDescription: "View all ongoing and historical activities",
+
                         icon: Icons.notifications_active_outlined,
                         text: StringManager.activitiesText,
                         route: Routes.activitiesRoute,
                       ),
-                    ),
-                    Showcase(
-                      key: _trackTheRoboKey,
-                      description: "Track the robot's path in real-time on the map for precise navigation",
-                      child: ContainerHomeWidget(
+                      ContainerHomeWidget(
+                        casekey: _trackTheRoboKey,
+                        caseDescription: "Track the robot's path in real-time on the map for precise navigation",
+
                         icon: Icons.location_on_outlined,
                         text: StringManager.trackText,
                         color: ColorManager.hintTextColor,
                         route: Routes.trackTheRobotRoute,
                       ),
-                    ),
-                    Showcase(
-                      key: _robotOnDutyKey,
-                      description: "Cancel an active robot mission if it is no longer needed",
+                      ContainerHomeWidget(
+                        casekey: _robotOnDutyKey,
+                        caseDescription: "Cancel an active robot mission if it is no longer needed",
 
-                      child: ContainerHomeWidget(
                         icon: Icons.close_outlined,
                         text: StringManager.cancelTripText,
                         route: Routes.robotOnDutyWorkerRoute,
                       ),
-                    ),
-                  ],
-                ),
-                verticalSpace(20.h),
-                Showcase(
-                  key: _otherKey,
-                  description: "Unload or load the robot's cargo, and charge it when necessary",
-
-                  child: Row(
+                    ],
+                  ),
+                  verticalSpace(20.h),
+                  Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                  
+
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                  
+
                       ContainerHomeWidget(
+                        casekey: _otherKey,
+                        caseDescription: "Unload or load the robot's cargo, and charge it when necessary",
+
                         icon: Icons.more_horiz,
                         text: StringManager.otherText,
                         color: ColorManager.tealColor,
                         route: Routes.otherAdminRoute,
                       ),
-                  
-                  
+
+
                     ],
                   ),
-                ),
-        
-                verticalSpace(10.h),
-        
-                ListTile(
-                  onTap: () {
-                    Get.lazyPut(() => AuthController());
-                    AuthController.instance.signOut(context);
-                  },
-                  title:Text(
-        
-                    StringManager.logoutText,
-                    // textAlign: TextAlign.center,
-                    style: StyleManager.font16Regular(
-                        color: ColorManager.primaryColor),
-                  ) ,
-                  leading:  Icon(Icons.logout,size: 20.sp,),
-        
-                ),
-              ],
+
+                  verticalSpace(10.h),
+
+                  ListTile(
+                    onTap: () {
+                      Get.lazyPut(() => AuthController());
+                      AuthController.instance.signOut(context);
+                    },
+                    title:Text(
+
+                      StringManager.logoutText,
+                      // textAlign: TextAlign.center,
+                      style: StyleManager.font16Regular(
+                          color: ColorManager.primaryColor),
+                    ) ,
+                    leading:  Icon(Icons.logout,size: 20.sp,),
+
+                  ),
+                ],
+              ),
             ),
-          ),
-        );
-      }
+          );
+        }
     );
   }
 }
