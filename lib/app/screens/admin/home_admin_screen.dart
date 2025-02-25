@@ -109,38 +109,30 @@ class HomeAdminScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Showcase(
-                      key: _robotPathKey,
-                      description: "Monitor the robot's path in real-time and modify it as needed for precise navigation",
-                      child: ContainerHomeWidget(
-                        icon: Icons.route,
-                        text: StringManager.robotPathText,
-                        color: ColorManager.hintTextColor,
-                        route: Routes.robotPathWorkerRoute,
-                      ),
-                    ),
-                    Showcase(
-                      key: _weatherKey,
-                      description: "Check the current weather conditions along with comprehensive statistics for the past month",
+                    ContainerHomeWidget(
+                      casekey: _robotPathKey,
+                      caseDescription: "Monitor the robot's path in real-time and modify it as needed for precise navigation",
 
-                      child: ContainerHomeWidget(
-                        icon: Icons.sunny_snowing,
-                        text: StringManager.weatherStatisticsText,
-                        color: ColorManager.tealColor,
-                        route: Routes.weatherRoute,
-                      ),
+                      icon: Icons.route,
+                       text: StringManager.robotPathText,
+                       color: ColorManager.hintTextColor,
+                       route: Routes.robotPathWorkerRoute,
+                     ),
+                    ContainerHomeWidget(
+                      casekey: _weatherKey,
+                              caseDescription: "Check the current weather conditions along with comprehensive statistics for the past month",
+                              icon: Icons.sunny_snowing,
+                      text: StringManager.weatherStatisticsText,
+                      color: ColorManager.tealColor,
+                      route: Routes.weatherRoute,
                     ),
-                    Expanded(
-                      child: Showcase(
-                        key: _workerProfilesKey,
-                        description: "Manage worker profiles and view their activity logs",
-                      
-                        child: ContainerHomeWidget(
-                          icon: Icons.person,
-                          text: StringManager.workersProfilesText,
-                          route: Routes.workerProfilesRoute,
-                        ),
-                      ),
+                    ContainerHomeWidget(
+                      casekey: _workerProfilesKey,
+                      caseDescription: "Manage worker profiles and view their activity logs",
+
+                      icon: Icons.person,
+                      text: StringManager.workersProfilesText,
+                      route: Routes.workerProfilesRoute,
                     ),
                   ],
                 ),
@@ -149,58 +141,52 @@ class HomeAdminScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Showcase(
-                      key: _activitiesKey,
-                      description: "View all ongoing and historical activities",
-                      child: ContainerHomeWidget(
-                        icon: Icons.notifications_active_outlined,
-                        text: StringManager.activitiesText,
-                        route: Routes.activitiesRoute,
-                      ),
-                    ),
-                    Showcase(
-                      key: _trackTheRoboKey,
-                      description: "Track the robot's path in real-time on the map for precise navigation",
-                      child: ContainerHomeWidget(
-                        icon: Icons.location_on_outlined,
-                        text: StringManager.trackText,
-                        color: ColorManager.hintTextColor,
-                        route: Routes.trackTheRobotRoute,
-                      ),
-                    ),
-                    Showcase(
-                      key: _robotOnDutyKey,
-                      description: "Cancel an active robot mission if it is no longer needed",
+                    ContainerHomeWidget(
+                      casekey: _activitiesKey,
+                      caseDescription: "View all ongoing and historical activities",
 
-                      child: ContainerHomeWidget(
-                        icon: Icons.close_outlined,
-                        text: StringManager.cancelTripText,
-                        route: Routes.robotOnDutyWorkerRoute,
-                      ),
+                      icon: Icons.notifications_active_outlined,
+                      text: StringManager.activitiesText,
+                      route: Routes.activitiesRoute,
+                    ),
+                    ContainerHomeWidget(
+                      casekey: _trackTheRoboKey,
+                      caseDescription: "Track the robot's path in real-time on the map for precise navigation",
+
+                      icon: Icons.location_on_outlined,
+                       text: StringManager.trackText,
+                       color: ColorManager.hintTextColor,
+                       route: Routes.trackTheRobotRoute,
+                     ),
+                    ContainerHomeWidget(
+                      casekey: _robotOnDutyKey,
+                    caseDescription: "Cancel an active robot mission if it is no longer needed",
+
+                      icon: Icons.close_outlined,
+                      text: StringManager.cancelTripText,
+                      route: Routes.robotOnDutyWorkerRoute,
                     ),
                   ],
                 ),
                 verticalSpace(20.h),
-                Showcase(
-                  key: _otherKey,
-                  description: "Unload or load the robot's cargo, and charge it when necessary",
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
 
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                  
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                  
-                      ContainerHomeWidget(
-                        icon: Icons.more_horiz,
-                        text: StringManager.otherText,
-                        color: ColorManager.tealColor,
-                        route: Routes.otherAdminRoute,
-                      ),
-                  
-                  
-                    ],
-                  ),
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+
+                    ContainerHomeWidget(
+                      casekey: _otherKey,
+                      caseDescription: "Unload or load the robot's cargo, and charge it when necessary",
+
+                      icon: Icons.more_horiz,
+                      text: StringManager.otherText,
+                      color: ColorManager.tealColor,
+                      route: Routes.otherAdminRoute,
+                    ),
+
+
+                  ],
                 ),
         
                 verticalSpace(10.h),
